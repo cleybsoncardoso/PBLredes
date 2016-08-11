@@ -20,7 +20,7 @@ public class Servidor {
 
     private int porta;
     ServerSocket server;
-    ArrayList<Usuario> usuarios;
+    ArrayList<Usuario> usuarios = new ArrayList<>();
     ArrayList<Integer> portas;
 
     /**

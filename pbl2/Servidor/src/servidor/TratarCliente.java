@@ -39,29 +39,32 @@ class TratarCliente implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("esperando opção do cliente " + cliente.getInetAddress().getHostAddress());
-        String opcaoCliente = null;
-        try {
-            opcaoCliente = input.readObject().toString();
-            switch (opcaoCliente) {
-                case "cadastro":
-                    cadastro();
+        while (true) {
+            System.out.println("esperando opção do cliente " + cliente.getInetAddress().getHostAddress());
+            String opcaoCliente = null;
+            try {
+                opcaoCliente = input.readObject().toString();
+                switch (opcaoCliente) {
+                    case "cadastro":
+                        cadastro();
+                        System.out.println("saiu");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void cadastro() throws IOException, ClassNotFoundException {
         System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
-        
+
         //recebe login
         String login = input.readObject().toString();
         //recebe senha
         String senha = input.readObject().toString();
-        
+
         //verifica se usuario já existe
         ArrayList<Usuario> usuarios = servidor.getUsuarios();
         Iterator iterador = usuarios.iterator();
@@ -73,13 +76,13 @@ class TratarCliente implements Runnable {
                 return;
             }
         }
-        
+
         //cria novo usuario
         Usuario novo = new Usuario(login, senha);
-        
+
         //adiciona usuario na lista de usuarios
         usuarios.add(novo);
-        
+
         //informa que usuario foi cadastrado com sucesso
         output.writeObject("cadastrado");
     }
