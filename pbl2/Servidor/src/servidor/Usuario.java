@@ -12,6 +12,7 @@ package servidor;
 class Usuario {
     private String login;
     private String senha;
+    private boolean online;
 
     public Usuario(String login, String senha) {
         this.login = login;
@@ -32,6 +33,14 @@ class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
     
 }

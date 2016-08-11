@@ -22,6 +22,7 @@ class TratarCliente implements Runnable {
 
     private Servidor servidor;
     private Socket cliente;
+    private Usuario logado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
@@ -46,17 +47,26 @@ class TratarCliente implements Runnable {
                 opcaoCliente = input.readObject().toString();
                 switch (opcaoCliente) {
                     case "cadastro":
-                        cadastro();
+                        this.cadastro();
                         System.out.println("saiu");
+                        break;
+                    case "logar":
+                        this.login();
+                        break;
+
                 }
             } catch (IOException ex) {
-                Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
+                return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
+    /**
+     * Método responsável por efetuar o cadastro de usuários.
+     */
     private void cadastro() throws IOException, ClassNotFoundException {
         System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
 
@@ -85,6 +95,50 @@ class TratarCliente implements Runnable {
 
         //informa que usuario foi cadastrado com sucesso
         output.writeObject("cadastrado");
+    }
+
+    /**
+     * Método responsável por efetuar o login dos usuários.
+     */
+    private void login() throws IOException, ClassNotFoundException {
+        System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
+
+        //recebe login
+        String login = input.readObject().toString();
+        //recebe senha
+        String senha = input.readObject().toString();
+
+        //verifica se login é válido
+        ArrayList<Usuario> usuarios = servidor.getUsuarios();
+        Iterator iterador = usuarios.iterator();
+        while (iterador.hasNext()) {
+            Usuario atual = (Usuario) iterador.next();
+            if (atual.getLogin().equals(login)) {
+                //usuario correto
+                if (atual.getSenha().equals(senha)) {
+                    //senha correta
+                    if (atual.isOnline()) {
+                        //informa que usuario já está logado
+                        output.writeObject("online");
+                        return;
+                    } else {
+                        //informa que usuario foi logado com sucesso
+                        atual.setOnline(true);
+                        logado = atual;
+                        output.writeObject("logado");
+                        return;
+                    }
+                } else {
+                    //informa que senha é inválida
+                    output.writeObject("senha");
+                    return;
+                }
+
+            }
+        }
+
+        //informa que nenhum usuario foi encontrado
+        output.writeObject("inexistente");
     }
 
 }
