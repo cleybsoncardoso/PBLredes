@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,16 +45,43 @@ class TratarCliente implements Runnable {
             opcaoCliente = input.readObject().toString();
             switch (opcaoCliente) {
                 case "cadastro":
-                    System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
-                    input.readObject().toString();
-                    input.readObject().toString();
-                    output.writeObject("cadastrado");
+                    cadastro();
             }
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void cadastro() throws IOException, ClassNotFoundException {
+        System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
+        
+        //recebe login
+        String login = input.readObject().toString();
+        //recebe senha
+        String senha = input.readObject().toString();
+        
+        //verifica se usuario já existe
+        ArrayList<Usuario> usuarios = servidor.getUsuarios();
+        Iterator iterador = usuarios.iterator();
+        while (iterador.hasNext()) {
+            Usuario atual = (Usuario) iterador.next();
+            if (atual.getLogin().equals(login)) {
+                //informa que nao foi possivel cadastrar usuario
+                output.writeObject("invalido");
+                return;
+            }
+        }
+        
+        //cria novo usuario
+        Usuario novo = new Usuario(login, senha);
+        
+        //adiciona usuario na lista de usuarios
+        usuarios.add(novo);
+        
+        //informa que usuario foi cadastrado com sucesso
+        output.writeObject("cadastrado");
     }
 
 }

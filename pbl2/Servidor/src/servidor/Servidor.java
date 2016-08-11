@@ -58,4 +58,10 @@ public class Servidor {
             }
         }
     }
+
+    public ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+    
+    
 }
