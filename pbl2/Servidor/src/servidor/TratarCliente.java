@@ -25,8 +25,14 @@ class TratarCliente implements Runnable {
     private Usuario logado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
+    private ArrayList<String> strings;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
+        strings = new ArrayList();
+        strings.add("CLeybson");
+        strings.add("Lucas");
+        strings.add("Ricardo");
+        
         this.cliente = cliente;
         this.servidor = servidor;
         try {
@@ -52,11 +58,13 @@ class TratarCliente implements Runnable {
                         break;
                     case "logar":
                         this.login();
+                        this.logado();
                         break;
 
                 }
             } catch (IOException ex) {
                 System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
+                logado.setOnline(false);
                 return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,6 +147,14 @@ class TratarCliente implements Runnable {
 
         //informa que nenhum usuario foi encontrado
         output.writeObject("inexistente");
+    }
+
+    private void logado() {
+        try {
+            output.writeObject(strings);
+        } catch (IOException ex) {
+            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
