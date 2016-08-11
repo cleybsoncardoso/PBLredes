@@ -129,7 +129,7 @@ public class Cliente {
                 logado();
             } else if (resposta.equals("senha")) {//caso senha esteja incorreta
                 System.out.println("\n\n\n________________________________________________");
-                System.out.println("----------LOGADO COM SUCESSO----------");
+                System.out.println("----------SENHA INCORRETA----------");
             } else if (resposta.equals("inexistente")) {//caso conta nao exista
                 System.out.println("\n\n\n________________________________________________");
                 System.out.println("----------ESTA CONTA NAO EXISTE----------");
