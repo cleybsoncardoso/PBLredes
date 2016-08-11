@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +48,6 @@ public class Cliente {
 
     private void executa() {
         String navegacao = null;
-
         while (true) {
             System.out.println("\n\n\n________________________________________________");
             System.out.println("Bem vindo ao Sistema Lava Duto\n");
@@ -85,7 +85,6 @@ public class Cliente {
                 dado = teclado.nextLine();
             } while (dado.equals(""));
             output.writeObject(dado);
-
             //após enviar os dados de login e senha, o servidor informa se foi cadastrado ou não a conta
             if (input.readObject().toString().equals("cadastrado")) {
                 System.out.println("\n\n\n________________________________________________");
@@ -95,7 +94,8 @@ public class Cliente {
                 System.err.println("CADASTRO NÃO FOI EFETUADO, TENTE NOVAMENTE");
             }
         } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
