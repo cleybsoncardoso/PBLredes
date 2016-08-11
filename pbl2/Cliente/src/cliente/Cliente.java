@@ -5,12 +5,15 @@
  */
 package cliente;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,17 +23,34 @@ import static javafx.application.Platform.exit;
  *
  * @author cleyb
  */
-public class Cliente implements Runnable{
+public class Cliente implements Runnable {
 
     private Socket cliente;
     private Scanner teclado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
-
     public Cliente() {
-        teclado = new Scanner(System.in);
+        ArrayList<String> repassarArquivos = new ArrayList();
+        List endereco = new ArrayList();
+        endereco.add("programa lava duto");
+        Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
+        String enderecoAtual = "";
+        while (it.hasNext()) {//passando o endereço da lista com o local atual, para a variavel
+            enderecoAtual = enderecoAtual + (String) it.next();
+        }
+        File local = new File(enderecoAtual);
+        for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
+            System.out.println(fileEntry.getName());
+            repassarArquivos.add(fileEntry.getName());
+            try {
+                output.writeObject(repassarArquivos);
+            } catch (IOException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
+        teclado = new Scanner(System.in);
         try {
             cliente = new Socket("127.0.0.1", 8080);
             output = new ObjectOutputStream(cliente.getOutputStream());
@@ -114,8 +134,8 @@ public class Cliente implements Runnable{
     private void logado() {
         String navegar;
         try {
-            ArrayList<String> arquivos  = (ArrayList<String>) input.readObject();
-            for(String nome : arquivos){
+            ArrayList<String> arquivos = (ArrayList<String>) input.readObject();
+            for (String nome : arquivos) {
                 System.out.println(nome);
             }
         } catch (IOException ex) {
