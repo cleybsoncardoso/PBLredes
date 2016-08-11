@@ -69,14 +69,20 @@ public class Cliente {
 
     private void cadastro() {
         try {
+            String dado="";
             System.out.println("\n\n\n________________________________________________");
             output.writeObject("cadastro");
             System.out.println("________________________________________________");
+            do{//login
             System.out.println("Digite o login a ser cadastrado");
-            output.writeObject(teclado.nextLine());
+            dado = teclado.nextLine();
+            }while(dado.equals(""));
+            output.writeObject(dado);
+            do{//senha
             System.out.println("Digite a senha a ser cadastrado");
-            System.out.println("________________________________________________");
-            output.writeObject(teclado.nextLine());
+            dado = teclado.nextLine();
+            }while(dado.equals(""));
+            output.writeObject(dado);
             if (input.readObject().toString().equals("cadastrado")) {
                 System.out.println("\n\n\n________________________________________________");
                 System.out.println("----------CADASTRO EFETUADO COM SUCESSO----------");
