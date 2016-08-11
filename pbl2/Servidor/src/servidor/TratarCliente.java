@@ -25,14 +25,10 @@ class TratarCliente implements Runnable {
     private Usuario logado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private ArrayList<String> strings;
+    private ArrayList<String> arquivos;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
-        strings = new ArrayList();
-        strings.add("CLeybson");
-        strings.add("Lucas");
-        strings.add("Ricardo");
-
+        arquivos = new ArrayList();
         this.cliente = cliente;
         this.servidor = servidor;
         try {
@@ -46,7 +42,21 @@ class TratarCliente implements Runnable {
 
     @Override
     public void run() {
+
+        try {
+            arquivos = (ArrayList<String>) input.readObject();
+        } catch (IOException ex) {
+            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (String nome : arquivos) {
+            System.out.println(nome);
+        }
+
         while (true) {
+
             System.out.println("esperando opção do cliente " + cliente.getInetAddress().getHostAddress());
             String opcaoCliente = null;
             try {
@@ -54,7 +64,6 @@ class TratarCliente implements Runnable {
                 switch (opcaoCliente) {
                     case "cadastro":
                         this.cadastro();
-                        System.out.println("saiu");
                         break;
                     case "logar":
                         this.login();
@@ -150,11 +159,12 @@ class TratarCliente implements Runnable {
     }
 
     /**
-     * Método chamado quando o usuário já está logado. Responsável pela comunicação do usuário já logado.
+     * Método chamado quando o usuário já está logado. Responsável pela
+     * comunicação do usuário já logado.
      */
     private void logado() {
         try {
-            output.writeObject(strings);
+            output.writeObject(arquivos);
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
