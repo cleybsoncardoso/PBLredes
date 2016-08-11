@@ -43,18 +43,15 @@ public class Cliente implements Runnable {
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
             System.out.println(fileEntry.getName());
             repassarArquivos.add(fileEntry.getName());
-            try {
-                output.writeObject(repassarArquivos);
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
         }
 
         teclado = new Scanner(System.in);
         try {
-            cliente = new Socket("127.0.0.1", 8080);
+            cliente = new Socket("25.15.175.182", 8080);
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
+            output.writeObject(repassarArquivos);
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
             System.exit(0);
