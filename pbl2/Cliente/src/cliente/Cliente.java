@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.application.Platform.exit;
 
 /**
  *
@@ -39,7 +40,8 @@ public class Cliente {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Servidor esta offline");
+            System.exit(0);
         }
     }
 
@@ -69,20 +71,22 @@ public class Cliente {
 
     private void cadastro() {
         try {
-            String dado="";
+            String dado = "";
             System.out.println("\n\n\n________________________________________________");
             output.writeObject("cadastro");
             System.out.println("________________________________________________");
-            do{//login
-            System.out.println("Digite o login a ser cadastrado");
-            dado = teclado.nextLine();
-            }while(dado.equals(""));
+            do {//login
+                System.out.println("Digite o login a ser cadastrado");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
             output.writeObject(dado);
-            do{//senha
-            System.out.println("Digite a senha a ser cadastrado");
-            dado = teclado.nextLine();
-            }while(dado.equals(""));
+            do {//senha
+                System.out.println("Digite a senha a ser cadastrado");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
             output.writeObject(dado);
+
+            //após enviar os dados de login e senha, o servidor informa se foi cadastrado ou não a conta
             if (input.readObject().toString().equals("cadastrado")) {
                 System.out.println("\n\n\n________________________________________________");
                 System.out.println("----------CADASTRO EFETUADO COM SUCESSO----------");
