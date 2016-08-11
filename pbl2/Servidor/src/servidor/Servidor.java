@@ -8,6 +8,7 @@ package servidor;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,8 @@ public class Servidor {
 
     private int porta;
     ServerSocket server;
+    ArrayList<Usuario> usuarios;
+    ArrayList<Integer> portas;
 
     /**
      * @param args the command line arguments
