@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +48,6 @@ public class Cliente {
 
     private void executa() {
         String navegacao = null;
-
         while (true) {
             System.out.println("\n\n\n________________________________________________");
             System.out.println("Bem vindo ao Sistema Lava Duto\n");
@@ -59,6 +59,10 @@ public class Cliente {
             switch (navegacao) {
                 case "1":
                     cadastro();
+                    break;
+
+                case "2":
+                    logar();
                     break;
 
             }
@@ -74,7 +78,6 @@ public class Cliente {
             String dado = "";
             System.out.println("\n\n\n________________________________________________");
             output.writeObject("cadastro");
-            System.out.println("________________________________________________");
             do {//login
                 System.out.println("Digite o login a ser cadastrado");
                 dado = teclado.nextLine();
@@ -85,7 +88,6 @@ public class Cliente {
                 dado = teclado.nextLine();
             } while (dado.equals(""));
             output.writeObject(dado);
-
             //após enviar os dados de login e senha, o servidor informa se foi cadastrado ou não a conta
             if (input.readObject().toString().equals("cadastrado")) {
                 System.out.println("\n\n\n________________________________________________");
@@ -95,7 +97,46 @@ public class Cliente {
                 System.err.println("CADASTRO NÃO FOI EFETUADO, TENTE NOVAMENTE");
             }
         } catch (IOException ex) {
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void logar() {
+        try {
+            String dado = "";
+            System.out.println("\n\n\n________________________________________________");
+            output.writeObject("logar");
+            do {//login
+                System.out.println("Login:");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
+            output.writeObject(dado);
+            do {//senha
+                System.out.println("Senha:");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
+            output.writeObject(dado);
+            String resposta = input.readObject().toString();
+            if (resposta.equals("online")) {//caso a conta ja esteja online
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------USUARIO JA ESTA LOGADO----------");
+            } else if (resposta.equals("logado")) {//caso nao ocorra erro
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------LOGADO COM SUCESSO----------");
+            }else if (resposta.equals("senha")) {//caso senha esteja incorreta
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------LOGADO COM SUCESSO----------");
+            }else if (resposta.equals("inexistente")) {//caso conta nao exista
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------ESTA CONTA NAO EXISTE----------");
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
