@@ -32,7 +32,7 @@ class TratarCliente implements Runnable {
         strings.add("CLeybson");
         strings.add("Lucas");
         strings.add("Ricardo");
-        
+
         this.cliente = cliente;
         this.servidor = servidor;
         try {
@@ -149,6 +149,9 @@ class TratarCliente implements Runnable {
         output.writeObject("inexistente");
     }
 
+    /**
+     * Método chamado quando o usuário já está logado. Responsável pela comunicação do usuário já logado.
+     */
     private void logado() {
         try {
             output.writeObject(strings);
