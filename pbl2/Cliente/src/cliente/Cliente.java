@@ -61,6 +61,10 @@ public class Cliente {
                     cadastro();
                     break;
 
+                case "2":
+                    logar();
+                    break;
+
             }
             if (navegacao.equals("3")) {
                 break;
@@ -74,7 +78,6 @@ public class Cliente {
             String dado = "";
             System.out.println("\n\n\n________________________________________________");
             output.writeObject("cadastro");
-            System.out.println("________________________________________________");
             do {//login
                 System.out.println("Digite o login a ser cadastrado");
                 dado = teclado.nextLine();
@@ -93,6 +96,44 @@ public class Cliente {
                 System.out.println("\n\n\n________________________________________________");
                 System.err.println("CADASTRO NÃO FOI EFETUADO, TENTE NOVAMENTE");
             }
+        } catch (IOException ex) {
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void logar() {
+        try {
+            String dado = "";
+            System.out.println("\n\n\n________________________________________________");
+            output.writeObject("logar");
+            do {//login
+                System.out.println("Login:");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
+            output.writeObject(dado);
+            do {//senha
+                System.out.println("Senha:");
+                dado = teclado.nextLine();
+            } while (dado.equals(""));
+            output.writeObject(dado);
+            String resposta = input.readObject().toString();
+            if (resposta.equals("online")) {//caso a conta ja esteja online
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------USUARIO JA ESTA LOGADO----------");
+            } else if (resposta.equals("logado")) {//caso nao ocorra erro
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------LOGADO COM SUCESSO----------");
+            }else if (resposta.equals("senha")) {//caso senha esteja incorreta
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------LOGADO COM SUCESSO----------");
+            }else if (resposta.equals("inexistente")) {//caso conta nao exista
+                System.out.println("\n\n\n________________________________________________");
+                System.out.println("----------ESTA CONTA NAO EXISTE----------");
+            }
+
         } catch (IOException ex) {
             System.err.println("Servidor ficou offline");
             System.exit(0);
