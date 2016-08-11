@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,19 +20,13 @@ import static javafx.application.Platform.exit;
  *
  * @author cleyb
  */
-public class Cliente {
+public class Cliente implements Runnable{
 
     private Socket cliente;
     private Scanner teclado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        new Cliente().executa();
-    }
 
     public Cliente() {
         teclado = new Scanner(System.in);
@@ -43,33 +38,6 @@ public class Cliente {
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
             System.exit(0);
-        }
-    }
-
-    private void executa() {
-        String navegacao = null;
-        while (true) {
-            System.out.println("\n\n\n________________________________________________");
-            System.out.println("Bem vindo ao Sistema Lava Duto\n");
-            System.out.println("1 - Cadastro");
-            System.out.println("2 - Logar");
-            System.out.println("3 - Sair");
-            System.out.println("________________________________________________");
-            navegacao = teclado.nextLine();
-            switch (navegacao) {
-                case "1":
-                    cadastro();
-                    break;
-
-                case "2":
-                    logar();
-                    break;
-
-            }
-            if (navegacao.equals("3")) {
-                break;
-            }
-
         }
     }
 
@@ -144,7 +112,46 @@ public class Cliente {
     }
 
     private void logado() {
+        String navegar;
+        try {
+            ArrayList<String> arquivos  = (ArrayList<String>) input.readObject();
+            for(String nome : arquivos){
+                System.out.println(nome);
+            }
+        } catch (IOException ex) {
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    @Override
+    public void run() {
+        String navegacao = null;
+        while (true) {
+            System.out.println("\n\n\n________________________________________________");
+            System.out.println("Bem vindo ao Sistema Lava Duto\n");
+            System.out.println("1 - Cadastro");
+            System.out.println("2 - Logar");
+            System.out.println("3 - Sair");
+            System.out.println("________________________________________________");
+            navegacao = teclado.nextLine();
+            switch (navegacao) {
+                case "1":
+                    cadastro();
+                    break;
+
+                case "2":
+                    logar();
+                    break;
+
+            }
+            if (navegacao.equals("3")) {
+                break;
+            }
+
+        }
     }
 
 }
