@@ -17,7 +17,7 @@ public class InformacoesCliente {
     private String ip;
     private int porta;
 
-    public InformacoesCliente(ArrayList<String> nomeArquivos, int porta) {
+    public InformacoesCliente(ArrayList<String> nomeArquivos, int porta, String ip) {
         this.nomeArquivos = nomeArquivos;
         this.ip = ip;
         this.porta = porta;
@@ -37,6 +37,14 @@ public class InformacoesCliente {
 
     public int getPorta() {
         return porta;
+    }
+
+    public void setNomeArquivos(ArrayList<String> nomeArquivos) {
+        this.nomeArquivos = nomeArquivos;
+    }
+
+    public void setPorta(int porta) {
+        this.porta = porta;
     }
 
 }

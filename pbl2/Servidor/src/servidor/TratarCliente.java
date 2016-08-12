@@ -43,28 +43,7 @@ class TratarCliente implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("entrou");
-
-        try {
-            //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
-            informacoes = (InformacoesCliente) input.readObject();
-            if (informacoes != null) {
-                informacoes.setIp(cliente.getInetAddress().getHostAddress());
-                System.out.println("IP: " + informacoes.getIp());
-                System.out.println("Porta: " + informacoes.getPorta());
-            }else{
-                System.out.println("veio null");
-            }
-
-            for (String nome : informacoes.getNomeArquivos()) {
-                System.out.println(nome);
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        receberInformacoes();
 
         while (true) {
 
@@ -90,6 +69,31 @@ class TratarCliente implements Runnable {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+    
+    private void receberInformacoes() {
+        try {
+            //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
+            ArrayList arquivos = (ArrayList<String>) input.readObject();
+            int porta = (Integer) input.readObject();
+
+            informacoes = new InformacoesCliente(arquivos, porta, cliente.getInetAddress().getHostAddress());
+
+            informacoes.setIp(cliente.getInetAddress().getHostAddress());
+            System.out.println("IP: " + informacoes.getIp());
+            System.out.println("Porta: " + informacoes.getPorta());
+
+            for (String nome : informacoes.getNomeArquivos()) {
+                System.out.println(nome);
+            }
+
+            servidor.getInformacoesClientes().add(informacoes);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -178,5 +182,7 @@ class TratarCliente implements Runnable {
     private void logado() {
 
     }
+
+    
 
 }

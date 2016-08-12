@@ -20,10 +20,10 @@ import util.InformacoesCliente;
 public class Servidor {
 
     private int porta;
-    ServerSocket server;
-    ArrayList<Usuario> usuarios = new ArrayList<>();
-    ArrayList<Integer> portas;
-    ArrayList<InformacoesCliente> informacoesClientes;
+    private ServerSocket server;
+    private ArrayList<Usuario> usuarios = new ArrayList<>();
+    private ArrayList<Integer> portas;
+    private ArrayList<InformacoesCliente> informacoesClientes;
 
     /**
      * @param args the command line arguments
