@@ -43,13 +43,18 @@ class TratarCliente implements Runnable {
     @Override
     public void run() {
 
+        System.out.println("entrou");
+
         try {
             //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
             informacoes = (InformacoesCliente) input.readObject();
-            informacoes.setIp(cliente.getInetAddress().getHostAddress());
-
-            System.out.println("IP: " + informacoes.getIp());
-            System.out.println("Porta: " + informacoes.getPorta());
+            if (informacoes != null) {
+                informacoes.setIp(cliente.getInetAddress().getHostAddress());
+                System.out.println("IP: " + informacoes.getIp());
+                System.out.println("Porta: " + informacoes.getPorta());
+            }else{
+                System.out.println("veio null");
+            }
 
             for (String nome : informacoes.getNomeArquivos()) {
                 System.out.println(nome);
