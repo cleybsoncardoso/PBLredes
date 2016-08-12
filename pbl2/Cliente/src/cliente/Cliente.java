@@ -29,7 +29,7 @@ public class Cliente implements Runnable {
     private Scanner teclado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private Servidor servidorCliente
+    private Servidor servidorCliente;
 
     public Cliente(Servidor servidorCliente) {
         this.servidorCliente = servidorCliente;

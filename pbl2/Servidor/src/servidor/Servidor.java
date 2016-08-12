@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.InformacoesCliente;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Servidor {
     ServerSocket server;
     ArrayList<Usuario> usuarios = new ArrayList<>();
     ArrayList<Integer> portas;
+    ArrayList<InformacoesCliente> informacoesClientes;
 
     /**
      * @param args the command line arguments
@@ -62,6 +64,11 @@ public class Servidor {
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
+
+    public ArrayList<InformacoesCliente> getInformacoesClientes() {
+        return informacoesClientes;
+    }
+    
     
     
 }

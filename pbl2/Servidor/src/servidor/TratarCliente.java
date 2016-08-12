@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.InformacoesCliente;
 
 /**
  *
@@ -25,10 +26,8 @@ class TratarCliente implements Runnable {
     private Usuario logado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private ArrayList<String> arquivos;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
-        arquivos = new ArrayList();
         this.cliente = cliente;
         this.servidor = servidor;
         try {
@@ -44,16 +43,18 @@ class TratarCliente implements Runnable {
     public void run() {
 
         try {
-            //cliente conecta e envia lista de arquivo do seu repositório
-            arquivos = (ArrayList<String>) input.readObject();
+            //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
+            InformacoesCliente informacoes = (InformacoesCliente) input.readObject();
+            
+
+            for (String nome : informacoes.getNomeArquivos()) {
+                System.out.println(nome);
+            }
+
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        for (String nome : arquivos) {
-            System.out.println(nome);
         }
 
         while (true) {
