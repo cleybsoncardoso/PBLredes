@@ -142,7 +142,9 @@ public class Cliente implements Runnable {
             for (String nome : arquivos) {
                 System.out.println(nome);
             }
-            
+            while(true){
+                System.out.println("teste");
+            }
             
         } catch (IOException ex) {
             System.err.println("Servidor ficou offline");
