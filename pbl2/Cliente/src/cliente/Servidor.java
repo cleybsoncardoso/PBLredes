@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author cleyb
  */
-public class Servidor {
+public class Servidor implements Runnable{
 
     public Servidor(int porta) {
         try {
@@ -30,6 +30,11 @@ public class Servidor {
         } catch (IOException ex) {
             System.out.println("Porta existente");
         }
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -16,7 +16,7 @@ public class InformacoesCliente {
     private String ip;
     private int porta;
 
-    public InformacoesCliente(ArrayList<String> nomeArquivos, String ip, int porta) {
+    public InformacoesCliente(ArrayList<String> nomeArquivos, int porta) {
         this.nomeArquivos = nomeArquivos;
         this.ip = ip;
         this.porta=porta;
