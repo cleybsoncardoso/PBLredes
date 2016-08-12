@@ -34,7 +34,7 @@ public class Cliente implements Runnable {
 
     public Cliente(Servidor servidorCliente) {
         this.servidorCliente = servidorCliente;
-        
+
         ArrayList<String> repassarArquivos = new ArrayList();
         List endereco = new ArrayList();
         endereco.add("programa lava duto");
@@ -55,8 +55,10 @@ public class Cliente implements Runnable {
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
-            InformacoesCliente informacoes = new InformacoesCliente(repassarArquivos, this.servidorCliente.getServidorCliente().getLocalPort());
-            output.writeObject(informacoes);
+
+            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
+            output.writeObject(repassarArquivos);
+            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
             System.exit(0);
