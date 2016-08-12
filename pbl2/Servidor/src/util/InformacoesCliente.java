@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author cleyb
  */
 public class InformacoesCliente {
+
     private ArrayList<String> nomeArquivos;
     private String ip;
     private int porta;
@@ -19,11 +20,15 @@ public class InformacoesCliente {
     public InformacoesCliente(ArrayList<String> nomeArquivos, int porta) {
         this.nomeArquivos = nomeArquivos;
         this.ip = ip;
-        this.porta=porta;
+        this.porta = porta;
     }
 
     public ArrayList<String> getNomeArquivos() {
         return nomeArquivos;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getIp() {
@@ -33,7 +38,5 @@ public class InformacoesCliente {
     public int getPorta() {
         return porta;
     }
-    
-    
-    
+
 }
