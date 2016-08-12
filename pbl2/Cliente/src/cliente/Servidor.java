@@ -22,12 +22,6 @@ public class Servidor implements Runnable {
     public Servidor(int porta) {
         try {
             servidorCliente = new ServerSocket(porta);
-            while (true) {
-                Socket cliente = servidorCliente.accept();
-                System.out.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se conectou");
-                TratarCliente tc = new TratarCliente(this, cliente);
-                new Thread(tc).start();
-            }
 
         } catch (IOException ex) {
             System.out.println("Porta existente");
@@ -40,7 +34,18 @@ public class Servidor implements Runnable {
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (true) {
+            Socket cliente;
+            try {
+                cliente = servidorCliente.accept();
+                System.out.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se conectou");
+                TratarCliente tc = new TratarCliente(this, cliente);
+                new Thread(tc).start();
+            } catch (IOException ex) {
+                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
 }
