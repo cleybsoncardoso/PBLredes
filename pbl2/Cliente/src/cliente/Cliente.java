@@ -151,9 +151,10 @@ public class Cliente implements Runnable {
         }
 
         while (true) {
-            int i = 0, j = -1;
+            int i = 0, indexArquivo = -1;
+            System.out.println("\n\n\n\tArquivos disponiveis:\n");
             for (String nome : arquivos) {
-                System.out.println(i + " " + nome);
+                System.out.println("[" + i + "]" + " " + nome);
                 i++;
             }
             System.out.println("__________________________________________________");
@@ -162,20 +163,27 @@ public class Cliente implements Runnable {
                 String[] comandos = new String[2];
                 comandos = navegar.split(" ");
                 navegar = comandos[0];
-                j = Integer.parseInt(comandos[1]);
+                indexArquivo = Integer.parseInt(comandos[1]);
+            }
+            if(navegar.equals("deslogar")){
+                break;
             }
             switch (navegar) {
                 case "help":
                     System.out.println("atualizar: Atualiza a sua lista de arquivos, caso faca alguma alteracao");
                     System.out.println("download <numero do arquivo>: Baixa o arquivo referente aquele numero");
+                    System.out.println("deslogar: Sai da conta");
                     teclado.nextLine();
                     break;
-
+                    
                 case "atualizar":
                     try {
                         output.writeObject("atualiza");
+                        System.out.println("Solicitando do servidor...");
                         output.writeObject(this.arquivoPessoal());
+                        System.out.println("ATUALIZANDO SERVIDOR");
                         arquivos = (ArrayList<String>) input.readObject();
+                        System.out.println("\n\nSERVIDOR ATUALIZADO!!!!!!!\n\n");
                         break;
                     } catch (IOException ex) {
                         System.err.println("Servidor ficou offline");
@@ -184,8 +192,14 @@ public class Cliente implements Runnable {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 case "download":
-                    System.out.println(navegar);
-                    System.out.println(j);
+                    System.out.println("fazendo conexão com o clienteServidor");
+                    try {
+                        output.writeObject(indexArquivo);
+                        System.out.println("Arquivo selecionado: " + arquivos.get(indexArquivo));
+                    } catch (IOException ex) {
+                        System.err.println("Servidor ficou offline");
+                        System.exit(0);
+                    }
                     break;
             }
         }
