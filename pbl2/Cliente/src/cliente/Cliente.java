@@ -139,19 +139,55 @@ public class Cliente implements Runnable {
     }
 
     private void logado() {
-        String navegar;
+        String navegar = "";
+        ArrayList<String> arquivos = null;
         try {
-            ArrayList<String> arquivos = (ArrayList<String>) input.readObject();
-            for (String nome : arquivos) {
-                System.out.println(nome);
-            }
-            teclado.nextLine();
-
+            arquivos = (ArrayList<String>) input.readObject();
         } catch (IOException ex) {
             System.err.println("Servidor ficou offline");
             System.exit(0);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        while (true) {
+            int i = 0, j = -1;
+            for (String nome : arquivos) {
+                System.out.println(i + " " + nome);
+                i++;
+            }
+            System.out.println("__________________________________________________");
+            navegar = teclado.nextLine();
+            if (navegar.contains("download")) {
+                String[] comandos = new String[2];
+                comandos = navegar.split(" ");
+                navegar = comandos[0];
+                j = Integer.parseInt(comandos[1]);
+            }
+            switch (navegar) {
+                case "help":
+                    System.out.println("atualizar: Atualiza a sua lista de arquivos, caso faca alguma alteracao");
+                    System.out.println("download <numero do arquivo>: Baixa o arquivo referente aquele numero");
+                    teclado.nextLine();
+                    break;
+
+                case "atualizar":
+                    try {
+                        output.writeObject("atualiza");
+                        output.writeObject(this.arquivoPessoal());
+                        arquivos = (ArrayList<String>) input.readObject();
+                        break;
+                    } catch (IOException ex) {
+                        System.err.println("Servidor ficou offline");
+                        System.exit(0);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                case "download":
+                    System.out.println(navegar);
+                    System.out.println(j);
+                    break;
+            }
         }
     }
 
