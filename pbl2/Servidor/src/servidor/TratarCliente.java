@@ -26,6 +26,7 @@ class TratarCliente implements Runnable {
     private Usuario logado;
     private ObjectInputStream input;
     private ObjectOutputStream output;
+    private InformacoesCliente informacoes;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
@@ -44,8 +45,11 @@ class TratarCliente implements Runnable {
 
         try {
             //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
-            InformacoesCliente informacoes = (InformacoesCliente) input.readObject();
-            
+            informacoes = (InformacoesCliente) input.readObject();
+            informacoes.setIp(cliente.getInetAddress().getHostAddress());
+
+            System.out.println("IP: " + informacoes.getIp());
+            System.out.println("Porta: " + informacoes.getPorta());
 
             for (String nome : informacoes.getNomeArquivos()) {
                 System.out.println(nome);
@@ -68,8 +72,9 @@ class TratarCliente implements Runnable {
                         this.cadastro();
                         break;
                     case "logar":
-                        this.login();
-                        this.logado();
+                        if (this.login()) {
+                            logado();
+                        }
                         break;
 
                 }
@@ -119,7 +124,7 @@ class TratarCliente implements Runnable {
     /**
      * Método responsável por efetuar o login dos usuários.
      */
-    private void login() throws IOException, ClassNotFoundException {
+    private boolean login() throws IOException, ClassNotFoundException {
         System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
 
         //recebe login
@@ -139,18 +144,18 @@ class TratarCliente implements Runnable {
                     if (atual.isOnline()) {
                         //informa que usuario já está logado
                         output.writeObject("online");
-                        return;
+                        return false;
                     } else {
                         //informa que usuario foi logado com sucesso
                         atual.setOnline(true);
                         logado = atual;
                         output.writeObject("logado");
-                        return;
+                        return true;
                     }
                 } else {
                     //informa que senha é inválida
                     output.writeObject("senha");
-                    return;
+                    return false;
                 }
 
             }
@@ -158,6 +163,7 @@ class TratarCliente implements Runnable {
 
         //informa que nenhum usuario foi encontrado
         output.writeObject("inexistente");
+        return false;
     }
 
     /**
@@ -165,11 +171,7 @@ class TratarCliente implements Runnable {
      * comunicação do usuário já logado.
      */
     private void logado() {
-        try {
-            output.writeObject(arquivos);
-        } catch (IOException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
 }
