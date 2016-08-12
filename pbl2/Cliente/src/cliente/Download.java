@@ -5,15 +5,36 @@
  */
 package cliente;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author cleyb
  */
-public class Download implements Runnable{
+public class Download implements Runnable {
+
+    private String ip;
+    private int porta;
+
+    public Download(String ip, int porta) {
+        this.ip = ip;
+        this.porta = porta;
+    }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Socket baixaServidor = null;
+        
+        try {
+            baixaServidor = new Socket(ip, porta);
+            System.out.println("Conectou");
+
+        } catch (IOException ex) {
+            System.err.println("Download nao concluido");
+        }
     }
-    
+
 }
