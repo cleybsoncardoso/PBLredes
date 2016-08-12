@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
+import util.InformacoesCliente;
 
 /**
  *
@@ -54,7 +55,8 @@ public class Cliente implements Runnable {
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
-            output.writeObject(repassarArquivos);
+            InformacoesCliente informacoes = new InformacoesCliente(repassarArquivos, this.servidorCliente.getServidorCliente().getLocalPort());
+            output.writeObject(informacoes);
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
             System.exit(0);

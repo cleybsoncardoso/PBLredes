@@ -15,11 +15,13 @@ import java.util.logging.Logger;
  *
  * @author cleyb
  */
-public class Servidor implements Runnable{
+public class Servidor implements Runnable {
+
+    ServerSocket servidorCliente;
 
     public Servidor(int porta) {
         try {
-            ServerSocket servidorCliente = new ServerSocket(porta);
+            servidorCliente = new ServerSocket(porta);
             while (true) {
                 Socket cliente = servidorCliente.accept();
                 System.out.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se conectou");
@@ -30,6 +32,10 @@ public class Servidor implements Runnable{
         } catch (IOException ex) {
             System.out.println("Porta existente");
         }
+    }
+
+    public ServerSocket getServidorCliente() {
+        return servidorCliente;
     }
 
     @Override
