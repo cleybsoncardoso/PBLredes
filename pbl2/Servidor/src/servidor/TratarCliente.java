@@ -86,8 +86,7 @@ class TratarCliente implements Runnable {
      */
     private void receberInformacoes() {
         try {
-            //cliente envia lista de arquivo do seu repositório e porta do servidor
-
+            //cliente envia lista de arquivo do seu repositório com porta do servidor
             System.out.println("Recebendo informacoes do servidor " + cliente.getInetAddress().getHostAddress() + ".");
             ArrayList arquivos = (ArrayList<String>) input.readObject();
 

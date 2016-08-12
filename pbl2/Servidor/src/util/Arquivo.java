@@ -19,6 +19,8 @@ public class Arquivo implements Serializable{
     
     public Arquivo(String nome){
         this.nome = nome;
+        this.ip = "";
+        this.porta = 0;
     }
 
     public String getNome() {
