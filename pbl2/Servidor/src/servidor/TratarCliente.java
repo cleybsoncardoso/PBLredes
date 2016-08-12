@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Arquivo;
 import util.InformacoesCliente;
 
 /**
@@ -95,7 +96,6 @@ class TratarCliente implements Runnable {
 
             //informacoes sao gravadas no objeto InformacoesCliente
             informacoes = new InformacoesCliente(arquivos, porta, cliente.getInetAddress().getHostAddress());
-            informacoes.setIp(cliente.getInetAddress().getHostAddress());
 
             //informacoes sao adicionadas na lista de informacoes do servidor central
             servidor.getInformacoesClientes().add(informacoes);
@@ -210,6 +210,7 @@ class TratarCliente implements Runnable {
                         break;
                     case "download":
                         verificarArquivo();
+                        break;
                 }
             } catch (IOException ex) {
                 //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
@@ -235,30 +236,14 @@ class TratarCliente implements Runnable {
     private void atualizar() throws IOException, ClassNotFoundException {
         System.out.println("Usuário " + logado.getLogin() + " escolheu atualizar.");
         //lê a lista de arquivos atual do cliente
-        ArrayList<String> lista = (ArrayList<String>) input.readObject();
+        ArrayList<Arquivo> lista = (ArrayList<Arquivo>) input.readObject();
         //atualiza a lista de arquivos desse cliente
         this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setNomeArquivos(lista);
         //atualiza a lista de todos os arquivos disponiveis
         this.informacoesClientes = servidor.getInformacoesClientes();
         //envia lista atualizada de arquivos disponiveis
-        output.writeObject(this.getArquivosDisponiveis());
+        output.writeObject(this.informacoesClientes);
     }
 
-    private void verificarArquivo() throws IOException, ClassNotFoundException {
-        //int index = (int) input.readObject();
-        output.writeObject(informacoes);
-    }
-
-    public ArrayList<String> getArquivosDisponiveis() {
-        Iterator it = this.informacoesClientes.iterator();
-        ArrayList<String> lista = new ArrayList<>();
-        while (it.hasNext()) {
-            InformacoesCliente atual = (InformacoesCliente) it.next();
-
-            lista.addAll(atual.getNomeArquivos());
-
-        }
-        return lista;
-    }
 
 }

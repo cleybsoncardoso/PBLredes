@@ -14,38 +14,25 @@ import java.util.ArrayList;
  */
 public class InformacoesCliente implements Serializable {
 
-    private ArrayList<String> nomeArquivos;
-    private String ip;
-    private int porta;
+    private ArrayList<Arquivo> nomeArquivos;
 
-    public InformacoesCliente(ArrayList<String> nomeArquivos, int porta, String ip) {
+    public InformacoesCliente(ArrayList<Arquivo> nomeArquivos, int porta, String ip) {
         this.nomeArquivos = nomeArquivos;
-        this.ip = ip;
-        this.porta = porta;
+        setInfo(ip, porta);
     }
 
-    public ArrayList<String> getNomeArquivos() {
+    public ArrayList<Arquivo> getNomeArquivos() {
         return nomeArquivos;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public int getPorta() {
-        return porta;
-    }
-
-    public void setNomeArquivos(ArrayList<String> nomeArquivos) {
+    public void setNomeArquivos(ArrayList<Arquivo> nomeArquivos) {
         this.nomeArquivos = nomeArquivos;
     }
 
-    public void setPorta(int porta) {
-        this.porta = porta;
+    private void setInfo(String ip, int porta) {
+        for (Arquivo arquivo : nomeArquivos) {
+            arquivo.setIp(ip);
+            arquivo.setPorta(porta);
+        }
     }
-
 }
