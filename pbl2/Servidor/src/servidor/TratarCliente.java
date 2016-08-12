@@ -88,7 +88,7 @@ class TratarCliente implements Runnable {
         try {
             //cliente envia lista de arquivo do seu repositório com porta do servidor
             System.out.println("Recebendo informacoes do servidor " + cliente.getInetAddress().getHostAddress() + ".");
-            ArrayList arquivos = (ArrayList<String>) input.readObject();
+            ArrayList arquivos = (ArrayList<Arquivo>) input.readObject();
 
             //porta do servidor do cliente
             int porta = (Integer) input.readObject();
@@ -193,7 +193,7 @@ class TratarCliente implements Runnable {
         //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
         System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
         this.informacoesClientes = servidor.getInformacoesClientes();
-        output.writeObject(this.informacoesClientes);
+        output.writeObject(this.getListaArquivo());
 
         while (true) {
             System.out.println("Esperando opção do usuário " + logado.getLogin() + ".");
@@ -241,8 +241,23 @@ class TratarCliente implements Runnable {
         //atualiza a lista de todos os arquivos disponiveis
         this.informacoesClientes = servidor.getInformacoesClientes();
         //envia lista atualizada de arquivos disponiveis
-        output.writeObject(this.informacoesClientes);
+        output.writeObject(this.getListaArquivo());
     }
 
-
+    /**Método que retorna a lista contendo todos os arquivos disponíveis para download.
+     * 
+     * @return
+     * 
+     * @see Arquivo
+     */
+    private ArrayList<Arquivo> getListaArquivo(){
+        ArrayList<Arquivo> lista = new ArrayList<>();
+        Iterator it = informacoesClientes.iterator();
+        while(it.hasNext()){
+            InformacoesCliente atual = (InformacoesCliente) it.next();
+            lista.addAll(atual.getNomeArquivos());
+        }
+        return lista;
+    }
+    
 }
