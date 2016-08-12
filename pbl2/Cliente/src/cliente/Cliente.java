@@ -35,6 +35,23 @@ public class Cliente implements Runnable {
     public Cliente(Servidor servidorCliente) {
         this.servidorCliente = servidorCliente;
 
+        teclado = new Scanner(System.in);
+        try {
+            cliente = new Socket("25.15.175.182", 8080);
+            System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            input = new ObjectInputStream(cliente.getInputStream());
+
+            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
+            output.writeObject(this.arquivoPessoal());
+            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+        } catch (IOException ex) {
+            System.out.println("Servidor esta offline");
+            System.exit(0);
+        }
+    }
+
+    private ArrayList<String> arquivoPessoal() {
         ArrayList<String> repassarArquivos = new ArrayList();
         List endereco = new ArrayList();
         endereco.add("programa lava duto");
@@ -45,24 +62,10 @@ public class Cliente implements Runnable {
         }
         File local = new File(enderecoAtual);
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            repassarArquivos.add(fileEntry.getName()+"("+fileEntry.length()+" Kb)");
+            repassarArquivos.add(fileEntry.getName() + "(" + fileEntry.length() + " Kb)");
 
         }
-
-        teclado = new Scanner(System.in);
-        try {
-            cliente = new Socket("25.15.175.182", 8080);
-            System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
-            output = new ObjectOutputStream(cliente.getOutputStream());
-            input = new ObjectInputStream(cliente.getInputStream());
-
-            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
-            output.writeObject(repassarArquivos);
-            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
-        } catch (IOException ex) {
-            System.out.println("Servidor esta offline");
-            System.exit(0);
-        }
+        return repassarArquivos;
     }
 
     private void cadastro() {
@@ -136,21 +139,69 @@ public class Cliente implements Runnable {
     }
 
     private void logado() {
-        String navegar;
+        String navegar = "";
+        ArrayList<String> arquivos = null;
         try {
-            ArrayList<String> arquivos = (ArrayList<String>) input.readObject();
-            for (String nome : arquivos) {
-                System.out.println(nome);
-            }
-            while(true){
-                System.out.println("teste");
-            }
-            
+            arquivos = (ArrayList<String>) input.readObject();
         } catch (IOException ex) {
             System.err.println("Servidor ficou offline");
             System.exit(0);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        while (true) {
+            int i = 0, indexArquivo = -1;
+            System.out.println("\n\n\n\tArquivos disponiveis:\n");
+            for (String nome : arquivos) {
+                System.out.println("[" + i + "]" + " " + nome);
+                i++;
+            }
+            System.out.println("__________________________________________________");
+            navegar = teclado.nextLine();
+            if (navegar.contains("download")) {
+                String[] comandos = new String[2];
+                comandos = navegar.split(" ");
+                navegar = comandos[0];
+                indexArquivo = Integer.parseInt(comandos[1]);
+            }
+            if(navegar.equals("deslogar")){
+                break;
+            }
+            switch (navegar) {
+                case "help":
+                    System.out.println("atualizar: Atualiza a sua lista de arquivos, caso faca alguma alteracao");
+                    System.out.println("download <numero do arquivo>: Baixa o arquivo referente aquele numero");
+                    System.out.println("deslogar: Sai da conta");
+                    teclado.nextLine();
+                    break;
+                    
+                case "atualizar":
+                    try {
+                        output.writeObject("atualiza");
+                        System.out.println("Solicitando do servidor...");
+                        output.writeObject(this.arquivoPessoal());
+                        System.out.println("ATUALIZANDO SERVIDOR");
+                        arquivos = (ArrayList<String>) input.readObject();
+                        System.out.println("\n\nSERVIDOR ATUALIZADO!!!!!!!\n\n");
+                        break;
+                    } catch (IOException ex) {
+                        System.err.println("Servidor ficou offline");
+                        System.exit(0);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                case "download":
+                    System.out.println("fazendo conexão com o clienteServidor");
+                    try {
+                        output.writeObject(indexArquivo);
+                        System.out.println("Arquivo selecionado: " + arquivos.get(indexArquivo));
+                    } catch (IOException ex) {
+                        System.err.println("Servidor ficou offline");
+                        System.exit(0);
+                    }
+                    break;
+            }
         }
     }
 
