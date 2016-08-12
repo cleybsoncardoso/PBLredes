@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 public class App {
 
     public static void main(String[] args) throws UnknownHostException, IOException {
-        Servidor servidorCliente = new Servidor(12345);
+        Servidor servidorCliente = new Servidor(12346);
         Cliente atual = new Cliente(servidorCliente);
         new Thread(atual).start();
         new Thread(servidorCliente).start();

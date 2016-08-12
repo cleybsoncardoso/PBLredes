@@ -35,6 +35,23 @@ public class Cliente implements Runnable {
     public Cliente(Servidor servidorCliente) {
         this.servidorCliente = servidorCliente;
 
+        teclado = new Scanner(System.in);
+        try {
+            cliente = new Socket("25.15.175.182", 8080);
+            System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            input = new ObjectInputStream(cliente.getInputStream());
+
+            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
+            output.writeObject(this.arquivoPessoal());
+            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+        } catch (IOException ex) {
+            System.out.println("Servidor esta offline");
+            System.exit(0);
+        }
+    }
+
+    private ArrayList<String> arquivoPessoal() {
         ArrayList<String> repassarArquivos = new ArrayList();
         List endereco = new ArrayList();
         endereco.add("programa lava duto");
@@ -45,24 +62,10 @@ public class Cliente implements Runnable {
         }
         File local = new File(enderecoAtual);
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            repassarArquivos.add(fileEntry.getName()+"("+fileEntry.length()+" Kb)");
+            repassarArquivos.add(fileEntry.getName() + "(" + fileEntry.length() + " Kb)");
 
         }
-
-        teclado = new Scanner(System.in);
-        try {
-            cliente = new Socket("25.15.175.182", 8080);
-            System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
-            output = new ObjectOutputStream(cliente.getOutputStream());
-            input = new ObjectInputStream(cliente.getInputStream());
-
-            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
-            output.writeObject(repassarArquivos);
-            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
-        } catch (IOException ex) {
-            System.out.println("Servidor esta offline");
-            System.exit(0);
-        }
+        return repassarArquivos;
     }
 
     private void cadastro() {
@@ -142,10 +145,8 @@ public class Cliente implements Runnable {
             for (String nome : arquivos) {
                 System.out.println(nome);
             }
-            while(true){
-                System.out.println("teste");
-            }
-            
+            teclado.nextLine();
+
         } catch (IOException ex) {
             System.err.println("Servidor ficou offline");
             System.exit(0);
