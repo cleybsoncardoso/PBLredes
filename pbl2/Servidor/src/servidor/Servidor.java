@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.InformacoesCliente;
@@ -23,7 +24,7 @@ public class Servidor {
     private ServerSocket server;
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private ArrayList<Integer> portas;
-    private ArrayList<InformacoesCliente> informacoesClientes;
+    private ArrayList<InformacoesCliente> informacoesClientes = new ArrayList<>();
 
     /**
      * @param args the command line arguments
@@ -52,9 +53,9 @@ public class Servidor {
             try {
                 Socket cliente = server.accept();
                 System.out.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se conectou");
-                TratarCliente tc = new TratarCliente(this,cliente);
+                TratarCliente tc = new TratarCliente(this, cliente);
                 new Thread(tc).start();
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -68,7 +69,5 @@ public class Servidor {
     public ArrayList<InformacoesCliente> getInformacoesClientes() {
         return informacoesClientes;
     }
-    
-    
     
 }

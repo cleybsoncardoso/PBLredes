@@ -27,6 +27,7 @@ class TratarCliente implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private InformacoesCliente informacoes;
+    private ArrayList<InformacoesCliente> informacoesClientes;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
@@ -43,14 +44,17 @@ class TratarCliente implements Runnable {
     @Override
     public void run() {
 
+        //servidor recebe lista de arquivos compartilhados do cliente
+        //e informacoes do servidor do cliente.
         receberInformacoes();
 
         while (true) {
 
-            System.out.println("esperando opção do cliente " + cliente.getInetAddress().getHostAddress());
-            String opcaoCliente = null;
+            System.out.println("Esperando opção do cliente " + cliente.getInetAddress().getHostAddress() + ".");
+
             try {
-                opcaoCliente = input.readObject().toString();
+                //esperando opcao de menu do cliente
+                String opcaoCliente = input.readObject().toString();
                 switch (opcaoCliente) {
                     case "cadastro":
                         this.cadastro();
@@ -60,10 +64,11 @@ class TratarCliente implements Runnable {
                             logado();
                         }
                         break;
-
                 }
             } catch (IOException ex) {
+                //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
                 System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
+                servidor.getInformacoesClientes().remove(informacoes);
                 logado.setOnline(false);
                 return;
             } catch (ClassNotFoundException ex) {
@@ -72,26 +77,31 @@ class TratarCliente implements Runnable {
         }
     }
 
+    /**
+     * Método responsável por receber as informações do servidor referente ao
+     * cliente.
+     *
+     * @see InformacoesCliente.
+     */
     private void receberInformacoes() {
         try {
-            //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
+            //cliente envia lista de arquivo do seu repositório e porta do servidor
+
+            System.out.println("Recebendo informacoes do servidor " + cliente.getInetAddress().getHostAddress() + ".");
             ArrayList arquivos = (ArrayList<String>) input.readObject();
+
+            //porta do servidor do cliente
             int porta = (Integer) input.readObject();
 
+            //informacoes sao gravadas no objeto InformacoesCliente
             informacoes = new InformacoesCliente(arquivos, porta, cliente.getInetAddress().getHostAddress());
-
             informacoes.setIp(cliente.getInetAddress().getHostAddress());
-            System.out.println("IP: " + informacoes.getIp());
-            System.out.println("Porta: " + informacoes.getPorta());
 
-            for (String nome : informacoes.getNomeArquivos()) {
-                System.out.println(nome);
-            }
-
+            //informacoes sao adicionadas na lista de informacoes do servidor central
             servidor.getInformacoesClientes().add(informacoes);
 
         } catch (IOException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,7 +111,7 @@ class TratarCliente implements Runnable {
      * Método responsável por efetuar o cadastro de usuários.
      */
     private void cadastro() throws IOException, ClassNotFoundException {
-        System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
+        System.out.println("Opção escolhida por " + cliente.getInetAddress().getHostAddress() + " foi cadastro");
 
         //recebe login
         String login = input.readObject().toString();
@@ -134,7 +144,7 @@ class TratarCliente implements Runnable {
      * Método responsável por efetuar o login dos usuários.
      */
     private boolean login() throws IOException, ClassNotFoundException {
-        System.out.println("Opcao escolhida por " + cliente + " foi cadastro");
+        System.out.println("Opção escolhida por " + cliente.getInetAddress().getHostAddress() + " foi logar.");
 
         //recebe login
         String login = input.readObject().toString();
@@ -179,20 +189,76 @@ class TratarCliente implements Runnable {
      * Método chamado quando o usuário já está logado. Responsável pela
      * comunicação do usuário já logado.
      */
-    private void logado() {
-        try {
-            Iterator it = servidor.getInformacoesClientes().iterator();
-            ArrayList<String> lista = new ArrayList<>();
-            while (it.hasNext()) {
-                InformacoesCliente atual = (InformacoesCliente) it.next();
+    private void logado() throws IOException {
 
-                lista.addAll(atual.getNomeArquivos());
+        //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
+        System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
+        this.informacoesClientes = servidor.getInformacoesClientes();
+        output.writeObject(this.getArquivosDisponiveis());
 
+        while (true) {
+            System.out.println("Esperando opção do usuário " + logado.getLogin() + ".");
+
+            try {
+                //esperando opcao de menu do cliente
+                String opcaoCliente = input.readObject().toString();
+                switch (opcaoCliente) {
+                    case "atualiza":
+                        this.atualizar();
+                        break;
+                    case "logar":
+                        break;
+                    case "download":
+                        verificarArquivo();
+                }
+            } catch (IOException ex) {
+                //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
+                System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
+                servidor.getInformacoesClientes().remove(informacoes);
+                logado.setOnline(false);
+                return;
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            output.writeObject(lista);
-        } catch (IOException ex) {
-            System.out.println("erro no envio da lista");
         }
+    }
+
+    /**
+     * Método responsável por atualizar a lista de arquivos disponíveis e
+     * envia-la ao cliente.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     *
+     * @see Servidor
+     */
+    private void atualizar() throws IOException, ClassNotFoundException {
+        System.out.println("Usuário " + logado.getLogin() + " escolheu atualizar.");
+        //lê a lista de arquivos atual do cliente
+        ArrayList<String> lista = (ArrayList<String>) input.readObject();
+        //atualiza a lista de arquivos desse cliente
+        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setNomeArquivos(lista);
+        //atualiza a lista de todos os arquivos disponiveis
+        this.informacoesClientes = servidor.getInformacoesClientes();
+        //envia lista atualizada de arquivos disponiveis
+        output.writeObject(this.getArquivosDisponiveis());
+    }
+
+    private void verificarArquivo() throws IOException, ClassNotFoundException {
+        //int index = (int) input.readObject();
+        output.writeObject(informacoes);
+    }
+
+    public ArrayList<String> getArquivosDisponiveis() {
+        Iterator it = this.informacoesClientes.iterator();
+        ArrayList<String> lista = new ArrayList<>();
+        while (it.hasNext()) {
+            InformacoesCliente atual = (InformacoesCliente) it.next();
+
+            lista.addAll(atual.getNomeArquivos());
+
+        }
+        return lista;
     }
 
 }

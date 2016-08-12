@@ -5,13 +5,14 @@
  */
 package util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author cleyb
  */
-public class InformacoesCliente {
+public class InformacoesCliente implements Serializable {
 
     private ArrayList<String> nomeArquivos;
     private String ip;
