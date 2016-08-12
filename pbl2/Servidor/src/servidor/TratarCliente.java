@@ -194,7 +194,7 @@ class TratarCliente implements Runnable {
         //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
         System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
         this.informacoesClientes = servidor.getInformacoesClientes();
-        output.writeObject(this.getArquivosDisponiveis());
+        output.writeObject(this.informacoesClientes);
 
         while (true) {
             System.out.println("Esperando opção do usuário " + logado.getLogin() + ".");
@@ -209,7 +209,7 @@ class TratarCliente implements Runnable {
                     case "logar":
                         break;
                     case "download":
-                        verificarArquivo();
+                        //verificarArquivo();
                         break;
                 }
             } catch (IOException ex) {
