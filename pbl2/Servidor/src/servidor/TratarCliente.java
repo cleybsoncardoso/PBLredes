@@ -44,6 +44,7 @@ class TratarCliente implements Runnable {
     public void run() {
 
         try {
+            //cliente conecta e envia lista de arquivo do seu repositório
             arquivos = (ArrayList<String>) input.readObject();
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
