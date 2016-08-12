@@ -31,6 +31,7 @@ public class Download implements Runnable {
         try {
             baixaServidor = new Socket(ip, porta);
             System.out.println("Conectou");
+            
 
         } catch (IOException ex) {
             System.err.println("Download nao concluido");
