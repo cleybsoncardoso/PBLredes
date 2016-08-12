@@ -71,7 +71,7 @@ class TratarCliente implements Runnable {
             }
         }
     }
-    
+
     private void receberInformacoes() {
         try {
             //cliente conecta e envia lista de arquivo do seu repositório e informacoes sobre o servidor
@@ -89,7 +89,7 @@ class TratarCliente implements Runnable {
             }
 
             servidor.getInformacoesClientes().add(informacoes);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -180,9 +180,19 @@ class TratarCliente implements Runnable {
      * comunicação do usuário já logado.
      */
     private void logado() {
+        try {
+            Iterator it = servidor.getInformacoesClientes().iterator();
+            ArrayList<String> lista = new ArrayList<>();
+            while (it.hasNext()) {
+                InformacoesCliente atual = (InformacoesCliente) it.next();
 
+                lista.addAll(atual.getNomeArquivos());
+
+            }
+            output.writeObject(lista);
+        } catch (IOException ex) {
+            System.out.println("erro no envio da lista");
+        }
     }
-
-    
 
 }
