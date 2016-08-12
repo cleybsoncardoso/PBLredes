@@ -45,7 +45,7 @@ public class Cliente implements Runnable {
         }
         File local = new File(enderecoAtual);
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            repassarArquivos.add(fileEntry.getName());
+            repassarArquivos.add(fileEntry.getName()+"("+fileEntry.length()+" Kb)");
 
         }
 
