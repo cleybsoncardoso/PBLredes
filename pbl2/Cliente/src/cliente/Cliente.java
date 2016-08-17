@@ -167,6 +167,11 @@ public class Cliente implements Runnable {
                 indexArquivo = Integer.parseInt(comandos[1]);
             }
             if (navegar.equals("deslogar")) {
+                try {
+                    output.writeObject("deslogar");
+                } catch (IOException ex) {
+                    System.out.println("Servidor ficou offline");
+                }
                 break;
             }
             switch (navegar) {
