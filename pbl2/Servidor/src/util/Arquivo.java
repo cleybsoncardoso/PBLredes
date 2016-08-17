@@ -17,12 +17,14 @@ public class Arquivo implements Serializable {
     private String ip;
     private int porta;
     private long tamanho;
+    private String endereco;
 
-    public Arquivo(String nome, long tamanho) {
+    public Arquivo(String nome, long tamanho, String endereco) {
         this.nome = nome;
         this.ip = "";
         this.porta = 0;
         this.tamanho = tamanho;
+        this.endereco = endereco;
     }
 
     public String getNome() {
@@ -31,6 +33,10 @@ public class Arquivo implements Serializable {
 
     public String getIp() {
         return ip;
+    }
+
+    public String getEndereco() {
+        return endereco;
     }
 
     public int getPorta() {
