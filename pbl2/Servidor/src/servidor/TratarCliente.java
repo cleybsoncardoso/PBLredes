@@ -55,6 +55,7 @@ class TratarCliente implements Runnable {
                 switch (opcaoCliente) {
                     case "cadastro":
                         this.cadastro();
+                        servidor.salvarUsuarios();
                         break;
                     case "logar":
                         if (this.login()) {
