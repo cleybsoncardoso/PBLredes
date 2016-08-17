@@ -46,8 +46,8 @@ class TratarCliente implements Runnable {
         File arq;
         
         try {
-            arq = new File(upload.getNome());
-
+            arq = new File(upload.getEndereco() + upload.getNome());
+            System.out.println("diretorio: " + arq.getAbsolutePath());
             fis = new FileInputStream(arq);
             OutputStream os = cliente.getOutputStream();
 
