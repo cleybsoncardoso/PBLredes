@@ -38,14 +38,11 @@ public class Cliente implements Runnable {
 
         teclado = new Scanner(System.in);
         try {
-            cliente = new Socket("127.0.0.1", 8080);
+            cliente = new Socket("25.15.175.182", 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
 
-            //enviado para o servidor os arquivos que tem no computador a se conectar no servidor e informando a porta do servido cliente
-            output.writeObject(this.arquivoPessoal());
-            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
             System.exit(0);
@@ -63,7 +60,7 @@ public class Cliente implements Runnable {
         }
         File local = new File(enderecoAtual);
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            repassarArquivos.add(new Arquivo(fileEntry.getName(),fileEntry.length()));
+            repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length()));
 
         }
         return repassarArquivos;
@@ -140,6 +137,16 @@ public class Cliente implements Runnable {
     }
 
     private void logado() {
+
+        try {
+            //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
+            output.writeObject(this.arquivoPessoal());
+            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+        } catch (IOException ex) {
+            System.err.println("Servidor ficou offline");
+            System.exit(0);
+        }
+
         String navegar = "";
         ArrayList<Arquivo> arquivosCliente = null;
         try {
@@ -247,3 +254,4 @@ public class Cliente implements Runnable {
     }
 
 }
+//percorrer pastas
