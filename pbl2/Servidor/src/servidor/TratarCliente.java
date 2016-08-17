@@ -210,6 +210,9 @@ class TratarCliente implements Runnable {
                     case "download":
                         //verificarArquivo();
                         break;
+                    case "deslogar":
+                        this.deslogar();
+                        return;
                 }
             } catch (IOException ex) {
                 //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
@@ -244,20 +247,27 @@ class TratarCliente implements Runnable {
         output.writeObject(this.getListaArquivo());
     }
 
-    /**Método que retorna a lista contendo todos os arquivos disponíveis para download.
-     * 
+    /**
+     * Método que retorna a lista contendo todos os arquivos disponíveis para
+     * download.
+     *
      * @return
-     * 
+     *
      * @see Arquivo
      */
-    private ArrayList<Arquivo> getListaArquivo(){
+    private ArrayList<Arquivo> getListaArquivo() {
         ArrayList<Arquivo> lista = new ArrayList<>();
         Iterator it = informacoesClientes.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             InformacoesCliente atual = (InformacoesCliente) it.next();
             lista.addAll(atual.getNomeArquivos());
         }
         return lista;
     }
-    
+
+    private void deslogar() {
+        servidor.getInformacoesClientes().remove(informacoes);
+        logado.setOnline(false);
+    }
+
 }
