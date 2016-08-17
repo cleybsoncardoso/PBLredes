@@ -49,10 +49,39 @@ public class Cliente implements Runnable {
         }
     }
 
+//    private ArrayList<Arquivo> arquivoPessoal() {
+//        ArrayList<Arquivo> repassarArquivos = new ArrayList();
+//        List endereco = new ArrayList();
+//        endereco.add("programa lava duto");
+//        Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
+//        String enderecoAtual = "";
+//        while (it.hasNext()) {//passando o endereço da lista com o local atual, para a variavel
+//            enderecoAtual = enderecoAtual + (String) it.next();
+//        }
+//        File local = new File(enderecoAtual);
+//        for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
+//            //   repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length()));
+//
+//        }
+//        return repassarArquivos;
+//    }
     private ArrayList<Arquivo> arquivoPessoal() {
+        System.out.println("entrou");
         ArrayList<Arquivo> repassarArquivos = new ArrayList();
         List endereco = new ArrayList();
+<<<<<<< HEAD
+        endereco.add("programa lava duto");
+        ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);
+        for (Arquivo fileEntry : arquivoPessoalLista) {
+            System.out.println(fileEntry.getNome());
+        }
+        return arquivoPessoalLista;
+    }
+
+    private ArrayList<Arquivo> precorrePastas(List endereco, ArrayList<Arquivo> repassarArquivos) {
+=======
         endereco.add("programa lava duto - Lucas");
+>>>>>>> d39af26627be3d8f91c9395b064a1c7a4de6283d
         Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
         String enderecoAtual = "";
         while (it.hasNext()) {//passando o endereço da lista com o local atual, para a variavel
@@ -60,8 +89,13 @@ public class Cliente implements Runnable {
         }
         File local = new File(enderecoAtual);
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length()));
-
+            if (fileEntry.isDirectory()) {
+                endereco.add("/" + fileEntry.getName());
+                precorrePastas(endereco, repassarArquivos);
+                endereco.remove("/" + fileEntry.getName());
+            } else {
+                repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
+            }
         }
         return repassarArquivos;
     }
