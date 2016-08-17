@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.InformacoesCliente;
@@ -113,7 +114,17 @@ public class Servidor {
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        deslogarClientes();
+        
     }
-
+    
+    private void deslogarClientes(){
+        Iterator i = usuarios.iterator();
+        while(i.hasNext()){
+            Usuario atual = (Usuario) i.next();
+            atual.setOnline(false);
+        }
+    }
+    
 }
