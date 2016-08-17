@@ -49,22 +49,6 @@ public class Cliente implements Runnable {
         }
     }
 
-//    private ArrayList<Arquivo> arquivoPessoal() {
-//        ArrayList<Arquivo> repassarArquivos = new ArrayList();
-//        List endereco = new ArrayList();
-//        endereco.add("programa lava duto");
-//        Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
-//        String enderecoAtual = "";
-//        while (it.hasNext()) {//passando o endereço da lista com o local atual, para a variavel
-//            enderecoAtual = enderecoAtual + (String) it.next();
-//        }
-//        File local = new File(enderecoAtual);
-//        for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-//            //   repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length()));
-//
-//        }
-//        return repassarArquivos;
-//    }
     private ArrayList<Arquivo> arquivoPessoal() {
         System.out.println("entrou");
         ArrayList<Arquivo> repassarArquivos = new ArrayList();
