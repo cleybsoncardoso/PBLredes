@@ -283,7 +283,6 @@ public class Cliente implements Runnable {
                     break;
 
             }
-
         }
     }
 
