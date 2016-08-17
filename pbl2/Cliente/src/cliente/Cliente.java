@@ -175,8 +175,9 @@ public class Cliente implements Runnable {
         while (true) {
             int i = 0, indexArquivo = -1;
             System.out.println("\n\n\n\tArquivos disponiveis:\n");
+            System.out.println("[ID] NOME \tTAMANHO\n");
             for (Arquivo nome : arquivosCliente) {
-                System.out.println("[" + i + "]" + " " + nome.getNome() + " (" + nome.getTamanho() + " Kb)");
+                System.out.println("[" + i + "]" + " " + nome.getNome() + "\t (" + nome.getTamanho() + " Kb)");
                 i++;
             }
             System.out.println("__________________________________________________");
@@ -185,7 +186,13 @@ public class Cliente implements Runnable {
                 String[] comandos = new String[2];
                 comandos = navegar.split(" ");
                 navegar = comandos[0];
+                try{
                 indexArquivo = Integer.parseInt(comandos[1]);
+                }catch(NumberFormatException e){
+                    System.out.println("Digite um numero");
+                }catch(ArrayIndexOutOfBoundsException e){
+                    System.out.println("Digite um ID valido");;
+                }
             }
             if (navegar.equals("deslogar")) {
                 try {
@@ -198,7 +205,7 @@ public class Cliente implements Runnable {
             switch (navegar) {
                 case "help":
                     System.out.println("atualizar: Atualiza a sua lista de arquivos, caso faca alguma alteracao");
-                    System.out.println("download <numero do arquivo>: Baixa o arquivo referente aquele numero");
+                    System.out.println("download <ID do arquivo>: Baixa o arquivo referente aquele numero");
                     System.out.println("deslogar: Sai da conta");
                     teclado.nextLine();
                     break;
@@ -219,20 +226,17 @@ public class Cliente implements Runnable {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 case "download":
+                    try{
                     Arquivo baixando = arquivosCliente.get(indexArquivo);
                     System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
                     System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
                     Download downloadArquivo = new Download(baixando.getIp(), baixando.getPorta(), baixando);
                     Thread t = new Thread(downloadArquivo);
                     t.start();
-                    try {
-                        output.writeObject("download");
-                        ArrayList<InformacoesCliente> clientesServidores = (ArrayList<InformacoesCliente>) input.readObject();
-                    } catch (IOException ex) {
-                        System.err.println("Servidor ficou offline");
-                        System.exit(0);
-                    } catch (ClassNotFoundException ex) {
-                        System.err.println("nao existe");
+                    }catch(ArrayIndexOutOfBoundsException e){
+                        System.out.println("Digite um ID existente ");
+                    }catch(IndexOutOfBoundsException e){
+                        System.out.println("Digite um ID existente ");
                     }
                     break;
                 case "sair":
