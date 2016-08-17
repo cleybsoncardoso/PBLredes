@@ -176,7 +176,7 @@ public class Cliente implements Runnable {
             int i = 0, indexArquivo = -1;
             System.out.println("\n\n\n\tArquivos disponiveis:\n");
             for (Arquivo nome : arquivosCliente) {
-                System.out.println("[" + i + "]" + " " + nome.getNome() + " (" + nome.getTamanho() + " Kb)"+"diretorio:" + nome.getEndereco());
+                System.out.println("[" + i + "]" + " " + nome.getNome() + " (" + nome.getTamanho() + " Kb)");
                 i++;
             }
             System.out.println("__________________________________________________");
