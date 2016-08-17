@@ -29,6 +29,7 @@ class TratarCliente implements Runnable {
     private ObjectOutputStream output;
     private InformacoesCliente informacoes;
     private ArrayList<InformacoesCliente> informacoesClientes;
+    private int porta;
 
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
@@ -90,7 +91,7 @@ class TratarCliente implements Runnable {
             ArrayList arquivos = (ArrayList<Arquivo>) input.readObject();
 
             //porta do servidor do cliente
-            int porta = (Integer) input.readObject();
+            this.porta = (Integer) input.readObject();
 
             //informacoes sao gravadas no objeto InformacoesCliente
             informacoes = new InformacoesCliente(arquivos, porta, cliente.getInetAddress().getHostAddress());
@@ -245,7 +246,7 @@ class TratarCliente implements Runnable {
 
         //atualiza a lista de arquivos desse cliente
         this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setNomeArquivos(lista);
-        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setInfo(cliente.getInetAddress().getHostAddress(), cliente.getPort());
+        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setInfo(cliente.getInetAddress().getHostAddress(), this.porta);
         
         //atualiza a lista de todos os arquivos disponiveis
         this.informacoesClientes = servidor.getInformacoesClientes();
