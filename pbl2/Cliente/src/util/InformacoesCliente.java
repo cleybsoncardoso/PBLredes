@@ -18,7 +18,7 @@ public class InformacoesCliente implements Serializable {
 
     public InformacoesCliente(ArrayList<Arquivo> nomeArquivos, int porta, String ip) {
         this.nomeArquivos = nomeArquivos;
-        setInfo(ip, porta);
+        this.setInfo(ip, porta);
     }
 
     public ArrayList<Arquivo> getNomeArquivos() {
@@ -29,7 +29,7 @@ public class InformacoesCliente implements Serializable {
         this.nomeArquivos = nomeArquivos;
     }
 
-    private void setInfo(String ip, int porta) {
+    public void setInfo(String ip, int porta) {
         for (Arquivo arquivo : nomeArquivos) {
             arquivo.setIp(ip);
             arquivo.setPorta(porta);

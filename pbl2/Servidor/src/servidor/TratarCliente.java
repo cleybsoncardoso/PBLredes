@@ -242,8 +242,11 @@ class TratarCliente implements Runnable {
         System.out.println("Usuário " + logado.getLogin() + " escolheu atualizar.");
         //lê a lista de arquivos atual do cliente
         ArrayList<Arquivo> lista = (ArrayList<Arquivo>) input.readObject();
+
         //atualiza a lista de arquivos desse cliente
         this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setNomeArquivos(lista);
+        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setInfo(cliente.getInetAddress().getHostAddress(), cliente.getPort());
+        
         //atualiza a lista de todos os arquivos disponiveis
         this.informacoesClientes = servidor.getInformacoesClientes();
         //envia lista atualizada de arquivos disponiveis
