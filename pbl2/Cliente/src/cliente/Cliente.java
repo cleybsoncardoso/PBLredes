@@ -76,6 +76,7 @@ public class Cliente implements Runnable {
             } else {
                 repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
             }
+
         }
         return repassarArquivos;
     }
@@ -186,11 +187,11 @@ public class Cliente implements Runnable {
                 String[] comandos = new String[2];
                 comandos = navegar.split(" ");
                 navegar = comandos[0];
-                try{
-                indexArquivo = Integer.parseInt(comandos[1]);
-                }catch(NumberFormatException e){
+                try {
+                    indexArquivo = Integer.parseInt(comandos[1]);
+                } catch (NumberFormatException e) {
                     System.out.println("Digite um numero");
-                }catch(ArrayIndexOutOfBoundsException e){
+                } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Digite um ID valido");;
                 }
             }
@@ -226,16 +227,16 @@ public class Cliente implements Runnable {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 case "download":
-                    try{
-                    Arquivo baixando = arquivosCliente.get(indexArquivo);
-                    System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
-                    System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
-                    Download downloadArquivo = new Download(baixando.getIp(), baixando.getPorta(), baixando);
-                    Thread t = new Thread(downloadArquivo);
-                    t.start();
-                    }catch(ArrayIndexOutOfBoundsException e){
+                    try {
+                        Arquivo baixando = arquivosCliente.get(indexArquivo);
+                        System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
+                        System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
+                        Download downloadArquivo = new Download(baixando.getIp(), baixando.getPorta(), baixando);
+                        Thread t = new Thread(downloadArquivo);
+                        t.start();
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Digite um ID existente ");
-                    }catch(IndexOutOfBoundsException e){
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.println("Digite um ID existente ");
                     }
                     break;

@@ -33,11 +33,8 @@ public class Download implements Runnable {
         this.baixando = baixando;
     }
 
-    
-
     @Override
     public void run() {
-        
 
         try {
             baixaServidor = new Socket(ip, porta);
@@ -55,7 +52,7 @@ public class Download implements Runnable {
             long tamanho = baixando.getTamanho();
             long tamanhoParcial = 0;
 
-            fos = new FileOutputStream("./programa lava duto/"+ baixando.getNome());
+            fos = new FileOutputStream("./programa lava duto/" + baixando.getNome());
             int tamanhoBuffer = 1024;
             byte[] buffer = new byte[tamanhoBuffer];
             int lidos;
@@ -76,7 +73,7 @@ public class Download implements Runnable {
         } catch (IOException ex) {
             try {
                 fos.close();
-                File arq = new File("./programa lava duto"+ baixando.getNome());
+                File arq = new File("./programa lava duto" + baixando.getNome());
                 arq.delete();
                 System.out.println("Erro de comunicação");
             } catch (IOException ex1) {
@@ -91,5 +88,4 @@ public class Download implements Runnable {
             Logger.getLogger(Download.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
