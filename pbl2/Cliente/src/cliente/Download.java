@@ -54,7 +54,7 @@ public class Download implements Runnable {
             long tamanho = baixando.getTamanho();
             long tamanhoParcial = 0;
 
-            fos = new FileOutputStream("./programa lava duto"+"/"+ baixando.getNome());
+            fos = new FileOutputStream("./programa lava duto"+ baixando.getNome());
             int tamanhoBuffer = 1024;
             byte[] buffer = new byte[tamanhoBuffer];
             int lidos;
