@@ -25,6 +25,7 @@ public class Download implements Runnable {
     private String ip;
     private int porta;
     private Arquivo baixando;
+    Socket baixaServidor = null;
 
     public Download(String ip, int porta, Arquivo baixando) {
         this.ip = ip;
@@ -36,7 +37,7 @@ public class Download implements Runnable {
 
     @Override
     public void run() {
-        Socket baixaServidor = null;
+        
 
         try {
             baixaServidor = new Socket(ip, porta);
@@ -83,6 +84,11 @@ public class Download implements Runnable {
                 System.out.println("Erro inesperado");
             }
 
+        }
+        try {
+            baixaServidor.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Download.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
