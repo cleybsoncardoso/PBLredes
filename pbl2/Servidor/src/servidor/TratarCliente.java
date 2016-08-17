@@ -45,10 +45,6 @@ class TratarCliente implements Runnable {
     @Override
     public void run() {
 
-        //servidor recebe lista de arquivos compartilhados do cliente
-        //e informacoes do servidor do cliente.
-        receberInformacoes();
-
         while (true) {
 
             System.out.println("Esperando opção do cliente " + cliente.getInetAddress().getHostAddress() + ".");
@@ -190,6 +186,10 @@ class TratarCliente implements Runnable {
      */
     private void logado() throws IOException {
 
+        //servidor recebe lista de arquivos compartilhados do cliente
+        //e informacoes do servidor do cliente.
+        receberInformacoes();
+
         //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
         System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
         this.informacoesClientes = servidor.getInformacoesClientes();
@@ -268,6 +268,7 @@ class TratarCliente implements Runnable {
     private void deslogar() {
         servidor.getInformacoesClientes().remove(informacoes);
         logado.setOnline(false);
+        System.out.println("Usuário " + logado.getLogin() + " se desconectou do servidor.");
     }
 
 }
