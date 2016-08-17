@@ -208,7 +208,7 @@ public class Cliente implements Runnable {
                     Arquivo baixando = arquivosCliente.get(indexArquivo);
                     System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
                     System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
-                    Download downloadArquivo = new Download(baixando.getIp(), baixando.getPorta());
+                    Download downloadArquivo = new Download(baixando.getIp(), baixando.getPorta(), baixando);
                     Thread t = new Thread(downloadArquivo);
                     t.start();
                     try {
@@ -220,6 +220,9 @@ public class Cliente implements Runnable {
                     } catch (ClassNotFoundException ex) {
                         System.err.println("nao existe");
                     }
+                    break;
+                case "sair":
+                    System.exit(0);
                     break;
             }
         }
@@ -244,10 +247,10 @@ public class Cliente implements Runnable {
                 case "2":
                     logar();
                     break;
+                case "3":
+                    System.exit(0);
+                    break;
 
-            }
-            if (navegacao.equals("3")) {
-                break;
             }
 
         }
