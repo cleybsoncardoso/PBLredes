@@ -78,7 +78,6 @@ public class Cliente implements Runnable {
     }
 
     private ArrayList<Arquivo> precorrePastas(List endereco, ArrayList<Arquivo> repassarArquivos) {
-        endereco.add("programa lava duto - Lucas");
         Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
         String enderecoAtual = "";
         while (it.hasNext()) {//passando o endereço da lista com o local atual, para a variavel
@@ -283,7 +282,6 @@ public class Cliente implements Runnable {
                     break;
 
             }
-
         }
     }
 
