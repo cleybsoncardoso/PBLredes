@@ -38,7 +38,7 @@ public class Cliente implements Runnable {
 
         teclado = new Scanner(System.in);
         try {
-            cliente = new Socket("25.15.175.182", 8080);
+            cliente = new Socket("192.168.0.2", 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
@@ -53,7 +53,7 @@ public class Cliente implements Runnable {
         System.out.println("entrou");
         ArrayList<Arquivo> repassarArquivos = new ArrayList();
         List endereco = new ArrayList();
-        endereco.add("programa lava duto");
+        endereco.add("programa lava duto upload");
         ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);
         for (Arquivo fileEntry : arquivoPessoalLista) {
             System.out.println(fileEntry.getNome());
@@ -68,6 +68,7 @@ public class Cliente implements Runnable {
             enderecoAtual = enderecoAtual + (String) it.next();
         }
         File local = new File(enderecoAtual);
+        try{
         for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
             if (fileEntry.isDirectory()) {
                 endereco.add("/" + fileEntry.getName());
@@ -77,6 +78,10 @@ public class Cliente implements Runnable {
                 repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
             }
 
+        }
+        }catch(NullPointerException e){
+            System.out.println("criando pasta de compartilhamento");
+            local.mkdir();
         }
         return repassarArquivos;
     }
