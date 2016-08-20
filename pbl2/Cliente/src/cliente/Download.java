@@ -86,11 +86,15 @@ public class Download implements Runnable {
                 System.out.println("Erro inesperado");
             }
 
+        }catch(NullPointerException ex){
+            System.out.println("Usuario se desconectou");
         }
         try {
             baixaServidor.close();
         } catch (IOException ex) {
-            Logger.getLogger(Download.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Conexao com usuario de download foi perdida");
+        }catch(NullPointerException e){
+            System.out.println("Cliente de download se desconectou");
         }
     }
 }
