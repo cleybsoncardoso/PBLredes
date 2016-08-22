@@ -40,8 +40,6 @@ class TratarCliente implements Runnable {
             ObjectOutputStream output = new ObjectOutputStream(cliente.getOutputStream());
             
             Object a = input.readObject();
-            System.out.println("\n\nChegou: ");
-            System.out.println(a);
             if (a.toString().equals("servidor")) {
                 
                 output.writeObject(this.servidor.getNomeCliente());
@@ -62,7 +60,7 @@ class TratarCliente implements Runnable {
                     int tamanhoBuffer = 1024;
                     byte[] buffer = new byte[tamanhoBuffer];
                     int lidos;
-                    System.out.println("Enviando.");
+                    System.out.println("Enviando...");
                     while (tamanhoParcial < tamanhoTotal) {
                         lidos = fis.read(buffer, 0, tamanhoBuffer);
                         tamanhoParcial += lidos;

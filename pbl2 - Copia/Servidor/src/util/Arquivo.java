@@ -8,8 +8,12 @@ package util;
 import java.io.Serializable;
 
 /**
+ * Classe responsável por ser uma abstração de um arquivo que será
+ * compartilhado. Nela contém o nome do arquivo, seu tamanho, endereço no
+ * diretório e informações do serversocket que está localizado.
  *
  * @author paiva
+ * @see ServerSocket
  */
 public class Arquivo implements Serializable {
 
@@ -19,6 +23,13 @@ public class Arquivo implements Serializable {
     private long tamanho;
     private String endereco;
 
+    /**
+     * Construtor que recebe como parâmetro informações sobre o arquivo.
+     *
+     * @param nome
+     * @param tamanho
+     * @param endereco
+     */
     public Arquivo(String nome, long tamanho, String endereco) {
         this.nome = nome;
         this.ip = "";

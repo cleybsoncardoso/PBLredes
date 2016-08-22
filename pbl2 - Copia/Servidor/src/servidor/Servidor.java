@@ -18,11 +18,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Arquivo;
 import util.InformacoesCliente;
 
 /**
+ * Classe Servidor Principal responsável por administrar as conexões p2p entre
+ * os usuários. Nela contém uma lista de arquivos que serão compartilhados.
  *
- * @author cleyb
+ * @see Usuario
+ * @see Arquivo
+ * @see InformacoesCliente
+ * @see Serializable
+ * @see ServerSocket
+ * @see Socket
  */
 public class Servidor {
 
@@ -41,13 +49,19 @@ public class Servidor {
         servidor.esperarCliente();
     }
 
+    /**
+     * Construtor que recebe como parâmetro a porta em que o servidor será
+     * mantido.
+     *
+     * @param porta
+     */
     public Servidor(int porta) {
         this.porta = porta;
         this.carregarUsuarios();
     }
 
     /**
-     * Método responsável por abrir o servidor.
+     * Método responsável por abrir o servidor na porta indicada.
      */
     private void levantarServidor() {
         try {
