@@ -35,7 +35,7 @@ public class Cliente implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private Servidor servidorCliente;
-    private String ipPrincipal="127.0.0.1";
+    private String ipPrincipal="25.6.169.148";
 
     public Cliente(Servidor servidorCliente) {
         this.servidorCliente = servidorCliente;
