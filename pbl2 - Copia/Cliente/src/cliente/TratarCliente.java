@@ -51,6 +51,14 @@ class TratarCliente implements Runnable {
 
                 try {
                     arq = new File(upload.getEndereco() + "/" + upload.getNome());
+                    //verifica se o arquivo ainda existe no repositório
+                    if(arq.exists()){
+                        //envia resposta positiva ao cliente
+                        output.writeObject("sim");
+                    }else{
+                        //envia resposta negativa ao cliente
+                        output.writeObject("nao");                        
+                    }
                     System.out.println("diretorio: " + arq.getAbsolutePath());
                     fis = new FileInputStream(arq);
                     OutputStream os = cliente.getOutputStream();
