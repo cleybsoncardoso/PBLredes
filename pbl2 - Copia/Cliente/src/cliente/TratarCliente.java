@@ -18,14 +18,14 @@ import java.util.logging.Logger;
 import util.Arquivo;
 
 /**
- *
+ * Classe responsavel por tratar os cliente que se conectam ao servidor
  * @author cleyb
  */
 class TratarCliente implements Runnable {
 
-    private Servidor servidor;
-    private Socket cliente;
-    private Arquivo upload;
+    private Servidor servidor; //servidor, com os dados do usuario
+    private Socket cliente; //socket que se conectou
+    private Arquivo upload; //referencia do arquivo a ser baixado
 
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.servidor = servidor;
@@ -39,11 +39,13 @@ class TratarCliente implements Runnable {
             ObjectInputStream input = new ObjectInputStream(cliente.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(cliente.getOutputStream());
             
-            Object a = input.readObject();
+            Object a = input.readObject();//verifica se é o servidor principal ou um usuario que se conectou
+            //se for o servidor principal, o programa sabe que ele só quer saber qual o usuario que esta logado no momento com este serveSocket aberto
             if (a.toString().equals("servidor")) {
                 
                 output.writeObject(this.servidor.getNomeCliente());
             } else {
+                //se for um usuario, o programa sabe que o usuario só quer fazer o download
                 upload = (Arquivo) input.readObject();
                 System.out.println("Arquivo enviado: " + upload.getNome());
                 FileInputStream fis;

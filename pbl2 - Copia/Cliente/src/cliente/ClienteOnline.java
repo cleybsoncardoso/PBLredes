@@ -6,7 +6,7 @@
 package cliente;
 
 /**
- *
+ * //classe que contem o nome do usuario atual logado
  * @author cleyb
  */
 public class ClienteOnline {
