@@ -30,14 +30,20 @@ import util.InformacoesCliente;
  */
 public class Cliente implements Runnable {
 
-    private Socket cliente;
-    private Scanner teclado;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
+    private Socket cliente; //socket criado para se conectar tanto no servidor principal, quanto no servesocket dos usuarios
+    private Scanner teclado; //Scanner para obter as informações digitadas pelo usuario
+    private ObjectInputStream input; //input do servesocket que o usuario estiver logado no momento
+    private ObjectOutputStream output; //output do servesocket que o usuario estiver logado no momento
     private Servidor servidorCliente;
-    private String ipPrincipal = "25.6.169.148";
-    ClienteOnline nomeCliente;
+    private String ipPrincipal = "25.6.169.148"; //ip do servidor principal
+    private ClienteOnline nomeCliente;
 
+    /**
+     * Construtor da classe cliente
+     *
+     * @param servidorCliente //classe que possue o ServeSocket
+     * @param nomeCliente //nome do usuario no momento
+     */
     public Cliente(Servidor servidorCliente, ClienteOnline nomeCliente) {
         this.nomeCliente = nomeCliente;
         this.servidorCliente = servidorCliente;
@@ -46,30 +52,42 @@ public class Cliente implements Runnable {
         try {
             cliente = new Socket(ipPrincipal, 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
-            this.conexaoNova();
-            output.writeObject(this.nomeCliente.getNomeCLiente());
-
-        } catch (IOException ex) {
+            this.conexaoNova(); //chama o metodo responsavel por atribuir os valores das variaveis "input" e "output" do servidor atual
+            output.writeObject(this.nomeCliente.getNomeCLiente());/*ao conectar com o servidor principal, toda vez o usuario envia o nome do usuario, 
+                                                                    para saber se o usuario ja estava logado ou não*/
+            
+        } catch (IOException ex) {//Caso ocorra um erro na comunicação
             System.out.println("Servidor esta offline");
             System.exit(0);
         }
     }
 
+    /**
+     * Metodo que obtem os nomes dos arquivos presentes dentro da pasta de compartilhamento
+     * @return Lista com o nome dos arquivos presentes na pasta de compartilhamento
+     */
     private ArrayList<Arquivo> arquivoPessoal() {
         System.out.println("entrou");
-        ArrayList<Arquivo> repassarArquivos = new ArrayList();
-        List endereco = new ArrayList();
-        endereco.add("programa lava duto upload");
-        ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);
+        ArrayList<Arquivo> repassarArquivos = new ArrayList(); //lista com o nome dos arquivos que vão ser compartilhados
+        List endereco = new ArrayList();//lista com o nome do endereço atual
+        endereco.add("programa lava duto upload");//pasta de compartilhamento
+        ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);//função que retorna o nome dos arquivos ques estão dentro de outras pastas
 
         System.out.println("\nSeus arquvios compartilhados:");
 
-        for (Arquivo fileEntry : arquivoPessoalLista) {
+        for (Arquivo fileEntry : arquivoPessoalLista) {//mostra o nome dos arquivos que o usuario está compartilhando
             System.out.println("-> " + fileEntry.getNome());
         }
         return arquivoPessoalLista;
     }
 
+    /**
+     * função recursiva, que percorre cada elemento presente na pasta compartilhada, um por um, se for uma pasta ele entra, adiciona todos os arquivos presentes dentro dela,
+     * e volta, e assim é feito com todas elementos dentro da pasta compartilhada
+     * @param endereco endereço da pasta atual
+     * @param repassarArquivos lista atualizada com o nome dos arquivos
+     * @return 
+     */
     private ArrayList<Arquivo> precorrePastas(List endereco, ArrayList<Arquivo> repassarArquivos) {
         Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
         String enderecoAtual = "";
@@ -79,16 +97,16 @@ public class Cliente implements Runnable {
         File local = new File(enderecoAtual);
         try {
             for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-                if (fileEntry.isDirectory()) {
+                if (fileEntry.isDirectory()) {//recursividade enquanto encontra pastas novas
                     endereco.add("/" + fileEntry.getName());
                     precorrePastas(endereco, repassarArquivos);
                     endereco.remove("/" + fileEntry.getName());
                 } else {
-                    repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
+                    repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));//caso seja uma arquivo, ele é inserido na lista
                 }
 
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) {//caso a pasta de compartilhamento não exis, o programa cria
             System.out.println("criando pasta de compartilhamento");
             local.mkdir();
         }
@@ -319,13 +337,14 @@ public class Cliente implements Runnable {
             byte[] buffer = new byte[tamanhoBuffer];
             int lidos;
 
-            System.out.println("Recebendo.");
+            System.out.println("Iniciando Download ...");
             while (tamanhoParcial < tamanho) {
+                System.out.println((tamanhoParcial * 100) / tamanho + " %");
                 lidos = in.read(buffer, 0, tamanhoBuffer);
                 tamanhoParcial += lidos;
                 fos.write(buffer, 0, lidos);
             }
-            System.out.println("Recebido.");
+            System.out.println("Download concluido");
 
             fos.flush();
             fos.close();
@@ -368,8 +387,8 @@ public class Cliente implements Runnable {
     }
 
     /**
-     * Metodo criado com o intuito de atualizar sempre que efetuada uma nova conexão
-     * os valores das variaveis de comunicação "input" e "output".
+     * Metodo criado com o intuito de atualizar sempre que efetuada uma nova
+     * conexão os valores das variaveis de comunicação "input" e "output".
      */
     private void conexaoNova() {
         try {
