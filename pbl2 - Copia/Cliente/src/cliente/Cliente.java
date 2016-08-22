@@ -35,11 +35,11 @@ public class Cliente implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private Servidor servidorCliente;
-    private String ipPrincipal="25.6.169.148";
+    private String ipPrincipal = "25.6.169.148";
     ClienteOnline nomeCliente;
 
     public Cliente(Servidor servidorCliente, ClienteOnline nomeCliente) {
-        this.nomeCliente=nomeCliente;
+        this.nomeCliente = nomeCliente;
         this.servidorCliente = servidorCliente;
 
         teclado = new Scanner(System.in);
@@ -62,10 +62,9 @@ public class Cliente implements Runnable {
         List endereco = new ArrayList();
         endereco.add("programa lava duto upload");
         ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);
-        
-        
+
         System.out.println("\nSeus arquvios compartilhados:");
-        
+
         for (Arquivo fileEntry : arquivoPessoalLista) {
             System.out.println("-> " + fileEntry.getNome());
         }
@@ -79,18 +78,18 @@ public class Cliente implements Runnable {
             enderecoAtual = enderecoAtual + (String) it.next();
         }
         File local = new File(enderecoAtual);
-        try{
-        for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
-            if (fileEntry.isDirectory()) {
-                endereco.add("/" + fileEntry.getName());
-                precorrePastas(endereco, repassarArquivos);
-                endereco.remove("/" + fileEntry.getName());
-            } else {
-                repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
-            }
+        try {
+            for (File fileEntry : local.listFiles()) {//informa quais arquivos e pastas estão no diretorio atual
+                if (fileEntry.isDirectory()) {
+                    endereco.add("/" + fileEntry.getName());
+                    precorrePastas(endereco, repassarArquivos);
+                    endereco.remove("/" + fileEntry.getName());
+                } else {
+                    repassarArquivos.add(new Arquivo(fileEntry.getName(), fileEntry.length(), enderecoAtual));
+                }
 
-        }
-        }catch(NullPointerException e){
+            }
+        } catch (NullPointerException e) {
             System.out.println("criando pasta de compartilhamento");
             local.mkdir();
         }
@@ -251,7 +250,7 @@ public class Cliente implements Runnable {
                         System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
                         System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
                         this.download(baixando.getIp(), baixando.getPorta(), baixando);
-                        
+
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("Digite um ID existente ");
                     } catch (IndexOutOfBoundsException e) {
@@ -311,7 +310,7 @@ public class Cliente implements Runnable {
             long tamanhoParcial = 0;
 
             File testePasta = new File("./programa lava duto download");
-            if(!testePasta.exists()){
+            if (!testePasta.exists()) {
                 System.out.println("criando pasta de download");
                 testePasta.mkdir();
             }
@@ -344,7 +343,7 @@ public class Cliente implements Runnable {
                 System.out.println("Erro inesperado");
             }
 
-        }catch(NullPointerException ex){
+        } catch (NullPointerException ex) {
             System.out.println("Usuario se desconectou");
         }
         try {
@@ -353,9 +352,17 @@ public class Cliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
             output.writeObject(this.nomeCliente.getNomeCLiente());
+            try {
+                //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
+                output.writeObject(this.arquivoPessoal());
+                output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+            } catch (IOException ex) {
+                System.err.println("Servidor ficou offline");
+                System.exit(0);
+            }
         } catch (IOException ex) {
             System.out.println("Conexao com usuario de download foi perdida");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Cliente de download se desconectou");
         }
     }

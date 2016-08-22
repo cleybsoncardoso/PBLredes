@@ -45,8 +45,15 @@ class TratarCliente implements Runnable {
 
     @Override
     public void run() {
+
         try {
-            if (!input.readObject().toString().equals("deslogado")) {
+            String nomeCliente = input.readObject().toString();
+            if (!nomeCliente.equals("deslogado")) {
+                for (Usuario atual : servidor.getUsuarios()) {
+                    if (atual.getLogin().equals(nomeCliente)) {
+                        logado = atual;
+                    }
+                }
                 this.logado();
             } else {
 
@@ -178,15 +185,6 @@ class TratarCliente implements Runnable {
                         atual.setOnline(true);
                         logado = atual;
                         output.writeObject("logado");
-                        receberInformacoes();
-
-                        //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
-                        System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
-                        //this.informacoesClientes = servidor.getInformacoesClientes();
-                        this.informacoesClientes = new ArrayList<>();
-                        this.informacoesClientes.addAll(servidor.getInformacoesClientes());
-                        this.informacoesClientes.remove(this.informacoes);
-                        output.writeObject(this.getListaArquivo());
 
                         return true;
                     }
@@ -212,12 +210,22 @@ class TratarCliente implements Runnable {
 
         //servidor recebe lista de arquivos compartilhados do cliente
         //e informacoes do servidor do cliente.
+        receberInformacoes();
+
+        //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
+        System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
+        //this.informacoesClientes = servidor.getInformacoesClientes();
+        this.informacoesClientes = new ArrayList<>();
+        this.informacoesClientes.addAll(servidor.getInformacoesClientes());
+        this.informacoesClientes.remove(this.informacoes);
+        output.writeObject(this.getListaArquivo());
         while (true) {
             System.out.println("Esperando opção do usuário " + logado.getLogin() + ".");
 
             try {
                 //esperando opcao de menu do cliente
                 String opcaoCliente = input.readObject().toString();
+                System.out.println("Cliente escolheu isso: " + opcaoCliente);
                 switch (opcaoCliente) {
                     case "atualiza":
                         this.atualizar();
