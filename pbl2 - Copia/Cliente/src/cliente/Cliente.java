@@ -36,8 +36,10 @@ public class Cliente implements Runnable {
     private ObjectOutputStream output;
     private Servidor servidorCliente;
     private String ipPrincipal="25.6.169.148";
+    ClienteOnline nomeCliente;
 
-    public Cliente(Servidor servidorCliente) {
+    public Cliente(Servidor servidorCliente, ClienteOnline nomeCliente) {
+        this.nomeCliente=nomeCliente;
         this.servidorCliente = servidorCliente;
 
         teclado = new Scanner(System.in);
@@ -46,6 +48,7 @@ public class Cliente implements Runnable {
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
+            output.writeObject(this.nomeCliente.getNomeCLiente());
 
         } catch (IOException ex) {
             System.out.println("Servidor esta offline");
@@ -127,19 +130,20 @@ public class Cliente implements Runnable {
 
     private void logar() {
         try {
-            String dado = "";
+            String dadoLogin = "";
+            String dadoSenha = "";
             System.out.println("\n\n________________________________________________");
             output.writeObject("logar");
             do {//login
                 System.out.println("Login:");
-                dado = teclado.nextLine();
-            } while (dado.equals(""));
-            output.writeObject(dado);
+                dadoLogin = teclado.nextLine();
+            } while (dadoLogin.equals(""));
+            output.writeObject(dadoLogin);
             do {//senha
                 System.out.println("Senha:");
-                dado = teclado.nextLine();
-            } while (dado.equals(""));
-            output.writeObject(dado);
+                dadoSenha = teclado.nextLine();
+            } while (dadoSenha.equals(""));
+            output.writeObject(dadoSenha);
             String resposta = input.readObject().toString();
             if (resposta.equals("online")) {//caso a conta ja esteja online
                 System.out.println("\n\n________________________________________________");
@@ -147,6 +151,7 @@ public class Cliente implements Runnable {
             } else if (resposta.equals("logado")) {//caso nao ocorra erro
                 System.out.println("\n\n________________________________________________");
                 System.out.println("----------LOGADO COM SUCESSO----------");
+                nomeCliente.setNomeCLiente(dadoLogin);
                 logado();
             } else if (resposta.equals("senha")) {//caso senha esteja incorreta
                 System.out.println("\n\n________________________________________________");
@@ -211,6 +216,7 @@ public class Cliente implements Runnable {
             if (navegar.equals("deslogar")) {
                 try {
                     output.writeObject("deslogar");
+                    nomeCliente.setNomeCLiente("deslogado");
                 } catch (IOException ex) {
                     System.out.println("Servidor ficou offline");
                 }
@@ -344,6 +350,9 @@ public class Cliente implements Runnable {
         try {
             cliente.close();
             cliente = new Socket(ipPrincipal, 8080);
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            input = new ObjectInputStream(cliente.getInputStream());
+            output.writeObject(this.nomeCliente.getNomeCLiente());
         } catch (IOException ex) {
             System.out.println("Conexao com usuario de download foi perdida");
         }catch(NullPointerException e){

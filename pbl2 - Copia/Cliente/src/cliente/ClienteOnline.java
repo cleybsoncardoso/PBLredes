@@ -10,5 +10,18 @@ package cliente;
  * @author cleyb
  */
 public class ClienteOnline {
+    private String nomeCLiente;
+
+    public ClienteOnline() {
+        nomeCLiente="deslogado";
+    }
+
+    public String getNomeCLiente() {
+        return nomeCLiente;
+    }
+
+    public void setNomeCLiente(String nomeCLiente) {
+        this.nomeCLiente = nomeCLiente;
+    }
     
 }

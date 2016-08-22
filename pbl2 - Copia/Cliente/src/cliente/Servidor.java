@@ -19,7 +19,7 @@ public class Servidor implements Runnable {
 
     ServerSocket servidorCliente;
 
-    public Servidor(int porta) {
+    public Servidor(int porta,ClienteOnline nomeCliente) {
         try {
             servidorCliente = new ServerSocket(porta);
 
