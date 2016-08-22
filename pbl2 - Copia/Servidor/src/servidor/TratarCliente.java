@@ -184,7 +184,7 @@ class TratarCliente implements Runnable {
                         //informa que usuario foi logado com sucesso
 
                         try {
-                            Socket autentica = new Socket(cliente.getInetAddress().getHostAddress(), porta);
+                            Socket autentica = new Socket(atual.getIp(), atual.getPorta());
                             ObjectInputStream inputAutentica = new ObjectInputStream(autentica.getInputStream());
                             ObjectOutputStream outputAutentica = new ObjectOutputStream(autentica.getOutputStream());
 

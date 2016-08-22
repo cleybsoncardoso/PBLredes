@@ -294,10 +294,10 @@ public class Cliente implements Runnable {
         try {
             cliente.close();
             cliente = new Socket(ip, porta);
-            this.conexaoNova();
+            this.conexaoNova();//coloca os valores do output e input da nova conexão
             System.out.println("Conectou com o servidor Download");
-            output.writeObject("cliente");
-            output.writeObject(baixando);
+            output.writeObject("cliente");//envia para o serveSocket do cliente, dizendo que ele é um cliente(so quer baixar)
+            output.writeObject(baixando);//envia o arquivo que quer baixar
 
         } catch (IOException ex) {
             System.err.println("Download nao concluido");
@@ -347,10 +347,11 @@ public class Cliente implements Runnable {
             System.out.println("Usuario se desconectou");
         }
         try {
-            cliente.close();
+            cliente.close();// ao finalizar download, o cliente volta ao servidor principal
+            System.out.println("Reestabelecando conexao com o servidor principal");
             cliente = new Socket(ipPrincipal, 8080);
             this.conexaoNova();
-            output.writeObject(this.nomeCliente.getNomeCLiente());
+            output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
             try {
                 //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
                 output.writeObject(this.arquivoPessoal());
@@ -366,6 +367,10 @@ public class Cliente implements Runnable {
         }
     }
 
+    /**
+     * Metodo criado com o intuito de atualizar sempre que efetuada uma nova conexão
+     * os valores das variaveis de comunicação "input" e "output".
+     */
     private void conexaoNova() {
         try {
             output = new ObjectOutputStream(cliente.getOutputStream());
