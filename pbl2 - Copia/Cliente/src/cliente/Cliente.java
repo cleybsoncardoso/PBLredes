@@ -46,8 +46,7 @@ public class Cliente implements Runnable {
         try {
             cliente = new Socket(ipPrincipal, 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
-            output = new ObjectOutputStream(cliente.getOutputStream());
-            input = new ObjectInputStream(cliente.getInputStream());
+            this.conexaoNova();
             output.writeObject(this.nomeCliente.getNomeCLiente());
 
         } catch (IOException ex) {
@@ -295,8 +294,9 @@ public class Cliente implements Runnable {
         try {
             cliente.close();
             cliente = new Socket(ip, porta);
+            this.conexaoNova();
             System.out.println("Conectou com o servidor Download");
-            ObjectOutputStream output = new ObjectOutputStream(cliente.getOutputStream());
+            output.writeObject("cliente");
             output.writeObject(baixando);
 
         } catch (IOException ex) {
@@ -349,8 +349,7 @@ public class Cliente implements Runnable {
         try {
             cliente.close();
             cliente = new Socket(ipPrincipal, 8080);
-            output = new ObjectOutputStream(cliente.getOutputStream());
-            input = new ObjectInputStream(cliente.getInputStream());
+            this.conexaoNova();
             output.writeObject(this.nomeCliente.getNomeCLiente());
             try {
                 //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
@@ -365,6 +364,16 @@ public class Cliente implements Runnable {
         } catch (NullPointerException e) {
             System.out.println("Cliente de download se desconectou");
         }
+    }
+
+    private void conexaoNova() {
+        try {
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            input = new ObjectInputStream(cliente.getInputStream());
+        } catch (IOException ex) {
+            System.out.println("conexao perdida");
+        }
+
     }
 
 }

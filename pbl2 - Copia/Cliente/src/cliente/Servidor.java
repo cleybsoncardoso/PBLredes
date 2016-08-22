@@ -18,14 +18,20 @@ import java.util.logging.Logger;
 public class Servidor implements Runnable {
 
     ServerSocket servidorCliente;
+    ClienteOnline nomeCliente;
 
     public Servidor(int porta,ClienteOnline nomeCliente) {
+        this.nomeCliente = nomeCliente;
         try {
             servidorCliente = new ServerSocket(porta);
 
         } catch (IOException ex) {
             System.out.println("Porta existente");
         }
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente.getNomeCLiente();
     }
 
     public ServerSocket getServidorCliente() {
