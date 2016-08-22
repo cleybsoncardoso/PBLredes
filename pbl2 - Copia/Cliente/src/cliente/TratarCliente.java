@@ -77,7 +77,7 @@ class TratarCliente implements Runnable {
                     System.out.println("Enviado.");
                     fis.close();
                 } catch (FileNotFoundException ex) {
-                    System.out.println("Arquivo não encontrado.");
+                    System.out.println("\n\n\nArquivo não encontrado.");
                 } catch (IOException ex) {
                     System.out.println("Erro na comunicação.");
 

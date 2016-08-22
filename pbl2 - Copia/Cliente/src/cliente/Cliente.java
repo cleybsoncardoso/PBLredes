@@ -120,7 +120,7 @@ public class Cliente implements Runnable {
     }
 
     /**
-     * Método
+     * Método para fazer o cadastro do cliente
      */
     private void cadastro() {
         try {
@@ -130,14 +130,14 @@ public class Cliente implements Runnable {
             do {//login
                 System.out.println("Digite o login a ser cadastrado");
                 dado = teclado.nextLine();
-            } while (dado.equals(""));
-            output.writeObject(dado);
+            } while (dado.equals(""));//checa se o login é válido
+            output.writeObject(dado); //envia o login para o servidor
             do {//senha
                 System.out.println("Digite a senha a ser cadastrado");
                 dado = teclado.nextLine();
-            } while (dado.equals(""));
-            output.writeObject(dado);
-            //após enviar os dados de login e senha, o servidor informa se foi cadastrado ou não a conta
+            } while (dado.equals(""));//verifica se a senha é valida
+            output.writeObject(dado);//envia a senha para o servidor
+            //após enviar os dados de login e senha, o servidor informa se a conta foi cadastrada ou não
             if (input.readObject().toString().equals("cadastrado")) {
                 System.out.println("\n\n________________________________________________");
                 System.out.println("----------CADASTRO EFETUADO COM SUCESSO----------");
@@ -145,7 +145,7 @@ public class Cliente implements Runnable {
                 System.out.println("\n\n________________________________________________");
                 System.err.println("CADASTRO NÃO FOI EFETUADO, TENTE NOVAMENTE");
             }
-        } catch (IOException ex) {
+        } catch (IOException ex) {//caso perca a conexão com o servidor
             System.err.println("Servidor ficou offline");
             System.exit(0);
         } catch (ClassNotFoundException ex) {
@@ -153,6 +153,9 @@ public class Cliente implements Runnable {
         }
     }
 
+    /**
+     * Método responsavel pelo login do usuario
+     */
     private void logar() {
         try {
             String dadoLogin = "";
@@ -194,6 +197,9 @@ public class Cliente implements Runnable {
         }
     }
 
+    /**
+     * Após o login ser efetuado com sucesso, metodo reponsavel por apresentar os arquivos disponiveis
+     */
     private void logado() {
 
         try {
