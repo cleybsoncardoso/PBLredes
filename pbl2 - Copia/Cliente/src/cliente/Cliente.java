@@ -55,7 +55,7 @@ public class Cliente implements Runnable {
             this.conexaoNova(); //chama o metodo responsavel por atribuir os valores das variaveis "input" e "output" do servidor atual
             output.writeObject(this.nomeCliente.getNomeCLiente());/*ao conectar com o servidor principal, toda vez o usuario envia o nome do usuario, 
                                                                     para saber se o usuario ja estava logado ou não*/
-            
+
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
             System.out.println("Servidor esta offline");
             System.exit(0);
@@ -63,8 +63,11 @@ public class Cliente implements Runnable {
     }
 
     /**
-     * Metodo que obtem os nomes dos arquivos presentes dentro da pasta de compartilhamento
-     * @return Lista com o nome dos arquivos presentes na pasta de compartilhamento
+     * Metodo que obtem os nomes dos arquivos presentes dentro da pasta de
+     * compartilhamento
+     *
+     * @return Lista com o nome dos arquivos presentes na pasta de
+     * compartilhamento
      */
     private ArrayList<Arquivo> arquivoPessoal() {
         System.out.println("entrou");
@@ -82,11 +85,14 @@ public class Cliente implements Runnable {
     }
 
     /**
-     * função recursiva, que percorre cada elemento presente na pasta compartilhada, um por um, se for uma pasta ele entra, adiciona todos os arquivos presentes dentro dela,
-     * e volta, e assim é feito com todas elementos dentro da pasta compartilhada
+     * função recursiva, que percorre cada elemento presente na pasta
+     * compartilhada, um por um, se for uma pasta ele entra, adiciona todos os
+     * arquivos presentes dentro dela, e volta, e assim é feito com todas
+     * elementos dentro da pasta compartilhada
+     *
      * @param endereco endereço da pasta atual
      * @param repassarArquivos lista atualizada com o nome dos arquivos
-     * @return 
+     * @return
      */
     private ArrayList<Arquivo> precorrePastas(List endereco, ArrayList<Arquivo> repassarArquivos) {
         Iterator it = endereco.iterator();//iterador que percorre a lista de endereços, para ter o endereço atual
@@ -106,13 +112,16 @@ public class Cliente implements Runnable {
                 }
 
             }
-        } catch (NullPointerException e) {//caso a pasta de compartilhamento não exis, o programa cria
+        } catch (NullPointerException e) {//caso a pasta de compartilhamento não exista, o programa cria
             System.out.println("criando pasta de compartilhamento");
             local.mkdir();
         }
         return repassarArquivos;
     }
 
+    /**
+     * Método
+     */
     private void cadastro() {
         try {
             String dado = "";
@@ -320,70 +329,81 @@ public class Cliente implements Runnable {
         } catch (IOException ex) {
             System.err.println("Download nao concluido");
         }
-
-        FileOutputStream fos = null;
         try {
-            InputStream in = cliente.getInputStream();
-            long tamanho = baixando.getTamanho();
-            long tamanhoParcial = 0;
+            String existencia = input.readObject().toString();
+            if (existencia.equals("sim")) {
+                FileOutputStream fos = null;
+                try {
+                    InputStream in = cliente.getInputStream();
+                    long tamanho = baixando.getTamanho();
+                    long tamanhoParcial = 0;
 
-            File testePasta = new File("./programa lava duto download");
-            if (!testePasta.exists()) {
-                System.out.println("criando pasta de download");
-                testePasta.mkdir();
+                    File testePasta = new File("./programa lava duto download");
+                    if (!testePasta.exists()) {
+                        System.out.println("criando pasta de download");
+                        testePasta.mkdir();
+                    }
+                    fos = new FileOutputStream("./programa lava duto download/" + baixando.getNome());
+                    int tamanhoBuffer = 1024;
+                    byte[] buffer = new byte[tamanhoBuffer];
+                    int lidos;
+
+                    System.out.println("Iniciando Download ...");
+                    while (tamanhoParcial < tamanho) {
+                        System.out.println((tamanhoParcial * 100) / tamanho + " %");
+                        lidos = in.read(buffer, 0, tamanhoBuffer);
+                        tamanhoParcial += lidos;
+                        fos.write(buffer, 0, lidos);
+                    }
+                    System.out.println("Download concluido");
+
+                    fos.flush();
+                    fos.close();
+
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Diretório não enconstrado.");
+                } catch (IOException ex) {
+                    try {
+                        fos.close();
+                        File arq = new File("./programa lava duto" + baixando.getNome());
+                        arq.delete();
+                        System.out.println("Erro de comunicação");
+                    } catch (IOException ex1) {
+                        //É lógicamente impossível chegar aqui.
+                        System.out.println("Erro inesperado");
+                    }
+
+                } catch (NullPointerException ex) {
+                    System.out.println("Usuario se desconectou");
+                }
+                try {
+                    cliente.close();// ao finalizar download, o cliente volta ao servidor principal
+                    System.out.println("Reestabelecando conexao com o servidor principal");
+                    cliente = new Socket(ipPrincipal, 8080);
+                    this.conexaoNova();
+                    output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
+                    try {
+                        //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
+                        output.writeObject(this.arquivoPessoal());
+                        output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+                    } catch (IOException ex) {
+                        System.err.println("Servidor ficou offline");
+                        System.exit(0);
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Conexao com usuario de download foi perdida");
+                } catch (NullPointerException e) {
+                    System.out.println("Cliente de download se desconectou");
+                }
+            }else{
+                System.out.println("Arquivo deletado pelo usuario fornecedor");
             }
-            fos = new FileOutputStream("./programa lava duto download/" + baixando.getNome());
-            int tamanhoBuffer = 1024;
-            byte[] buffer = new byte[tamanhoBuffer];
-            int lidos;
-
-            System.out.println("Iniciando Download ...");
-            while (tamanhoParcial < tamanho) {
-                System.out.println((tamanhoParcial * 100) / tamanho + " %");
-                lidos = in.read(buffer, 0, tamanhoBuffer);
-                tamanhoParcial += lidos;
-                fos.write(buffer, 0, lidos);
-            }
-            System.out.println("Download concluido");
-
-            fos.flush();
-            fos.close();
-
-        } catch (FileNotFoundException ex) {
-            System.out.println("Diretório não enconstrado.");
         } catch (IOException ex) {
-            try {
-                fos.close();
-                File arq = new File("./programa lava duto" + baixando.getNome());
-                arq.delete();
-                System.out.println("Erro de comunicação");
-            } catch (IOException ex1) {
-                //É lógicamente impossível chegar aqui.
-                System.out.println("Erro inesperado");
-            }
+            System.out.println("erro em comunicacao");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        } catch (NullPointerException ex) {
-            System.out.println("Usuario se desconectou");
-        }
-        try {
-            cliente.close();// ao finalizar download, o cliente volta ao servidor principal
-            System.out.println("Reestabelecando conexao com o servidor principal");
-            cliente = new Socket(ipPrincipal, 8080);
-            this.conexaoNova();
-            output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
-            try {
-                //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
-                output.writeObject(this.arquivoPessoal());
-                output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
-            } catch (IOException ex) {
-                System.err.println("Servidor ficou offline");
-                System.exit(0);
-            }
-        } catch (IOException ex) {
-            System.out.println("Conexao com usuario de download foi perdida");
-        } catch (NullPointerException e) {
-            System.out.println("Cliente de download se desconectou");
-        }
     }
 
     /**
