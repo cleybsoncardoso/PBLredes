@@ -198,19 +198,21 @@ public class Cliente implements Runnable {
     }
 
     /**
-     * Após o login ser efetuado com sucesso, metodo reponsavel por apresentar os arquivos disponiveis
+     * Após o login ser efetuado com sucesso, metodo reponsavel por apresentar
+     * os arquivos disponiveis
      */
     private void logado() {
 
         try {
-            //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
+            //enviado para o servidor os arquivos que tem no computador ao fazer o login
             output.writeObject(this.arquivoPessoal());
-            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
-        } catch (IOException ex) {
+            output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());//informa a porta do serveSocket do cliente
+        } catch (IOException ex) {//erro na comunicação
             System.err.println("Servidor ficou offline");
             System.exit(0);
         }
 
+        //recebe lista de arquivo que estão disponiveis no servidor
         String navegar = "";
         ArrayList<Arquivo> arquivosCliente = null;
         try {
@@ -222,28 +224,34 @@ public class Cliente implements Runnable {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        //o programa entra em loop, apos cada operação feita, o software mostra novamente os arquivos, e isso se repete ate o cliente deslogar
         while (true) {
             int i = 0, indexArquivo = -1;
             System.out.println("\n\nArquivos disponiveis:");
             System.out.println("[ID] NOME \tTAMANHO\n");
+            //mostra o nome e o tamanho de cada arquivo para fazer o download
             for (Arquivo nome : arquivosCliente) {
                 System.out.println("[" + i + "]" + " " + nome.getNome() + "\t (" + nome.getTamanho() + " Kb)");
                 i++;
             }
             System.out.println("__________________________________________________");
             navegar = teclado.nextLine();
+
+            //caso seja um download, é o unico caso especial que possue 2 palavras
             if (navegar.contains("download")) {
                 String[] comandos = new String[2];
-                comandos = navegar.split(" ");
+                comandos = navegar.split(" ");//o software separa a palavra download e o ID do arquivo referente
                 navegar = comandos[0];
                 try {
-                    indexArquivo = Integer.parseInt(comandos[1]);
-                } catch (NumberFormatException e) {
+                    indexArquivo = Integer.parseInt(comandos[1]);//transforma o ID digitado, em um numero inteiro para usar como index da lista
+                } catch (NumberFormatException e) {//caso não seja um numero
                     System.out.println("Digite um numero");
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (ArrayIndexOutOfBoundsException e) {//caso não tenha nenhum numero
                     System.out.println("Digite um ID valido");;
                 }
             }
+
+            //caso o cliente deslogue, o sistema informa ao servidor, coloca o nome do usuario como "deslogado" para futuras utilizações com o servidor e sae do loop do nome dos arquivos
             if (navegar.equals("deslogar")) {
                 try {
                     output.writeObject("deslogar");
@@ -254,20 +262,22 @@ public class Cliente implements Runnable {
                 break;
             }
             switch (navegar) {
+                //caso o cliente digite help, é listado os comando disponiveis para utilizar no sistema
                 case "help":
                     System.out.println("atualizar: Atualiza a sua lista de arquivos, caso faca alguma alteracao");
                     System.out.println("download <ID do arquivo>: Baixa o arquivo referente aquele numero");
                     System.out.println("deslogar: Sai da conta");
-                    teclado.nextLine();
+                    teclado.nextLine();//aguarda o cliente digitar alguma coisa, para voltar ao loop
                     break;
 
                 case "atualizar":
+                    //atualiza a lista dos arquivos disponiveis e seus arquivos da pasta upload
                     try {
-                        output.writeObject("atualiza");
+                        output.writeObject("atualiza");//envia para o servidor, que  o usuario quer atualizar
                         System.out.println("Solicitando do servidor...");
-                        output.writeObject(this.arquivoPessoal());
+                        output.writeObject(this.arquivoPessoal());//envia uma lista atualizada dos arquivos atuais presentes na pasta compartilhada
                         System.out.println("ATUALIZANDO SERVIDOR");
-                        arquivosCliente = (ArrayList<Arquivo>) input.readObject();
+                        arquivosCliente = (ArrayList<Arquivo>) input.readObject();//recebe a lista de arquivos atualizada do servidor, de arquivos para fazer o download
                         System.out.println("\n\nSERVIDOR ATUALIZADO!!!!!!!\n\n");
                         break;
                     } catch (IOException ex) {
@@ -277,10 +287,12 @@ public class Cliente implements Runnable {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 case "download":
+                    //opção de download
                     try {
-                        Arquivo baixando = arquivosCliente.get(indexArquivo);
+                        Arquivo baixando = arquivosCliente.get(indexArquivo);//obtem o arquivo com o ID escolhido pelo usuario
                         System.out.println("Fazendo conexão com o clienteServidor " + baixando.getIp());
                         System.out.println("Arquivo selecionado: " + baixando.getNome() + " (" + baixando.getTamanho() + " Kb)");
+                        //envia o arquivo solicitado para fazer o download, a porta e o ip do serveSocket que possue o arquivo; Para o metodo fazer o download
                         this.download(baixando.getIp(), baixando.getPorta(), baixando);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -298,6 +310,7 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
+        //menu principal
         String navegacao = null;
         while (true) {
             System.out.println("\n\n\n________________________________________________");
@@ -323,20 +336,33 @@ public class Cliente implements Runnable {
         }
     }
 
+    /**
+     * Esta função basicamente faz todo o trabalho de fazer o download, ela faz
+     * o usuario se desconectar do servidor principal e se conectar com o
+     * serveSocket do cliente que possue o arquivo, após terminar o download,
+     * ela faz o usuario se desconectar do serveSocket do cliente que possue o
+     * arquivo e retorna a conexão com o servidor principal.
+     *
+     * @param ip ip do serveSocket
+     * @param porta porta do ServeSocket
+     * @param baixando referencias do arquivo que quer baixar
+     */
     private void download(String ip, int porta, Arquivo baixando) {
         try {
-            cliente.close();
-            cliente = new Socket(ip, porta);
-            this.conexaoNova();//coloca os valores do output e input da nova conexão
+            cliente.close();//desconecta do servidor principal
+            cliente = new Socket(ip, porta);//se conecta com o serveSocket do cliente que possue o arquivo
+            this.conexaoNova();//coloca os valores do output e input da nova conexão, referentes ao serveSocket do cliente
             System.out.println("Conectou com o servidor Download");
-            output.writeObject("cliente");//envia para o serveSocket do cliente, dizendo que ele é um cliente(so quer baixar)
-            output.writeObject(baixando);//envia o arquivo que quer baixar
+            output.writeObject("cliente");//envia para o serveSocket do cliente, dizendo que ele é um cliente(so quer baixar).
+            output.writeObject(baixando);//envia as referencias do arquivo que quer baixar
 
         } catch (IOException ex) {
             System.err.println("Download nao concluido");
         }
         try {
+            //espera a resposta o serveSocket do cliente, falando se o arquivo ainda existe ou se ja foi deletado
             String existencia = input.readObject().toString();
+            //se existir, o cliente faz o download
             if (existencia.equals("sim")) {
                 FileOutputStream fos = null;
                 try {
@@ -344,19 +370,21 @@ public class Cliente implements Runnable {
                     long tamanho = baixando.getTamanho();
                     long tamanhoParcial = 0;
 
+                    //verifica se a pasta de download existe, se nao existe o software cria
                     File testePasta = new File("./programa lava duto download");
                     if (!testePasta.exists()) {
                         System.out.println("criando pasta de download");
                         testePasta.mkdir();
                     }
+                    //cria o file para iniciar o download
                     fos = new FileOutputStream("./programa lava duto download/" + baixando.getNome());
                     int tamanhoBuffer = 1024;
                     byte[] buffer = new byte[tamanhoBuffer];
                     int lidos;
-
+                    
                     System.out.println("Iniciando Download ...");
                     while (tamanhoParcial < tamanho) {
-                        System.out.println((tamanhoParcial * 100) / tamanho + " %");
+                        System.out.println((tamanhoParcial * 100) / tamanho + " %");//porcentagem do processo
                         lidos = in.read(buffer, 0, tamanhoBuffer);
                         tamanhoParcial += lidos;
                         fos.write(buffer, 0, lidos);
@@ -368,30 +396,32 @@ public class Cliente implements Runnable {
 
                 } catch (FileNotFoundException ex) {
                     System.out.println("Diretório não enconstrado.");
-                } catch (IOException ex) {
+                } catch (IOException ex) {//caso ocorra um problema na comunicação
                     try {
                         fos.close();
                         File arq = new File("./programa lava duto" + baixando.getNome());
-                        arq.delete();
+                        arq.delete();//apaga o file corrompido
                         System.out.println("Erro de comunicação");
                     } catch (IOException ex1) {
-                        //É lógicamente impossível chegar aqui.
+                        //erro impossivel de acontecer
                         System.out.println("Erro inesperado");
                     }
 
                 } catch (NullPointerException ex) {
                     System.out.println("Usuario se desconectou");
                 }
+                
+                //voltando para o servidor principal
                 try {
-                    cliente.close();// ao finalizar download, o cliente volta ao servidor principal
+                    cliente.close();// ao finalizar download
                     System.out.println("Reestabelecando conexao com o servidor principal");
-                    cliente = new Socket(ipPrincipal, 8080);
-                    this.conexaoNova();
+                    cliente = new Socket(ipPrincipal, 8080);//retorna ao servidor principal
+                    this.conexaoNova();//coloca os valores do output e input da nova conexão, referentes ao servidor principal
                     output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
                     try {
                         //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
-                        output.writeObject(this.arquivoPessoal());
-                        output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());
+                        output.writeObject(this.arquivoPessoal());//envia para o servidor os arquivos que estão na pasta compartilhada para download, para reestabelecer a conexão
+                        output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());//envia a porta do seu ServeSocket
                     } catch (IOException ex) {
                         System.err.println("Servidor ficou offline");
                         System.exit(0);
@@ -401,7 +431,7 @@ public class Cliente implements Runnable {
                 } catch (NullPointerException e) {
                     System.out.println("Cliente de download se desconectou");
                 }
-            }else{
+            } else {
                 System.out.println("Arquivo deletado pelo usuario fornecedor");
             }
         } catch (IOException ex) {
