@@ -38,7 +38,7 @@ public class Cliente implements Runnable {
 
         teclado = new Scanner(System.in);
         try {
-            cliente = new Socket("192.168.0.2", 8080);
+            cliente = new Socket("127.0.0.1", 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
@@ -55,8 +55,12 @@ public class Cliente implements Runnable {
         List endereco = new ArrayList();
         endereco.add("programa lava duto upload");
         ArrayList<Arquivo> arquivoPessoalLista = precorrePastas(endereco, repassarArquivos);
+        
+        
+        System.out.println("\nSeus arquvios compartilhados:");
+        
         for (Arquivo fileEntry : arquivoPessoalLista) {
-            System.out.println(fileEntry.getNome());
+            System.out.println("-> " + fileEntry.getNome());
         }
         return arquivoPessoalLista;
     }
@@ -89,7 +93,7 @@ public class Cliente implements Runnable {
     private void cadastro() {
         try {
             String dado = "";
-            System.out.println("\n\n\n________________________________________________");
+            System.out.println("\n\n________________________________________________");
             output.writeObject("cadastro");
             do {//login
                 System.out.println("Digite o login a ser cadastrado");
@@ -103,10 +107,10 @@ public class Cliente implements Runnable {
             output.writeObject(dado);
             //após enviar os dados de login e senha, o servidor informa se foi cadastrado ou não a conta
             if (input.readObject().toString().equals("cadastrado")) {
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.out.println("----------CADASTRO EFETUADO COM SUCESSO----------");
             } else {
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.err.println("CADASTRO NÃO FOI EFETUADO, TENTE NOVAMENTE");
             }
         } catch (IOException ex) {
@@ -120,7 +124,7 @@ public class Cliente implements Runnable {
     private void logar() {
         try {
             String dado = "";
-            System.out.println("\n\n\n________________________________________________");
+            System.out.println("\n\n________________________________________________");
             output.writeObject("logar");
             do {//login
                 System.out.println("Login:");
@@ -134,17 +138,17 @@ public class Cliente implements Runnable {
             output.writeObject(dado);
             String resposta = input.readObject().toString();
             if (resposta.equals("online")) {//caso a conta ja esteja online
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.out.println("----------USUARIO JA ESTA LOGADO----------");
             } else if (resposta.equals("logado")) {//caso nao ocorra erro
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.out.println("----------LOGADO COM SUCESSO----------");
                 logado();
             } else if (resposta.equals("senha")) {//caso senha esteja incorreta
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.out.println("----------SENHA INCORRETA----------");
             } else if (resposta.equals("inexistente")) {//caso conta nao exista
-                System.out.println("\n\n\n________________________________________________");
+                System.out.println("\n\n________________________________________________");
                 System.out.println("----------ESTA CONTA NAO EXISTE----------");
             }
 
@@ -180,7 +184,7 @@ public class Cliente implements Runnable {
 
         while (true) {
             int i = 0, indexArquivo = -1;
-            System.out.println("\n\n\n\tArquivos disponiveis:\n");
+            System.out.println("\n\nArquivos disponiveis:");
             System.out.println("[ID] NOME \tTAMANHO\n");
             for (Arquivo nome : arquivosCliente) {
                 System.out.println("[" + i + "]" + " " + nome.getNome() + "\t (" + nome.getTamanho() + " Kb)");

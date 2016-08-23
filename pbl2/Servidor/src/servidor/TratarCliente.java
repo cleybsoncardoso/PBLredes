@@ -196,7 +196,9 @@ class TratarCliente implements Runnable {
 
         //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
         System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
-        this.informacoesClientes = servidor.getInformacoesClientes();
+        //this.informacoesClientes = servidor.getInformacoesClientes();
+        this.informacoesClientes = new ArrayList<>();
+        this.informacoesClientes.addAll(servidor.getInformacoesClientes());
         this.informacoesClientes.remove(this.informacoes);
         output.writeObject(this.getListaArquivo());
 
@@ -245,12 +247,18 @@ class TratarCliente implements Runnable {
         //lê a lista de arquivos atual do cliente
         ArrayList<Arquivo> lista = (ArrayList<Arquivo>) input.readObject();
 
-        //atualiza a lista de arquivos desse cliente
-        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setNomeArquivos(lista);
-        this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes)).setInfo(cliente.getInetAddress().getHostAddress(), this.porta);
         
-        //atualiza a lista de todos os arquivos disponiveis
-        this.informacoesClientes = servidor.getInformacoesClientes();
+        //atualiza a lista de arquivos desse cliente no servidor
+        InformacoesCliente aux = this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes));
+        aux.setNomeArquivos(lista);
+        aux.setInfo(cliente.getInetAddress().getHostAddress(), this.porta);
+        
+        //atualiza a lista de todos os arquivos disponiveis para download no cliente
+        this.informacoesClientes = new ArrayList<>();
+        this.informacoesClientes.addAll(servidor.getInformacoesClientes());
+        this.informacoesClientes.remove(this.informacoes);
+        output.writeObject(this.getListaArquivo());
+        
         //envia lista atualizada de arquivos disponiveis
         output.writeObject(this.getListaArquivo());
     }
