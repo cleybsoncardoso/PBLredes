@@ -52,7 +52,12 @@ public class Download implements Runnable {
             long tamanho = baixando.getTamanho();
             long tamanhoParcial = 0;
 
-            fos = new FileOutputStream("./programa lava duto/" + baixando.getNome());
+            File testePasta = new File("./programa lava duto download");
+            if(!testePasta.exists()){
+                System.out.println("criando pasta de download");
+                testePasta.mkdir();
+            }
+            fos = new FileOutputStream("./programa lava duto download/" + baixando.getNome());
             int tamanhoBuffer = 1024;
             byte[] buffer = new byte[tamanhoBuffer];
             int lidos;
@@ -81,11 +86,15 @@ public class Download implements Runnable {
                 System.out.println("Erro inesperado");
             }
 
+        }catch(NullPointerException ex){
+            System.out.println("Usuario se desconectou");
         }
         try {
             baixaServidor.close();
         } catch (IOException ex) {
-            Logger.getLogger(Download.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Conexao com usuario de download foi perdida");
+        }catch(NullPointerException e){
+            System.out.println("Cliente de download se desconectou");
         }
     }
 }
