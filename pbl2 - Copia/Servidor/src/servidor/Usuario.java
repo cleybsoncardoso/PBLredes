@@ -14,6 +14,8 @@ import java.io.Serializable;
 class Usuario implements Serializable{
     private String login;
     private String senha;
+    private String ip;
+    private int porta;
     private boolean online;
 
     public Usuario(String login, String senha) {
@@ -35,6 +37,22 @@ class Usuario implements Serializable{
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public int getPorta() {
+        return porta;
+    }
+
+    public void setPorta(int porta) {
+        this.porta = porta;
     }
 
     public boolean isOnline() {
