@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servidor;
 
+import com.sun.corba.se.spi.activation.Server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,8 +13,13 @@ import util.Arquivo;
 import util.InformacoesCliente;
 
 /**
+ * Classe responsável por ouvir um socket de um cliente e manter a conexão entre
+ * o servidor principal com esse cliente. Ela é executada em uma thread que é
+ * criada cada vez que um cliente se conecta com o servidor.
  *
- * @author cleyb
+ * @see ServerSocket
+ * @see Socket
+ * @see Runnable
  */
 class TratarCliente implements Runnable {
 
@@ -247,18 +248,17 @@ class TratarCliente implements Runnable {
         //lê a lista de arquivos atual do cliente
         ArrayList<Arquivo> lista = (ArrayList<Arquivo>) input.readObject();
 
-        
         //atualiza a lista de arquivos desse cliente no servidor
         InformacoesCliente aux = this.servidor.getInformacoesClientes().get(this.servidor.getInformacoesClientes().indexOf(informacoes));
         aux.setNomeArquivos(lista);
         aux.setInfo(cliente.getInetAddress().getHostAddress(), this.porta);
-        
+
         //atualiza a lista de todos os arquivos disponiveis para download no cliente
         this.informacoesClientes = new ArrayList<>();
         this.informacoesClientes.addAll(servidor.getInformacoesClientes());
         this.informacoesClientes.remove(this.informacoes);
         output.writeObject(this.getListaArquivo());
-        
+
         //envia lista atualizada de arquivos disponiveis
         output.writeObject(this.getListaArquivo());
     }

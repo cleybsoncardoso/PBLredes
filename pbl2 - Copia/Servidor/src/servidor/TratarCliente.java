@@ -43,6 +43,8 @@ class TratarCliente implements Runnable {
     private int porta;
 
     /**
+     * Construtor que recebe como parâmetro o socket do cliente que está se
+     * comunicando e a referencia do servidor principal.
      *
      * @param servidor
      * @param cliente
@@ -58,20 +60,33 @@ class TratarCliente implements Runnable {
         }
     }
 
+    /**
+     * Método que é chamado quando a Thread é executada. O cliente envia uma
+     * string que indentifica qual o seu estado(logado/deslogado), apartir daí o
+     * login de usuário é reconhecido e faz a verificação se é possível realizar
+     * login.
+     *
+     */
     @Override
     public void run() {
 
         try {
+            /*cliente enviar o nome de usuario do cliente. Se for deslogado é
+            porque ainda não possui um usuario definido.
+             */
             String nomeCliente = input.readObject().toString();
             if (!nomeCliente.equals("deslogado")) {
                 for (Usuario atual : servidor.getUsuarios()) {
                     if (atual.getLogin().equals(nomeCliente)) {
                         logado = atual;
+                        break;
                     }
                 }
+                //o cliente ja tinha logado anteriormente e agora nao precisa inserir informacoes de login e senha.
                 this.logado();
             } else {
 
+                /*Usuário enviar qual ação deseja executar e insere as informacoes necessarias*/
                 while (true) {
 
                     System.out.println("Esperando opção do cliente " + cliente.getInetAddress().getHostAddress() + ".");
@@ -80,10 +95,12 @@ class TratarCliente implements Runnable {
                         //esperando opcao de menu do cliente
                         String opcaoCliente = input.readObject().toString();
                         switch (opcaoCliente) {
+                            //caso cliente deseje cadastrar novo conta de usuario
                             case "cadastro":
-                                this.cadastro();
-                                servidor.salvarUsuarios();
+                                this.cadastro(); //cadastro é realizado.
+                                servidor.salvarUsuarios(); //servidor salva lista de usuarios em arquivo serializado.
                                 break;
+                            //enviando 'logar' o tratacliente verifica se é possível se logar.
                             case "logar":
                                 if (this.login()) {
                                     logado();
@@ -94,7 +111,7 @@ class TratarCliente implements Runnable {
                         //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
                         System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
                         servidor.getInformacoesClientes().remove(informacoes);
-                        
+
                         return;
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +119,7 @@ class TratarCliente implements Runnable {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,8 +127,11 @@ class TratarCliente implements Runnable {
 
     /**
      * Método responsável por receber as informações do servidor referente ao
-     * cliente.
+     * cliente. O cliente enviar os arquivos disponíveis na pasta compartilhada
+     * e a porta em que o seu ServerSocket está disponível.
      *
+     * @see ServerSocket
+     * @see Arquivo
      * @see InformacoesCliente.
      */
     private void receberInformacoes() {
@@ -270,11 +290,11 @@ class TratarCliente implements Runnable {
                 String opcaoCliente = input.readObject().toString();
                 System.out.println("Cliente escolheu isso: " + opcaoCliente);
                 switch (opcaoCliente) {
+                    //atualiza a lista de arquivos compartilhados no servidor
                     case "atualiza":
                         this.atualizar();
                         break;
-                    case "logar":
-                        break;
+                    //desloga o cliente do servidor e atribui a variavel online de Usuario como false.
                     case "deslogar":
                         this.deslogar();
                         return;
