@@ -38,7 +38,12 @@ class TratarCliente implements Runnable {
         try {
             ObjectInputStream input = new ObjectInputStream(cliente.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(cliente.getOutputStream());
-            if (input.readObject().toString().equals("servidor")) {
+            
+            Object a = input.readObject();
+            System.out.println("\n\nChegou: ");
+            System.out.println(a);
+            if (a.toString().equals("servidor")) {
+                
                 output.writeObject(this.servidor.getNomeCliente());
             } else {
                 upload = (Arquivo) input.readObject();
