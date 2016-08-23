@@ -277,9 +277,6 @@ class TratarCliente implements Runnable {
                         break;
                     case "logar":
                         break;
-                    case "download":
-                        //verificarArquivo();
-                        break;
                     case "deslogar":
                         this.deslogar();
                         return;
