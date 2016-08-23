@@ -187,9 +187,7 @@ class TratarCliente implements Runnable {
 
         //verifica se login é válido
         ArrayList<Usuario> usuarios = servidor.getUsuarios();
-        Iterator iterador = usuarios.iterator();
-        while (iterador.hasNext()) {
-            Usuario atual = (Usuario) iterador.next();
+        for (Usuario atual : usuarios) {
             if (atual.getLogin().equals(login)) {
                 //usuario correto
                 if (atual.getSenha().equals(senha)) {
@@ -290,7 +288,6 @@ class TratarCliente implements Runnable {
                 //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
                 System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
                 servidor.getInformacoesClientes().remove(informacoes);
-                logado.setOnline(false);
                 return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
