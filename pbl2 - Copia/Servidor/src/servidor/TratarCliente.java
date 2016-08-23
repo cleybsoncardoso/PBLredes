@@ -106,9 +106,12 @@ class TratarCliente implements Runnable {
             //cliente envia lista de arquivo do seu repositório com porta do servidor
             System.out.println("Recebendo informacoes do servidor " + cliente.getInetAddress().getHostAddress() + ".");
             ArrayList arquivos = (ArrayList<Arquivo>) input.readObject();
-
+       
             //porta do servidor do cliente
             this.porta = (Integer) input.readObject();
+            
+            logado.setIp(cliente.getInetAddress().getHostAddress());
+            logado.setPorta(porta);
 
             //informacoes sao gravadas no objeto InformacoesCliente
             informacoes = new InformacoesCliente(arquivos, porta, cliente.getInetAddress().getHostAddress());
@@ -116,6 +119,8 @@ class TratarCliente implements Runnable {
             //informacoes sao adicionadas na lista de informacoes do servidor central
             servidor.getInformacoesClientes().add(informacoes);
 
+            
+            
         } catch (IOException ex) {
             System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
         } catch (ClassNotFoundException ex) {
