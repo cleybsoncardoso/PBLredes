@@ -94,9 +94,7 @@ class TratarCliente implements Runnable {
                         //caso a conexao seja perdida o usuario é deslogado e seus arquivos saem do sistema.
                         System.err.println("Cliente " + cliente.getInetAddress().getHostAddress() + " se desconectou.");
                         servidor.getInformacoesClientes().remove(informacoes);
-                        if (logado != null) {
-                            logado.setOnline(false);
-                        }
+                        
                         return;
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
