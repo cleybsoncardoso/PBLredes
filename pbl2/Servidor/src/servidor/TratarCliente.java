@@ -197,6 +197,7 @@ class TratarCliente implements Runnable {
         //é enviado ao usuário a lista contendo o nome de todos os arquivos disponíveis para download.
         System.out.println("Usuário " + logado.getLogin() + " foi logado com sucesso.");
         this.informacoesClientes = servidor.getInformacoesClientes();
+        this.informacoesClientes.remove(this.informacoes);
         output.writeObject(this.getListaArquivo());
 
         while (true) {

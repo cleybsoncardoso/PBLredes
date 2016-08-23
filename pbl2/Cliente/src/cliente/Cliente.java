@@ -38,7 +38,7 @@ public class Cliente implements Runnable {
 
         teclado = new Scanner(System.in);
         try {
-            cliente = new Socket("25.15.175.182", 8080);
+            cliente = new Socket("192.168.0.125", 8080);
             System.out.println("seu ip é " + this.cliente.getInetAddress().getHostAddress());
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
