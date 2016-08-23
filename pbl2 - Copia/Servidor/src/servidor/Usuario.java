@@ -11,7 +11,8 @@ import java.io.Serializable;
  *
  * @author cleyb
  */
-class Usuario implements Serializable{
+class Usuario implements Serializable {
+
     private String login;
     private String senha;
     private String ip;
@@ -62,5 +63,5 @@ class Usuario implements Serializable{
     public void setOnline(boolean online) {
         this.online = online;
     }
-    
+
 }

@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.Arquivo;
 
 /**
@@ -62,7 +60,7 @@ public class Download implements Runnable {
             byte[] buffer = new byte[tamanhoBuffer];
             int lidos;
 
-            System.out.println("Recebendo.");
+            System.out.println("Recebendo...");
             while (tamanhoParcial < tamanho) {
                 lidos = in.read(buffer, 0, tamanhoBuffer);
                 tamanhoParcial += lidos;
