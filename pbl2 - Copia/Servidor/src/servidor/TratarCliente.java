@@ -182,11 +182,36 @@ class TratarCliente implements Runnable {
                         return false;
                     } else {
                         //informa que usuario foi logado com sucesso
-                        atual.setOnline(true);
-                        logado = atual;
-                        output.writeObject("logado");
 
-                        return true;
+                        try {
+                            Socket autentica = new Socket(cliente.getInetAddress().getHostAddress(), porta);
+                            ObjectInputStream inputAutentica = new ObjectInputStream(autentica.getInputStream());
+                            ObjectOutputStream outputAutentica = new ObjectOutputStream(autentica.getOutputStream());
+
+                            outputAutentica.writeObject("servidor");
+
+                            String loginAutentica = (String) inputAutentica.readObject();
+
+                            if (loginAutentica.equals(login)) {
+                                //informa que usuario já está logado
+                                output.writeObject("online");
+                                autentica.close();
+                                return false;
+                            } else {
+                                atual.setOnline(true);
+                                logado = atual;
+                                output.writeObject("logado");
+                                autentica.close();
+                                return true;
+                            }
+
+                        } catch (IOException ex) {
+                            atual.setOnline(true);
+                            logado = atual;
+                            output.writeObject("logado");
+                            return true;
+                        }
+
                     }
                 } else {
                     //informa que senha é inválida
