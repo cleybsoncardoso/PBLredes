@@ -281,6 +281,9 @@ class TratarCliente implements Runnable {
         return lista;
     }
 
+    /**
+     * Método que desloga o cliente do servidor.
+     */
     private void deslogar() {
         servidor.getInformacoesClientes().remove(informacoes);
         logado.setOnline(false);
