@@ -18,17 +18,17 @@ import util.InformacoesCliente;
 
 /**
  *
- * Classe responsável por manter a conexão do cliente com o servidor através
- * de uma thread. Toda comunicação com o cliente acontece em TrataCliente,
- * portanto ela possui uma referencia do Socket do cliente e informações
- * do usuário conectado.
- * 
+ * Classe responsável por manter a conexão do cliente com o servidor através de
+ * uma thread. Toda comunicação com o cliente acontece em TrataCliente, portanto
+ * ela possui uma referencia do Socket do cliente e informações do usuário
+ * conectado.
+ *
  * @see Socket
  * @see ServerSocket
  * @see Usuario
  * @see Arquivo
  * @see InformacoesCliente
- * 
+ *
  * @author paiva
  */
 class TratarCliente implements Runnable {
@@ -45,7 +45,7 @@ class TratarCliente implements Runnable {
     /**
      *
      * @param servidor
-     * @param cliente 
+     * @param cliente
      */
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
@@ -194,73 +194,47 @@ class TratarCliente implements Runnable {
                 //usuario correto
                 if (atual.getSenha().equals(senha)) {
                     //senha correta
-<<<<<<< HEAD
+                    //veirifica se o usuário está online
                     if (atual.isOnline()) {
-                        //informa que usuario já está logado
-                        output.writeObject("online");
-                        return false;
-                    } else {
-                        //informa que usuario foi logado com sucesso
-
                         try {
+                            //cria uma comunicacao com o serversocket do usuario logado
                             Socket autentica = new Socket(atual.getIp(), atual.getPorta());
 
                             ObjectOutputStream outputAutentica = new ObjectOutputStream(autentica.getOutputStream());
-
                             outputAutentica.writeObject("servidor");
                             ObjectInputStream inputAutentica = new ObjectInputStream(autentica.getInputStream());
+
                             String loginAutentica = (String) inputAutentica.readObject();
 
+                            //se o login retornado pelo serversocket do usuario for igual ao digitado
                             if (loginAutentica.equals(login)) {
                                 //informa que usuario já está logado
                                 output.writeObject("online");
                                 autentica.close();
                                 return false;
                             } else {
-=======
-                    
-                        //veirifica se o usuário está online
-                        if (atual.isOnline()) {
-                            try {
-                                //cria uma comunicacao com o serversocket do usuario logado
-                                Socket autentica = new Socket(atual.getIp(), atual.getPorta());
-
-                                ObjectOutputStream outputAutentica = new ObjectOutputStream(autentica.getOutputStream());
-                                outputAutentica.writeObject("servidor");
-                                ObjectInputStream inputAutentica = new ObjectInputStream(autentica.getInputStream());
-                                
-                                String loginAutentica = (String) inputAutentica.readObject();
-
-                                //se o login retornado pelo serversocket do usuario for igual ao digitado
-                                if (loginAutentica.equals(login)) {
-                                    //informa que usuario já está logado
-                                    output.writeObject("online");
-                                    autentica.close();
-                                    return false;
-                                } else {
-                                    //usuario nao está mais logado, perdeu a conexao por algum motivo
-                                    atual.setOnline(true);
-                                    logado = atual;
-                                    output.writeObject("logado");
-                                    autentica.close();
-                                    return true;
-                                }
-
-                            } catch (IOException ex) {
-                                //caso nao consiga conectar com o serversocket é porque o usuario estava offline
->>>>>>> 6d72f5eae7cb1b2d114dcdb17000403f2249b3fc
+                                //usuario nao está mais logado, perdeu a conexao por algum motivo
                                 atual.setOnline(true);
                                 logado = atual;
                                 output.writeObject("logado");
+                                autentica.close();
                                 return true;
                             }
-                        } else {
+
+                        } catch (IOException ex) {
+                            //caso nao consiga conectar com o serversocket é porque o usuario estava offline
                             atual.setOnline(true);
                             logado = atual;
                             output.writeObject("logado");
                             return true;
                         }
-                    
+                    } else {
+                        atual.setOnline(true);
+                        logado = atual;
+                        output.writeObject("logado");
+                        return true;
+                    }
+
                 } else {
                     //informa que senha é inválida
                     output.writeObject("senha");
