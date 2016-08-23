@@ -32,6 +32,13 @@ class TratarCliente implements Runnable {
     private ArrayList<InformacoesCliente> informacoesClientes;
     private int porta;
 
+    /**
+     * Construtor que recebe como parâmetro o socket do cliente que está se
+     * comunicando e a referencia do servidor principal.
+     *
+     * @param servidor
+     * @param cliente
+     */
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
         this.servidor = servidor;
@@ -44,6 +51,9 @@ class TratarCliente implements Runnable {
 
     }
 
+    /**
+     * Método que é chamado quando a Thread é executada. Aqui é verificado o desejo do cliente
+     */
     @Override
     public void run() {
 
