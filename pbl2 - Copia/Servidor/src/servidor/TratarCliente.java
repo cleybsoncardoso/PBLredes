@@ -18,7 +18,18 @@ import util.InformacoesCliente;
 
 /**
  *
- * @author cleyb
+ * Classe responsável por manter a conexão do cliente com o servidor através
+ * de uma thread. Toda comunicação com o cliente acontece em TrataCliente,
+ * portanto ela possui uma referencia do Socket do cliente e informações
+ * do usuário conectado.
+ * 
+ * @see Socket
+ * @see ServerSocket
+ * @see Usuario
+ * @see Arquivo
+ * @see InformacoesCliente
+ * 
+ * @author paiva
  */
 class TratarCliente implements Runnable {
 
@@ -31,6 +42,11 @@ class TratarCliente implements Runnable {
     private ArrayList<InformacoesCliente> informacoesClientes;
     private int porta;
 
+    /**
+     *
+     * @param servidor
+     * @param cliente 
+     */
     public TratarCliente(Servidor servidor, Socket cliente) {
         this.cliente = cliente;
         this.servidor = servidor;
@@ -40,7 +56,6 @@ class TratarCliente implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(TratarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
