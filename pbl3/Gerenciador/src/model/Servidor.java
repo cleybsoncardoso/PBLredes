@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package model;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.TrataCliente;
 
 /**
  *
@@ -18,7 +21,8 @@ import java.util.logging.Logger;
 public class Servidor implements Runnable {
 
     private int porta;
-    ServerSocket servidor;
+    private ServerSocket servidor;
+    private ArrayList<Carro> carros;
 
     public Servidor(int porta) {
         this.porta = porta;
@@ -34,9 +38,13 @@ public class Servidor implements Runnable {
         try {
             while (true) {
                 Socket cliente = servidor.accept();
+                Carro car = new Carro(cliente);
+                carros.add(car);
+                TrataCliente trataCliente = new TrataCliente(cliente, car);
+                new Thread(trataCliente).start();
             }
         } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Servidor ficou offline");
         }
     }
 

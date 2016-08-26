@@ -3,28 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package application;
 
-import Model.*;
+import controller.Controller;
 
 /**
  *
  * @author paiva
  */
 public class App {
-
-    Servidor servidor;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        App Controller = new App();
+        Controller controller = new Controller();
+        controller.iniciarServidor();
     }
-
-    public App() {
-        servidor = new Servidor(8080);
-        new Thread (servidor).start();
-    }
-    
     
 }
