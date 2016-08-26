@@ -5,6 +5,8 @@
  */
 package application;
 
+import controller.Controller;
+
 /**
  *
  * @author paiva
@@ -15,7 +17,7 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Controller controller = new Controller();
+        controller.conectaServidor();
     }
-    
 }
