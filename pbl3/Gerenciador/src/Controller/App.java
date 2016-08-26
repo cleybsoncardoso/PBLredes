@@ -5,17 +5,26 @@
  */
 package Controller;
 
+import Model.*;
+
 /**
  *
  * @author paiva
  */
 public class App {
 
+    Servidor servidor;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        App Controller = new App();
     }
+
+    public App() {
+        servidor = new Servidor(8080);
+        new Thread (servidor).start();
+    }
+    
     
 }
