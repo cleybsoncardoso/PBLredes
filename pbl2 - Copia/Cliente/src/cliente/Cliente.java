@@ -35,7 +35,7 @@ public class Cliente implements Runnable {
     private ObjectInputStream input; //input do servesocket que o usuario estiver logado no momento
     private ObjectOutputStream output; //output do servesocket que o usuario estiver logado no momento
     private Servidor servidorCliente;
-    private String ipPrincipal = "25.6.169.148"; //ip do servidor principal
+    private String ipPrincipal = "192.168.0.125"; //ip do servidor principal
     private ClienteOnline nomeCliente;
 
     /**
