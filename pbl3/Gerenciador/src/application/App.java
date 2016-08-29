@@ -5,8 +5,10 @@
  */
 package application;
 
+import Model.TrataCliente;
 import controller.Controller;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,10 +24,16 @@ public class App {
      */
     public static void main(String[] args) {
         try {
-            Socket cliente = new Socket("127.0.0.1", 8080);
-            Controller controller = new Controller(cliente);
+            ServerSocket servidor = new ServerSocket(8080);
+            while(true){
+                Socket cliente = servidor.accept();
+                Controller controller = new Controller(cliente, servidor);
+                
+            }
+            
+            
         } catch (IOException ex) {
-            System.out.println("Erro na conexão");
+            System.out.println("Não foi possivel iniciar a porta");
         }
     }
     

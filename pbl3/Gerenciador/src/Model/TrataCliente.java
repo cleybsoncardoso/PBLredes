@@ -3,20 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
-
-import java.net.Socket;
+package Model;
 
 /**
  *
- * @author paiva
+ * @author cleyb
  */
-public class Controller {
-    private Socket cliente;
-
-    public Controller(Socket cliente) {
-        this.cliente = cliente;
-    }
-    
+public class TrataCliente {
     
 }
