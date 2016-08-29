@@ -5,8 +5,7 @@
  */
 package controller;
 
-<<<<<<< HEAD
-import Model.TrataCliente;
+import model.TrataCliente;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,7 +13,7 @@ import java.net.Socket;
  *
  * @author cleyb
  */
-public class Controller implements Runnable {
+public class Controller implements Runnable{
 
     private Socket cliente;
     private ServerSocket servidor;
@@ -30,23 +29,4 @@ public class Controller implements Runnable {
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-=======
-import model.Servidor;
-
-/**
- *
- * @author paiva
- */
-public class Controller {
-    
-    private Servidor servidor;
-    private final int porta = 12345;
-
-    public void iniciarServidor() {
-        servidor = new Servidor(porta);
-        new Thread(servidor).start();
-    }
-    
->>>>>>> 85c279a371044bb662fc6867e93ba00cc8b92925
 }

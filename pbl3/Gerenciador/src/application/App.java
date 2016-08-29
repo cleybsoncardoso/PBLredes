@@ -5,36 +5,19 @@
  */
 package application;
 
-import Model.TrataCliente;
 import controller.Controller;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author paiva
  */
 public class App {
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            ServerSocket servidor = new ServerSocket(8080);
-            while(true){
-                Socket cliente = servidor.accept();
-                Controller controller = new Controller(cliente, servidor);
-                
-            }
-            
-            
-        } catch (IOException ex) {
-            System.out.println("Não foi possivel iniciar a porta");
-        }
+        Controller controller = new Controller();
+        controller.iniciarServidor();
     }
     
 }
