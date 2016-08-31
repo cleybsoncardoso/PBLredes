@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author paiva
  */
-public class Cliente {
+public class Cliente implements Runnable {
 
     private String ip;
     private int porta;
@@ -52,6 +52,10 @@ public class Cliente {
         } catch (ClassNotFoundException ex) {
             return null;
         }
+    }
+
+    @Override
+    public void run() {
     }
 
 }
