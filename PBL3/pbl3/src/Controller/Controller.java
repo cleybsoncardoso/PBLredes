@@ -25,8 +25,8 @@ public class Controller {
         listaIps = new ArrayList<>();
     }
     
-    public void iniciarConexão(){
-        auxiliar.primeiraConexao("127.0.0.1",8080);
+    public void iniciarConexao(){
+        auxiliar.primeiraConexao("25.12.22.120",8080);
     }
 
     public ArrayList<Carro> getCarros() {
