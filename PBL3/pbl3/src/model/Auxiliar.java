@@ -33,10 +33,11 @@ public class Auxiliar {
         try {
             Socket cliente = new Socket(ip, porta);
             clientes.add(cliente);
-            new ObjectOutputStream(cliente.getOutputStream()).writeObject("segundo");
+            new ObjectOutputStream(cliente.getOutputStream()).writeObject("primeiro");
             ArrayList<String> ips = (ArrayList<String>) new ObjectInputStream(cliente.getInputStream()).readObject();
             for (String ipCliente : ips) {
                 Socket clienteAtual = new Socket(ipCliente, 8080);
+                new ObjectOutputStream(clienteAtual.getOutputStream()).writeObject("segundo");
                 clientes.add(clienteAtual);
             }
         } catch (IOException ex) {
@@ -49,6 +50,7 @@ public class Auxiliar {
     public void addSocket(String ip, int porta) {
         try {
             Socket cliente = new Socket(ip, porta);
+            new ObjectOutputStream(cliente.getOutputStream()).writeObject("segundo");
             clientes.add(cliente);
         } catch (IOException ex) {
             System.out.println("não foi possivel estabelecer conexao");
