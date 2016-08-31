@@ -29,6 +29,7 @@ public class Cliente implements Runnable {
             cliente = new Socket(ip, porta);
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
+            this.ip = ip;
 
         } catch (IOException ex) {
             System.out.println("nao foi possivel se conectar com " + ip);
@@ -56,6 +57,10 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
+    }
+    
+    public String getIp(){
+        return ip;
     }
 
 }

@@ -38,9 +38,13 @@ public class TrataCliente implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("entrou");
-        inicio();
-        recebendo();
+        try {
+            System.out.println("entrou");
+            inicio();
+            recebendo();
+        } catch (IOException ex) {
+            Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void inicio() {
@@ -58,13 +62,16 @@ public class TrataCliente implements Runnable {
         }
     }
 
-    private void recebendo() {
+    private void recebendo() throws IOException {
         while (true) {
             try {
                 String msg = input.readObject().toString();
                 System.out.println(msg);
             } catch (IOException ex) {
                 conexaoPerdida();
+                controller.removerCliente(cliente.getInetAddress().getHostAddress());
+                cliente.close();
+                return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
             }

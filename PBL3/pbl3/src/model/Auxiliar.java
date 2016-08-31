@@ -5,15 +5,7 @@
  */
 package model;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.Cliente;
 import util.Quadrante;
 import util.Replicador;
@@ -32,7 +24,7 @@ public class Auxiliar {
 
     public void primeiraConexao(String ip, int porta) {
         Cliente cliente = new Cliente(ip, porta);
-        new Thread (cliente).start();
+        new Thread(cliente).start();
         clientes.add(cliente);
         cliente.enviarMsg("primeiro");
 //        ArrayList<String> ips = (ArrayList<String>) cliente.receberMsg();
@@ -45,6 +37,7 @@ public class Auxiliar {
 
     public void addSocket(String ip, int porta) {
         Cliente cliente = new Cliente(ip, porta);
+        new Thread(cliente).start();
         cliente.enviarMsg("segundo");
         clientes.add(cliente);
     }
@@ -105,6 +98,14 @@ public class Auxiliar {
     public void replica(String msg) {
         for (Cliente clienteAtual : clientes) {
             new Thread(new Replicador(clienteAtual, clientes, msg)).start();
+        }
+    }
+
+    public void removerCliente(String ip) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getIp().equals(ip)) {
+                clientes.remove(cliente);
+            }
         }
     }
 }

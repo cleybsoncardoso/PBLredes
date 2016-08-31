@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import model.Auxiliar;
 import model.Carro;
+import util.Cliente;
 
 /**
  *
@@ -48,6 +49,11 @@ public class Controller {
     
     public void replica(String msg){
         auxiliar.replica(msg);
+    }
+    
+    public void removerCliente(String ip){
+        listaIps.remove(ip);
+        auxiliar.removerCliente(ip);
     }
     
 }

@@ -35,7 +35,7 @@ public class Server implements Runnable{
                 controller.addIp(cliente.getInetAddress().getHostAddress());
                 TrataCliente tc = new TrataCliente(controller,cliente);
                 new Thread(tc).start();
-                controller.addConexao(cliente.getInetAddress().getHostAddress());
+                //controller.addConexao(cliente.getInetAddress().getHostAddress());
             }
         } catch (IOException ex) {
             System.out.println("não foi possivel iniciar servidor");
