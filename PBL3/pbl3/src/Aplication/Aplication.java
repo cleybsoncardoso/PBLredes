@@ -25,7 +25,7 @@ public class Aplication {
         Scanner teste = new Scanner(System.in);
         while(true){
             String t = teste.nextLine();
-            
+            controller.replica(t);
         }
     }
     
