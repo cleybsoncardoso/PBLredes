@@ -35,6 +35,7 @@ public class Controller {
     
     public void addConexao(String ip){
         auxiliar.addSocket(ip, 8080);
+        System.out.println("fazendo conexao com " + ip);
     }  
     
     public void addIp(String ip){

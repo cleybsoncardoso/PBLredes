@@ -8,7 +8,6 @@ package util;
 import Controller.Controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -38,6 +37,8 @@ public class TrataCliente implements Runnable {
 
     @Override
     public void run() {
+
+        System.out.println("entrou");
         inicio();
         recebendo();
     }
@@ -69,8 +70,8 @@ public class TrataCliente implements Runnable {
             }
         }
     }
-    
-    private void conexaoPerdida(){
+
+    private void conexaoPerdida() {
         System.out.println("Conexao perdida com o cliente " + cliente.getInetAddress().getHostAddress());
     }
 

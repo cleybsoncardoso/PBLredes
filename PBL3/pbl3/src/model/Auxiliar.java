@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Cliente;
 import util.Quadrante;
 import util.Replicador;
 
@@ -23,17 +24,18 @@ import util.Replicador;
  */
 public class Auxiliar {
 
-    private ArrayList<Socket> clientes;
+    private ArrayList<Cliente> clientes;
 
     public Auxiliar() {
-        this.clientes = new ArrayList<Socket>();
+        this.clientes = new ArrayList<Cliente>();
     }
 
     public void primeiraConexao(String ip, int porta) {
         try {
-            Socket cliente = new Socket(ip, porta);
+            
+            Cliente cliente = new Cliente(ip, porta);
             clientes.add(cliente);
-            new ObjectOutputStream(cliente.getOutputStream()).writeObject("primeiro");
+            
             ArrayList<String> ips = (ArrayList<String>) new ObjectInputStream(cliente.getInputStream()).readObject();
             for (String ipCliente : ips) {
                 Socket clienteAtual = new Socket(ipCliente, 8080);
