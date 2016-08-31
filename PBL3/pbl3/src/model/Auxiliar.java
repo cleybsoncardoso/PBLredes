@@ -27,12 +27,12 @@ public class Auxiliar {
         new Thread(cliente).start();
         clientes.add(cliente);
         cliente.enviarMsg("primeiro");
-//        ArrayList<String> ips = (ArrayList<String>) cliente.receberMsg();
-//        for (String ipCliente : ips) {
-//            Cliente clienteAtual = new Cliente(ipCliente, 8080);
-//            clienteAtual.enviarMsg("segundo");
-//            clientes.add(clienteAtual);
-//        }
+        ArrayList<String> ips = (ArrayList<String>) cliente.receberMsg();
+        for (String ipCliente : ips) {
+            Cliente clienteAtual = new Cliente(ipCliente, 8080);
+            clienteAtual.enviarMsg("segundo");
+            clientes.add(clienteAtual);
+        }
     }
 
     public void addSocket(String ip, int porta) {
