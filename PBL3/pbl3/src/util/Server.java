@@ -32,10 +32,10 @@ public class Server implements Runnable{
                 System.out.println("Esperando Cliente...");
                 Socket cliente = servidor.accept();
                 System.out.println("Conexao criada com " + cliente.getInetAddress().getHostAddress());
-                controller.addIp(cliente.getInetAddress().getHostAddress());
                 TrataCliente tc = new TrataCliente(controller,cliente);
                 new Thread(tc).start();
-                //controller.addConexao(cliente.getInetAddress().getHostAddress());
+                System.out.println(cliente.getInetAddress().getHostAddress());
+                controller.addConexao(cliente.getInetAddress().getHostAddress());
             }
         } catch (IOException ex) {
             System.out.println("não foi possivel iniciar servidor");

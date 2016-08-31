@@ -41,6 +41,7 @@ public class TrataCliente implements Runnable {
         try {
             System.out.println("entrou");
             inicio();
+            controller.addIp(cliente.getInetAddress().getHostAddress());
             recebendo();
         } catch (IOException ex) {
             Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
