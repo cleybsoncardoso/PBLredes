@@ -45,4 +45,8 @@ public class Controller {
         return listaIps;
     }
     
+    public void replica(String msg){
+        auxiliar.replica(msg);
+    }
+    
 }

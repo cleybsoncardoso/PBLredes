@@ -8,6 +8,7 @@ package model;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,6 +32,7 @@ public class Auxiliar {
         try {
             Socket cliente = new Socket(ip, porta);
             clientes.add(cliente);
+            new ObjectOutputStream(cliente.getOutputStream()).writeObject("segundo");
             ArrayList<String> ips = (ArrayList<String>) new ObjectInputStream(cliente.getInputStream()).readObject();
             for (String ipCliente : ips) {
                 Socket clienteAtual = new Socket(ipCliente, 8080);
@@ -104,5 +106,15 @@ public class Auxiliar {
                 return trajeto;
             }
         }
+    }
+
+    public void replica(String msg) {
+        for(Socket clienteAtual: clientes){
+            try {
+                new ObjectOutputStream(clienteAtual.getOutputStream()).writeObject(msg);
+            } catch (IOException ex) {
+                Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ }
     }
 }
