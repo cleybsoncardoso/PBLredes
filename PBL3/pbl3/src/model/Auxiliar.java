@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Cliente;
 import util.Quadrante;
 import util.Replicador;
 
@@ -23,39 +24,28 @@ import util.Replicador;
  */
 public class Auxiliar {
 
-    private ArrayList<Socket> clientes;
+    private ArrayList<Cliente> clientes;
 
     public Auxiliar() {
-        this.clientes = new ArrayList<Socket>();
+        this.clientes = new ArrayList<Cliente>();
     }
 
     public void primeiraConexao(String ip, int porta) {
-        try {
-            Socket cliente = new Socket(ip, porta);
-            clientes.add(cliente);
-            new ObjectOutputStream(cliente.getOutputStream()).writeObject("primeiro");
-            ArrayList<String> ips = (ArrayList<String>) new ObjectInputStream(cliente.getInputStream()).readObject();
-            for (String ipCliente : ips) {
-                Socket clienteAtual = new Socket(ipCliente, 8080);
-                new ObjectOutputStream(clienteAtual.getOutputStream()).writeObject("segundo");
-                clientes.add(clienteAtual);
-            }
-        } catch (IOException ex) {
-            System.out.println("não foi possivel estabelecer conexao");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
+        Cliente cliente = new Cliente(ip, porta);
+        clientes.add(cliente);
+        cliente.enviarMsg("primeiro");
+        ArrayList<String> ips = (ArrayList<String>) cliente.receberMsg();
+        for (String ipCliente : ips) {
+            Cliente clienteAtual = new Cliente(ipCliente, 8080);
+            clienteAtual.enviarMsg("segundo");
+            clientes.add(clienteAtual);
         }
     }
 
     public void addSocket(String ip, int porta) {
-        try {
-            Socket cliente = new Socket(ip, porta);
-            new ObjectOutputStream(cliente.getOutputStream()).writeObject("segundo");
-            clientes.add(cliente);
-        } catch (IOException ex) {
-            System.out.println("não foi possivel estabelecer conexao");
-
-        }
+        Cliente cliente = new Cliente(ip, porta);
+        cliente.enviarMsg("segundo");
+        clientes.add(cliente);
     }
 
     public ArrayList<Quadrante> calcularTrajeto(String origem, String destino) {
@@ -112,7 +102,7 @@ public class Auxiliar {
     }
 
     public void replica(String msg) {
-        for (Socket clienteAtual : clientes) {
+        for (Cliente clienteAtual : clientes) {
             new Thread(new Replicador(clienteAtual, clientes, msg)).start();
         }
     }
