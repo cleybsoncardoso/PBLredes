@@ -18,11 +18,11 @@ import java.util.logging.Logger;
  */
 public class Replicador implements Runnable {
     
-    private Socket cliente;
-    private ArrayList<Socket> lista;
+    private Cliente cliente;
+    private ArrayList<Cliente> lista;
     private String msg;
 
-    public Replicador(Socket cliente, ArrayList<Socket> lista, String msg){
+    public Replicador(Cliente cliente, ArrayList<Cliente> lista, String msg){
         this.cliente = cliente;
         this.lista = lista;
         this.msg = msg;
@@ -30,12 +30,7 @@ public class Replicador implements Runnable {
     
     @Override
     public void run() {
-        try {
-            new ObjectOutputStream(cliente.getOutputStream()).writeObject(msg);
-        } catch (IOException ex) {
-            System.out.println("Mensagem nao pode ser enviada para " + cliente.getInetAddress().getHostAddress());
-            lista.remove(cliente);
-        }
+        cliente.enviarMsg(msg);
     }
 
 }
