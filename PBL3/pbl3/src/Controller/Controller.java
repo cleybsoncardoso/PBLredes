@@ -17,10 +17,12 @@ import model.Carro;
 public class Controller {
     private ArrayList<Carro> carros;
     private Auxiliar auxiliar;
+    private ArrayList<String> listaIps;
 
     public Controller() {
         carros = new ArrayList<Carro>();
         auxiliar = new Auxiliar();
+        listaIps = new ArrayList<>();
     }
     
     public void iniciarConexão(){
@@ -34,5 +36,13 @@ public class Controller {
     public void addConexao(String ip){
         auxiliar.addSocket(ip, 8080);
     }  
+    
+    public void addIp(String ip){
+        listaIps.add(ip);
+    }
+    
+    public ArrayList<String> getIpList(){
+        return listaIps;
+    }
     
 }
