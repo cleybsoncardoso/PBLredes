@@ -7,13 +7,25 @@ package Controller;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import model.Carro;
 
 /**
  *
  * @author cleyb
  */
 public class Controller {
+    private ArrayList<Carro> carros;
 
+    public Controller() {
+        carros = new ArrayList<Carro>();
+    }
+    
+    
+
+    public ArrayList<Carro> getCarros() {
+        return carros;
+    }
+    
 
     
     

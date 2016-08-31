@@ -28,7 +28,7 @@ public class Aplication {
             ServerSocket servidor = new ServerSocket(8080);
             while(true){
                 Socket cliente = servidor.accept();
-                TrataCliente tc = new TrataCliente(cliente);
+                TrataCliente tc = new TrataCliente(controler,cliente);
                 new Thread(tc).start();
             }
         } catch (IOException ex) {

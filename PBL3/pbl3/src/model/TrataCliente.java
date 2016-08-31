@@ -5,6 +5,7 @@
  */
 package model;
 
+import Controller.Controller;
 import java.net.Socket;
 
 /**
@@ -13,8 +14,12 @@ import java.net.Socket;
  */
 public class TrataCliente implements Runnable{
 
-    public TrataCliente(Socket cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private Controller controller;
+    private Socket cliente;
+    
+    public TrataCliente(Controller controler, Socket cliente) {
+        this.controller = controler;
+        this.cliente=cliente;
     }
 
     @Override
