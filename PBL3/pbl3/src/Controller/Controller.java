@@ -31,7 +31,8 @@ public class Controller {
         return carros;
     }
     
-
-    
+    public void addConexao(String ip){
+        auxiliar.addSocket(ip, 8080);
+    }  
     
 }
