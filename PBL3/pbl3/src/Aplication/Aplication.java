@@ -6,6 +6,7 @@
 package Aplication;
 
 import Controller.Controller;
+import java.util.Scanner;
 import util.Server;
 
 /**
@@ -21,6 +22,11 @@ public class Aplication {
         Controller controller = new Controller();
         Server servidor = new Server(controller);
         new Thread(servidor).start();
+        Scanner teste = new Scanner(System.in);
+        while(true){
+            String t = teste.nextLine();
+            
+        }
     }
     
 }

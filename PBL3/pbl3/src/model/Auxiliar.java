@@ -8,12 +8,14 @@ package model;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.Quadrante;
+import util.Replicador;
 
 /**
  *
@@ -31,6 +33,7 @@ public class Auxiliar {
         try {
             Socket cliente = new Socket(ip, porta);
             clientes.add(cliente);
+            new ObjectOutputStream(cliente.getOutputStream()).writeObject("segundo");
             ArrayList<String> ips = (ArrayList<String>) new ObjectInputStream(cliente.getInputStream()).readObject();
             for (String ipCliente : ips) {
                 Socket clienteAtual = new Socket(ipCliente, 8080);
@@ -103,6 +106,12 @@ public class Auxiliar {
                 trajeto.add(new Quadrante("b", 0, 0, 3));
                 return trajeto;
             }
+        }
+    }
+
+    public void replica(String msg) {
+        for (Socket clienteAtual : clientes) {
+            new Thread(new Replicador(clienteAtual, clientes, msg)).start();
         }
     }
 }

@@ -9,6 +9,7 @@ import Controller.Controller;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Server implements Runnable{
     private Controller controller;
     
     public Server(Controller controller){
-        this.controller = controller;        
+        this.controller = controller;
     }
 
     @Override
@@ -28,11 +29,13 @@ public class Server implements Runnable{
             ServerSocket servidor = new ServerSocket(8080);
             while(true){
                 Socket cliente = servidor.accept();
+                controller.addIp(cliente.getInetAddress().getHostAddress());
                 TrataCliente tc = new TrataCliente(controller,cliente);
                 new Thread(tc).start();
+                controller.addConexao(cliente.getInetAddress().getHostAddress());
             }
         } catch (IOException ex) {
             System.out.println("não foi possivel iniciar servidor");
         }
-    }
+    }   
 }
