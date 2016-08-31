@@ -35,7 +35,7 @@ public class Cliente implements Runnable {
     private ObjectInputStream input; //input do servesocket que o usuario estiver logado no momento
     private ObjectOutputStream output; //output do servesocket que o usuario estiver logado no momento
     private Servidor servidorCliente;
-    private String ipPrincipal = "25.6.169.148"; //ip do servidor principal
+    private String ipPrincipal = "192.168.0.125"; //ip do servidor principal
     private ClienteOnline nomeCliente;
 
     /**
@@ -381,7 +381,7 @@ public class Cliente implements Runnable {
                     int tamanhoBuffer = 1024;
                     byte[] buffer = new byte[tamanhoBuffer];
                     int lidos;
-                    
+
                     System.out.println("Iniciando Download ...");
                     while (tamanhoParcial < tamanho) {
                         System.out.println((tamanhoParcial * 100) / tamanho + " %");//porcentagem do processo
@@ -410,29 +410,30 @@ public class Cliente implements Runnable {
                 } catch (NullPointerException ex) {
                     System.out.println("Usuario se desconectou");
                 }
-                
-                //voltando para o servidor principal
-                try {
-                    cliente.close();// ao finalizar download
-                    System.out.println("Reestabelecando conexao com o servidor principal");
-                    cliente = new Socket(ipPrincipal, 8080);//retorna ao servidor principal
-                    this.conexaoNova();//coloca os valores do output e input da nova conexão, referentes ao servidor principal
-                    output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
-                    try {
-                        //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
-                        output.writeObject(this.arquivoPessoal());//envia para o servidor os arquivos que estão na pasta compartilhada para download, para reestabelecer a conexão
-                        output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());//envia a porta do seu ServeSocket
-                    } catch (IOException ex) {
-                        System.err.println("Servidor ficou offline");
-                        System.exit(0);
-                    }
-                } catch (IOException ex) {
-                    System.out.println("Conexao com usuario de download foi perdida");
-                } catch (NullPointerException e) {
-                    System.out.println("Cliente de download se desconectou");
-                }
+
             } else {
                 System.out.println("Arquivo deletado pelo usuario fornecedor");
+            }
+
+            //voltando para o servidor principal
+            try {
+                cliente.close();// ao finalizar download
+                System.out.println("Reestabelecando conexao com o servidor principal");
+                cliente = new Socket(ipPrincipal, 8080);//retorna ao servidor principal
+                this.conexaoNova();//coloca os valores do output e input da nova conexão, referentes ao servidor principal
+                output.writeObject(this.nomeCliente.getNomeCLiente());//envia para o servidor principal o nome do usuario, para reestabelecer a conexao de onde parou
+                try {
+                    //enviado para o servidor os arquivos que tem no computador ao fazer o login e informando a porta do servido cliente
+                    output.writeObject(this.arquivoPessoal());//envia para o servidor os arquivos que estão na pasta compartilhada para download, para reestabelecer a conexão
+                    output.writeObject(this.servidorCliente.getServidorCliente().getLocalPort());//envia a porta do seu ServeSocket
+                } catch (IOException ex) {
+                    System.err.println("Servidor ficou offline");
+                    System.exit(0);
+                }
+            } catch (IOException ex) {
+                System.out.println("Conexao com usuario de download foi perdida");
+            } catch (NullPointerException e) {
+                System.out.println("Cliente de download se desconectou");
             }
         } catch (IOException ex) {
             System.out.println("erro em comunicacao");
