@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.Quadrante;
+import util.Replicador;
 
 /**
  *
@@ -109,12 +110,8 @@ public class Auxiliar {
     }
 
     public void replica(String msg) {
-        for(Socket clienteAtual: clientes){
-            try {
-                new ObjectOutputStream(clienteAtual.getOutputStream()).writeObject(msg);
-            } catch (IOException ex) {
-                Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
-            }
- }
+        for (Socket clienteAtual : clientes) {
+            new Thread(new Replicador(clienteAtual, clientes, msg)).start();
+        }
     }
 }

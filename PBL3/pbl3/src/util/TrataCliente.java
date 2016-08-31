@@ -40,7 +40,6 @@ public class TrataCliente implements Runnable {
     public void run() {
         inicio();
         recebendo();
-
     }
 
     private void inicio() {
