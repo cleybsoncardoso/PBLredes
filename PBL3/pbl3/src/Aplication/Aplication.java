@@ -20,7 +20,7 @@ public class Aplication {
     public static void main(String[] args) {
         Controller controller = new Controller();
         Server servidor = new Server(controller);
-        
+        new Thread(servidor).start();
     }
     
 }
