@@ -7,6 +7,7 @@ package Controller;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import model.Auxiliar;
 import model.Carro;
 
 /**
@@ -15,12 +16,16 @@ import model.Carro;
  */
 public class Controller {
     private ArrayList<Carro> carros;
+    private Auxiliar auxiliar;
 
     public Controller() {
         carros = new ArrayList<Carro>();
+        auxiliar = new Auxiliar();
     }
     
-    
+    public void iniciarConexão(){
+        auxiliar.primeiraConexao("127.0.0.1",8080);
+    }
 
     public ArrayList<Carro> getCarros() {
         return carros;
