@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
+package util;
 
 /**
  *
  * @author cleyb
  */
-class Coordenada {
+public class Coordenada {
+
     private int x, y;
 
     public Coordenada(int x, int y) {
@@ -24,5 +20,5 @@ class Coordenada {
     public int getY() {
         return y;
     }
-    
+
 }
