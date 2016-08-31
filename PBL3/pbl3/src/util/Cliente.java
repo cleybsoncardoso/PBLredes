@@ -42,5 +42,16 @@ public class Cliente {
             System.out.println("perdeu conexao ao escrever para " + ip);
         }
     }
+    
+    public Object receberMsg(){
+        try {
+            return input.readObject();
+        } catch (IOException ex) {
+            System.out.println("perdeu conexao ao receber de " + ip);
+            return null;
+        } catch (ClassNotFoundException ex) {
+            return null;
+        }
+    }
 
 }
