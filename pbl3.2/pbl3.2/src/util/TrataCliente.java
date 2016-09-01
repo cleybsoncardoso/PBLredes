@@ -70,10 +70,15 @@ public class TrataCliente implements Runnable {
 
     private void enviaIps() throws IOException, ClassNotFoundException {
         String msg = (String) input.readObject();
+        System.out.println(msg);
         if (msg.equals("primeiro")) {
+            System.out.println("entrou");
             ArrayList<String> aux = new ArrayList<>();
             aux.addAll(controller.getIps());
             aux.remove(this.ip);
+            output.writeObject(aux);
+            
+            System.out.println("saiu");
         }
     }
 

@@ -28,13 +28,13 @@ public class Auxiliar {
     
     public void iniciarConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
+        client.enviarMsg("segundo");
         new Thread (client).start();
         clientes.add(client);
     }
 
     public void replicarMsg(String msg) {
         for(Cliente c: clientes){
-            c.enviarMsg("segundo");
             c.enviarMsg(msg);
         }
     }
