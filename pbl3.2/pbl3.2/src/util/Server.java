@@ -43,10 +43,6 @@ public class Server implements Runnable {
                 new Thread(tc).start();
                 controller.iniciarConexao(ip);
 
-                if (conectar(ip)) {
-                    controller.iniciarConexao(ip);
-                    clientes.add(cliente);
-                }
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
