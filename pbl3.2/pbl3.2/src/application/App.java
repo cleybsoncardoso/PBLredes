@@ -8,6 +8,7 @@ package application;
 import controller.Controller;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.Server;
@@ -23,5 +24,9 @@ public class App {
         Controller controller = new Controller();
         Server serverSocket = new Server(controller, 8080);
         new Thread (serverSocket).start();
+        Scanner teclado = new Scanner(System.in);
+        while(true){
+            
+        }
     }
 }
