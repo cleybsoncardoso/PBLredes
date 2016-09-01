@@ -37,6 +37,7 @@ public class Cliente implements Runnable {
         realizarConexao();
         while (true) {
             if(enviarMsg){
+                System.out.println("entrou");
                 try {
                     output.writeObject(msg);
                     enviarMsg = false;
