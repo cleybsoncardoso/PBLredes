@@ -33,6 +33,12 @@ public class Cliente implements Runnable {
 
     }
 
+    public String getIp() {
+        return ip;
+    }
+    
+    
+
     @Override
     public void run() {
         realizarConexao();

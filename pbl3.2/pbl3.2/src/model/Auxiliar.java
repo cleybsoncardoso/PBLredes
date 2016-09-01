@@ -37,5 +37,10 @@ public class Auxiliar {
             c.enviarMsg(msg);
         }
     }
-    
+    public void removerCliente(String ip){
+        for(Cliente c: clientes){
+            if(c.getIp().equals(ip))
+                clientes.remove(c);
+        }
+    }
 }
