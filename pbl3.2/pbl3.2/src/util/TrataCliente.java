@@ -46,7 +46,6 @@ public class TrataCliente implements Runnable {
                 System.out.println(msg);
             } catch (IOException ex) {
                 controller.removerIp(this.cliente.getInetAddress().getHostAddress());
-                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
