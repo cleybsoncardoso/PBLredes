@@ -53,6 +53,7 @@ public class Auxiliar {
         try {
             ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
             for (String ipAtual : ips) {
+                System.out.println(ipAtual);
                 this.iniciarConexao(ipAtual);
             }
         } catch (IOException ex) {
