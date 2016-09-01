@@ -22,7 +22,8 @@ public class Controller {
     public void iniciarConexao(String string) {
         auxiliar.iniciarConexao(string);
     }
-    public void replicarMsg(String msg){
+
+    public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
     }
 }

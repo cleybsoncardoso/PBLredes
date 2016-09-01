@@ -39,6 +39,7 @@ public class Server implements Runnable {
                 System.out.println("Conexao criada com " + cliente.getInetAddress().getHostAddress());
                 TrataCliente tc = new TrataCliente(controller, cliente);
                 new Thread(tc).start();
+                controller.iniciarConexao(cliente.getInetAddress().getHostAddress());
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
