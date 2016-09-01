@@ -61,7 +61,6 @@ public class Auxiliar {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         clientes.add(client);
     }
 }
