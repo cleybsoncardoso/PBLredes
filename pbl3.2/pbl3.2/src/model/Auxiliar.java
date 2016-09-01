@@ -19,7 +19,7 @@ import util.Cliente;
  */
 public class Auxiliar {
 
-    ArrayList <Cliente> clientes;
+    private ArrayList <Cliente> clientes;
 
     public Auxiliar() {
         this.clientes = new ArrayList<Cliente>();
