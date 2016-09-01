@@ -43,7 +43,6 @@ public class Cliente implements Runnable {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(enviarMsg){
-                System.out.println("entrou");
                 try {
                     output.writeObject(msg);
                     enviarMsg = false;
