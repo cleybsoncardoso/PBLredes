@@ -55,7 +55,6 @@ public class Cliente implements Runnable {
 
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
             System.out.println("Servidor esta offline");
-            System.exit(0);
         }
     }
     

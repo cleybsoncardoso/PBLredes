@@ -5,12 +5,28 @@
  */
 package application;
 
+import controller.Controller;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.Server;
+import util.TrataCliente;
+
 /**
  *
  * @author paiva
  */
 public class App {
-    public static void main(String[] args){
-        
+
+    public static void main(String[] args) {
+        Controller controller = new Controller();
+        Server serverSocket = new Server(controller, 8080);
+        new Thread (serverSocket).start();
+        Scanner teclado = new Scanner(System.in);
+        while(true){
+            
+        }
     }
 }
