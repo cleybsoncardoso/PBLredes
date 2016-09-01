@@ -42,6 +42,10 @@ public class Controller {
         }
         return true;
     }
+    
+    public ArrayList<String> getIps(){
+        return this.ips;
+    }
 
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);

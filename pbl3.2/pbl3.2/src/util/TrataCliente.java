@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,34 +25,54 @@ public class TrataCliente implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Server servidor;
+    private String ip;
 
     TrataCliente(Controller controller, Socket cliente) {
         this.controller = controller;
         this.cliente = cliente;
+        this.ip = this.cliente.getInetAddress().getHostAddress();
         this.servidor = servidor;
         try {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
-            controller.removerIp(this.cliente.getInetAddress().getHostAddress());
-            Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+            controller.removerIp(this.ip);
         }
     }
 
     @Override
     public void run() {
+
+        try {
+            enviaIps();
+        } catch (IOException ex) {
+            controller.removerIp(this.ip);
+            System.out.println("Conexão perdida com " + ip);
+            return;
+        } catch (ClassNotFoundException ex) {
+            return;
+        }
+
         while (true) {
             try {
                 String msg = (String) input.readObject();
                 System.out.println(msg);
             } catch (IOException ex) {
-                controller.removerIp(this.cliente.getInetAddress().getHostAddress());
-                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+                controller.removerIp(this.ip);
+                System.out.println("Conexão perdida com " + ip);
                 return;
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
+        }
+    }
+
+    private void enviaIps() throws IOException, ClassNotFoundException {
+        String msg = (String) input.readObject();
+        if (msg.equals("primeiro")) {
+            ArrayList<String> aux = new ArrayList<>();
+            aux.addAll(controller.getIps());
+            aux.remove(this.ip);
         }
     }
 
