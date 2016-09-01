@@ -8,6 +8,7 @@ package util;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,11 @@ public class Cliente implements Runnable {
     public void run() {
         realizarConexao();
         while (true) {
+            try {
+                sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if(enviarMsg){
                 System.out.println("entrou");
                 try {
@@ -55,7 +61,6 @@ public class Cliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
             System.out.println("Conexao realizada");
-
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
             System.out.println("Servidor esta offline");
         }
