@@ -52,11 +52,7 @@ public class Auxiliar {
         client.enviarMsg("primeiro");
         try {
             ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
-<<<<<<< HEAD
-            for(String ipAtual: ips){
-=======
             for (String ipAtual : ips) {
->>>>>>> 98a5521bb2e27cba1d1b2b299cefdce714bf6b09
                 System.out.println(ipAtual);
                 this.iniciarConexao(ipAtual);
             }
