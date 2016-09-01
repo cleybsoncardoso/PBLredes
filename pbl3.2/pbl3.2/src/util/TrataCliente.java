@@ -38,7 +38,14 @@ public class TrataCliente implements Runnable {
     @Override
     public void run() {
         while(true){
-            //bloco que realiza comunicacao com cliente
+            try {
+                String msg = (String) input.readObject();
+                System.out.println(msg);
+            } catch (IOException ex) {
+                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

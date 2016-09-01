@@ -23,6 +23,8 @@ public class Cliente implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Socket cliente;
+    private boolean enviarMsg;
+    private String msg;
 
     public Cliente(int porta, String ip) {
         this.porta = porta;
@@ -34,7 +36,14 @@ public class Cliente implements Runnable {
     public void run() {
         realizarConexao();
         while (true) {
-            //bloco que realiza comunicação com o servidor
+            if(enviarMsg){
+                try {
+                    output.writeObject(msg);
+                    enviarMsg = false;
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -48,6 +57,11 @@ public class Cliente implements Runnable {
             System.out.println("Servidor esta offline");
             System.exit(0);
         }
+    }
+    
+    public void enviarMsg(String msg){
+        this.msg = msg;
+        this.enviarMsg = true;
     }
 
 }
