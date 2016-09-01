@@ -40,6 +40,7 @@ public class Cliente implements Runnable {
                 try {
                     output.writeObject(msg);
                     enviarMsg = false;
+                    System.out.println("Mensagem enviada");
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -52,6 +53,7 @@ public class Cliente implements Runnable {
             cliente = new Socket(ip, porta);
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
+            System.out.println("Conexao realizada");
 
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
             System.out.println("Servidor esta offline");
