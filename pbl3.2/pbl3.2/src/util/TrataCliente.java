@@ -25,7 +25,7 @@ public class TrataCliente implements Runnable {
     private ObjectInputStream input;
     private Server servidor;
 
-    TrataCliente(Controller controller, Socket cliente, Server servidor) {
+    TrataCliente(Controller controller, Socket cliente) {
         this.controller = controller;
         this.cliente = cliente;
         this.servidor = servidor;
@@ -33,19 +33,19 @@ public class TrataCliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
-            servidor.removerCliente(this.cliente);
+            controller.removerIp(this.cliente.getInetAddress().getHostAddress());
             Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
                 String msg = (String) input.readObject();
                 System.out.println(msg);
             } catch (IOException ex) {
-                servidor.removerCliente(this.cliente);
+                controller.removerIp(this.cliente.getInetAddress().getHostAddress());
                 Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             } catch (ClassNotFoundException ex) {
