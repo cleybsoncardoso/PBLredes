@@ -37,6 +37,7 @@ public class TrataCliente implements Runnable {
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
             controller.removerIp(this.ip);
+            System.out.println("Conexão perdida com " + ip);
         }
     }
 
@@ -58,12 +59,8 @@ public class TrataCliente implements Runnable {
                 String msg = (String) input.readObject();
                 System.out.println(msg);
             } catch (IOException ex) {
-<<<<<<< HEAD
                 controller.removerIp(this.ip);
                 System.out.println("Conexão perdida com " + ip);
-=======
-                controller.removerIp(this.cliente.getInetAddress().getHostAddress());
->>>>>>> 048622d7afe45bbc9a1d1f39de5c5c702991a6ed
                 return;
             } catch (ClassNotFoundException ex) {
                 return;

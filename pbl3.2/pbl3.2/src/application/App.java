@@ -22,15 +22,12 @@ public class App {
 
     public static void main(String[] args) {
         Controller controller = new Controller();
-<<<<<<< HEAD
         //controller.iniciarConexao("25.12.22.120");
-=======
-        controller.primeiraConexao("25.12.22.120");
->>>>>>> 048622d7afe45bbc9a1d1f39de5c5c702991a6ed
+        //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
-        new Thread (serverSocket).start();
+        new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
-        while(true){
+        while (true) {
             controller.replicarMsg(teclado.nextLine());
         }
     }
