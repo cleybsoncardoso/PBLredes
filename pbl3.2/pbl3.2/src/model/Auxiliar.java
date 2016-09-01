@@ -19,39 +19,44 @@ import util.Cliente;
  */
 public class Auxiliar {
 
-    private ArrayList <Cliente> clientes;
+    private ArrayList<Cliente> clientes;
 
     public Auxiliar() {
         this.clientes = new ArrayList<Cliente>();
     }
-    
-    
+
     public void iniciarConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
-        new Thread (client).start();
+        new Thread(client).start();
+        client.enviarMsg("segundo");
         clientes.add(client);
     }
 
     public void replicarMsg(String msg) {
-        for(Cliente c: clientes){
-            c.enviarMsg("segundo");
+        for (Cliente c : clientes) {
             c.enviarMsg(msg);
         }
     }
-    public void removerCliente(String ip){
-        for(Cliente c: clientes){
-            if(c.getIp().equals(ip))
+
+    public void removerCliente(String ip) {
+        for (Cliente c : clientes) {
+            if (c.getIp().equals(ip)) {
                 clientes.remove(c);
+            }
         }
     }
 
     public void primeiraConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
-        new Thread (client).start();
+        new Thread(client).start();
         client.enviarMsg("primeiro");
         try {
             ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
+<<<<<<< HEAD
             for(String ipAtual: ips){
+=======
+            for (String ipAtual : ips) {
+>>>>>>> 98a5521bb2e27cba1d1b2b299cefdce714bf6b09
                 System.out.println(ipAtual);
                 this.iniciarConexao(ipAtual);
             }
@@ -60,7 +65,6 @@ public class Auxiliar {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         clientes.add(client);
     }
 }

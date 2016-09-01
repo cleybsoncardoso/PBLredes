@@ -24,6 +24,7 @@ public class Controller {
 
     public void primeiraConexao(String ip){
         auxiliar.primeiraConexao(ip);
+        ips.add(ip);
     }
     public void iniciarConexao(String ip) {
         if (verificaIp(ip)) {

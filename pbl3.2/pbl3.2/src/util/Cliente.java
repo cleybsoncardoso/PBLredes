@@ -30,25 +30,30 @@ public class Cliente implements Runnable {
     public Cliente(int porta, String ip) {
         this.porta = porta;
         this.ip = ip;
+        try {
+            cliente = new Socket(ip, porta);
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            input = new ObjectInputStream(cliente.getInputStream());
+            System.out.println("Conexao realizada");
+        } catch (IOException ex) {//Caso ocorra um erro na comunicação
+            System.out.println("Servidor esta offline");
+        }
 
     }
 
     public String getIp() {
         return ip;
     }
-    
-    
 
     @Override
     public void run() {
-        realizarConexao();
         while (true) {
             try {
                 sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(enviarMsg){
+            if (enviarMsg) {
                 try {
                     output.writeObject(msg);
                     enviarMsg = false;
@@ -64,20 +69,7 @@ public class Cliente implements Runnable {
         return input;
     }
 
-    
-
-    private void realizarConexao() {
-        try {
-            cliente = new Socket(ip, porta);
-            output = new ObjectOutputStream(cliente.getOutputStream());
-            input = new ObjectInputStream(cliente.getInputStream());
-            System.out.println("Conexao realizada");
-        } catch (IOException ex) {//Caso ocorra um erro na comunicação
-            System.out.println("Servidor esta offline");
-        }
-    }
-    
-    public void enviarMsg(Object msg){
+    public void enviarMsg(Object msg) {
         this.msg = msg;
         this.enviarMsg = true;
     }
