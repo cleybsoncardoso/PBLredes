@@ -34,6 +34,7 @@ public class Auxiliar {
 
     public void replicarMsg(String msg) {
         for(Cliente c: clientes){
+            c.enviarMsg("segundo");
             c.enviarMsg(msg);
         }
     }
@@ -42,5 +43,23 @@ public class Auxiliar {
             if(c.getIp().equals(ip))
                 clientes.remove(c);
         }
+    }
+
+    public void primeiraConexao(String ip) {
+        Cliente client = new Cliente(8080, ip);
+        new Thread (client).start();
+        client.enviarMsg("primeiro");
+        try {
+            ArrayList<String> ips =  (ArrayList<String>) client.getInput().readObject();
+            for(String ipAtual: ips){
+                this.iniciarConexao(ipAtual);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        clientes.add(client);
     }
 }

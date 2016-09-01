@@ -25,7 +25,7 @@ public class Cliente implements Runnable {
     private ObjectInputStream input;
     private Socket cliente;
     private boolean enviarMsg;
-    private String msg;
+    private Object msg;
 
     public Cliente(int porta, String ip) {
         this.porta = porta;
@@ -60,6 +60,12 @@ public class Cliente implements Runnable {
         }
     }
 
+    public ObjectInputStream getInput() {
+        return input;
+    }
+
+    
+
     private void realizarConexao() {
         try {
             cliente = new Socket(ip, porta);
@@ -71,7 +77,7 @@ public class Cliente implements Runnable {
         }
     }
     
-    public void enviarMsg(String msg){
+    public void enviarMsg(Object msg){
         this.msg = msg;
         this.enviarMsg = true;
     }
