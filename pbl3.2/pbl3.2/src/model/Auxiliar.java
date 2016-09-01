@@ -50,8 +50,9 @@ public class Auxiliar {
         new Thread (client).start();
         client.enviarMsg("primeiro");
         try {
-            ArrayList<String> ips =  (ArrayList<String>) client.getInput().readObject();
+            ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
             for(String ipAtual: ips){
+                System.out.println(ipAtual);
                 this.iniciarConexao(ipAtual);
             }
         } catch (IOException ex) {
