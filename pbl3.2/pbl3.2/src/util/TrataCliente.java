@@ -77,7 +77,6 @@ public class TrataCliente implements Runnable {
             aux.addAll(controller.getIps());
             aux.remove(this.ip);
             output.writeObject(aux);
-            
             System.out.println("saiu");
         }
     }
