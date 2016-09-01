@@ -26,6 +26,7 @@ public class Server implements Runnable {
     public Server(Controller controller, int porta) {
         this.controller = controller;
         this.porta = porta;
+        clientes = new ArrayList<>();
     }
 
     @Override
