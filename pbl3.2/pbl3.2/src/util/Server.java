@@ -44,6 +44,7 @@ public class Server implements Runnable {
 
                 if (conectar(ip)) {
                     controller.iniciarConexao(ip);
+                    clientes.add(cliente);
                 }
             }
         } catch (IOException ex) {

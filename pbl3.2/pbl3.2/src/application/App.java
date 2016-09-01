@@ -22,7 +22,7 @@ public class App {
 
     public static void main(String[] args) {
         Controller controller = new Controller();
-        //controller.iniciarConexao("25.12.22.120");
+        controller.iniciarConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
         new Thread (serverSocket).start();
         Scanner teclado = new Scanner(System.in);
