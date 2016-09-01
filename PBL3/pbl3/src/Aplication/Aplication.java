@@ -22,7 +22,6 @@ public class Aplication {
         Controller controller = new Controller();
         Server servidor = new Server(controller);
         new Thread(servidor).start();
-        controller.iniciarConexao();
         Scanner teste = new Scanner(System.in);
         while(true){
             String t = teste.nextLine();
