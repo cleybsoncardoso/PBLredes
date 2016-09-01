@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import model.Auxiliar;
 
 /**
@@ -13,14 +14,32 @@ import model.Auxiliar;
  */
 public class Controller {
 
-    Auxiliar auxiliar;
+    private Auxiliar auxiliar;
+    private ArrayList<String> ips;
 
     public Controller() {
         auxiliar = new Auxiliar();
+        ips = new ArrayList<>();
     }
 
-    public void iniciarConexao(String string) {
-        auxiliar.iniciarConexao(string);
+    public void iniciarConexao(String ip) {
+        if (verificaIp(ip)) {
+            auxiliar.iniciarConexao(ip);
+            ips.add(ip);
+        }
+    }
+    
+    public void removerIp(String ip){
+        ips.remove(ip);
+    }
+
+    private boolean verificaIp(String ip) {
+        for (String ipAtual : ips) {
+            if (ipAtual.equals(ip)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void replicarMsg(String msg) {

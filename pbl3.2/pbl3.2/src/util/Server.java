@@ -39,29 +39,13 @@ public class Server implements Runnable {
                 Socket cliente = servidor.accept();
                 String ip = cliente.getInetAddress().getHostAddress();
                 System.out.println("Conexao criada com " + ip);
-                TrataCliente tc = new TrataCliente(controller, cliente, this);
+                TrataCliente tc = new TrataCliente(controller, cliente);
                 new Thread(tc).start();
+                controller.iniciarConexao(ip);
 
-                if (conectar(ip)) {
-                    controller.iniciarConexao(ip);
-                }
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private boolean conectar(String ip) {
-        for (Socket c : clientes) {
-            if (c.getInetAddress().getHostAddress().equals(ip)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public void removerCliente(Socket cliente){
-        clientes.remove(cliente);
-    }
-
 }
