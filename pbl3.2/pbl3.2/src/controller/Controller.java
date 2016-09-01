@@ -18,7 +18,7 @@ public class Controller {
     private ArrayList<String> ips;
 
     public Controller() {
-        auxiliar = new Auxiliar();
+        auxiliar = new Auxiliar(this);
         ips = new ArrayList<>();
     }
 

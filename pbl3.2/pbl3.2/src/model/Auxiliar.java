@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.Controller;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ import util.Cliente;
 public class Auxiliar {
 
     private ArrayList<Cliente> clientes;
+    private Controller controller;
 
-    public Auxiliar() {
+    public Auxiliar(Controller controller) {
         this.clientes = new ArrayList<Cliente>();
+        this.controller=controller;
     }
 
     public void iniciarConexao(String ip) {
@@ -54,7 +57,7 @@ public class Auxiliar {
             ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
             for (String ipAtual : ips) {
                 System.out.println(ipAtual);
-                this.iniciarConexao(ipAtual);
+                controller.iniciarConexao(ipAtual);
             }
         } catch (IOException ex) {
             Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
