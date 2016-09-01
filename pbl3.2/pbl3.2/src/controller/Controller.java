@@ -6,7 +6,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import model.Auxiliar;
+import model.Carro;
 
 /**
  *
@@ -16,6 +18,7 @@ public class Controller {
 
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
+    private HashMap<Integer, Carro> carros;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
@@ -53,5 +56,8 @@ public class Controller {
 
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
+    }
+    
+    public void adicionarCarro(int id){
     }
 }

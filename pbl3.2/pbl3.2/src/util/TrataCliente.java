@@ -20,14 +20,19 @@ import java.util.logging.Logger;
  */
 public class TrataCliente implements Runnable {
 
+    private static int id_counter = 1;
     private Controller controller;
     private Socket cliente;
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Server servidor;
     private String ip;
+    private int id;
 
     TrataCliente(Controller controller, Socket cliente) {
+        this.id = id_counter;
+        this.id_counter++;
+        System.out.println(id);
         this.controller = controller;
         this.cliente = cliente;
         this.ip = this.cliente.getInetAddress().getHostAddress();
