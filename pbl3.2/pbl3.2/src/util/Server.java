@@ -36,14 +36,31 @@ public class Server implements Runnable {
             while (true) {
                 System.out.println("Esperando Cliente...");
                 Socket cliente = servidor.accept();
-                System.out.println("Conexao criada com " + cliente.getInetAddress().getHostAddress());
-                TrataCliente tc = new TrataCliente(controller, cliente);
+                String ip = cliente.getInetAddress().getHostAddress();
+                System.out.println("Conexao criada com " + ip);
+                TrataCliente tc = new TrataCliente(controller, cliente, this);
                 new Thread(tc).start();
-                controller.iniciarConexao(cliente.getInetAddress().getHostAddress());
+
+                if (conectar(ip)) {
+                    controller.iniciarConexao(ip);
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean conectar(String ip) {
+        for (Socket c : clientes) {
+            if (c.getInetAddress().getHostAddress().equals(ip)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void removerCliente(Socket cliente){
+        clientes.remove(cliente);
     }
 
 }

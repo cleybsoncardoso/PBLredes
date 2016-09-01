@@ -23,14 +23,17 @@ public class TrataCliente implements Runnable {
     private Socket cliente;
     private ObjectOutputStream output;
     private ObjectInputStream input;
+    private Server servidor;
 
-    TrataCliente(Controller controller, Socket cliente) {
+    TrataCliente(Controller controller, Socket cliente, Server servidor) {
         this.controller = controller;
         this.cliente = cliente;
+        this.servidor = servidor;
         try {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
+            servidor.removerCliente(this.cliente);
             Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -42,9 +45,12 @@ public class TrataCliente implements Runnable {
                 String msg = (String) input.readObject();
                 System.out.println(msg);
             } catch (IOException ex) {
+                servidor.removerCliente(this.cliente);
                 Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+                return;
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+                return;
             }
         }
     }
