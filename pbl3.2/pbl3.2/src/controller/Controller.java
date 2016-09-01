@@ -5,10 +5,24 @@
  */
 package controller;
 
+import model.Auxiliar;
+
 /**
  *
  * @author paiva
  */
 public class Controller {
-    
+
+    Auxiliar auxiliar;
+
+    public Controller() {
+        auxiliar = new Auxiliar();
+    }
+
+    public void iniciarConexao(String string) {
+        auxiliar.iniciarConexao(string);
+    }
+    public void replicarMsg(String msg){
+        auxiliar.replicarMsg(msg);
+    }
 }
