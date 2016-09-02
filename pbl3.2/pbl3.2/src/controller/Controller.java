@@ -22,10 +22,12 @@ public class Controller {
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
+    private String meuIp;
 
-    public Controller() {
+    public Controller(String meuIp) {
         auxiliar = new Auxiliar(this);
         ips = new ArrayList<>();
+        this.meuIp=meuIp;
     }
 
     public void primeiraConexao(String ip) {
@@ -34,7 +36,7 @@ public class Controller {
     }
 
     public void iniciarConexao(String ip) {
-        System.out.println("recebi: "+ip);
+        System.out.println("recebi: " + ip);
         if (verificaIp(ip)) {
             System.err.println("acho q agora foi");
             auxiliar.iniciarConexao(ip);
@@ -48,16 +50,11 @@ public class Controller {
     }
 
     private boolean verificaIp(String ip) {
-        try {
-            String meuIp = InetAddress.getLocalHost().getHostAddress();
-            for (String ipAtual : ips) {
-                if (ipAtual.equals(ip)) {
-                    return false;
-                }
-            }
 
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        for (String ipAtual : ips) {
+            if (ipAtual.equals(ip)) {
+                return false;
+            }
         }
         return true;
     }
