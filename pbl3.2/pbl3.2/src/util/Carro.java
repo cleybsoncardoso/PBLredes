@@ -3,49 +3,63 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package util;
 
-import java.net.Socket;
-import java.util.ArrayList;
-import util.Quadrante;
-import util.Coordenada;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
- * @author cleyb
+ * @author paiva
  */
 public class Carro {
-    private String origem, destino;
-    private Coordenada coordenadaAtual;
-    private ArrayList<Quadrante> trajeto;
-    private Socket cliente;
 
-    public Carro(Socket cliente, String origem, String destino, Coordenada coordenadaAtual, ArrayList<Quadrante> trajeto) {
-        this.origem = origem;
-        this.destino = destino;
-        this.coordenadaAtual = coordenadaAtual;
-        this.trajeto = trajeto;
-        this.cliente=cliente;
+    private static final float SPEED = 200; //Velocidade em 20 pixels / segundo
+    private static int WIDTH = 20;
+    private static int HEIGHT = 30;
+
+    private int x;
+    private int y;
+
+    private float vx = SPEED;
+    private float vy = SPEED / 2;
+
+    private int screenWidth;
+    private int screenHeight;
+
+    public Rectangle2D car;
+
+    public Carro(int screenWidth, int screenHeight) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
+        car = new Rectangle2D.Float(0, 0, WIDTH, HEIGHT);
     }
 
-    public String getOrigem() {
-        return origem;
+    public Carro(int screenWidth, int screenHeight, int x, int y) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
+        this.x = x;
+        this.y = y;
+        car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
 
-    public String getDestino() {
-        return destino;
+    public Rectangle2D draw() {
+        return car;
     }
 
-    public Coordenada getCoordenadaAtual() {
-        return coordenadaAtual;
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+        if (car == null) {
+            car = new Rectangle2D.Float(0, 0, WIDTH, HEIGHT);
+        }
+        car.setRect(this.x, this.y, WIDTH, HEIGHT);
     }
 
-    public ArrayList<Quadrante> getTrajeto() {
-        return trajeto;
+    public void virar(){
+        int aux = HEIGHT;
+        HEIGHT = WIDTH;
+        WIDTH = aux;
+        car.setRect(this.x, this.y, HEIGHT, WIDTH);
+        System.out.println("virou");
     }
-
-    public Socket getCliente() {
-        return cliente;
-    }
-    
 }

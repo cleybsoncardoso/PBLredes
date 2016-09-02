@@ -8,7 +8,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Auxiliar;
-import model.Carro;
+import model.Carro2;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Controller {
 
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
-    private HashMap<Integer, Carro> carros;
+    private HashMap<Integer, Carro2> carros;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
