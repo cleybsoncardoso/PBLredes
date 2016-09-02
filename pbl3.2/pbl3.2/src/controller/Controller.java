@@ -8,7 +8,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Auxiliar;
-import model.Carro2;
 
 /**
  *
