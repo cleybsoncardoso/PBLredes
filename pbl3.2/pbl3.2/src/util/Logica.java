@@ -17,12 +17,27 @@ public class Logica {
 
     private Controller controller;
     private ControllerCarro meuCarro;
-    
-    public boolean conflito(){
-        
+
+    public boolean conflito() {
+        for (ControllerCarro carroAtual : controller.getCarros()) {
+            int j = 0;
+            //verifica qual o maior trajeto, para basear se vai ter conflito
+            if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
+                j = carroAtual.getTrajeto().size();
+            } else {
+                j = meuCarro.getTrajeto().size();
+            }
+            //busca direta, para verificar se vai ter conflito
+            for (int i = 0; i < j; i++) {
+                if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
+                    return true;
+                }
+            }
+
+        }
         return false;
     }
-    
+
     public ArrayList<Quadrante> calcularTrajeto(String origem, String destino) {
         ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();
         if (origem.equals("A")) {
@@ -75,5 +90,5 @@ public class Logica {
             }
         }
     }
-    
+
 }
