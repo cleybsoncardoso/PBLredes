@@ -40,7 +40,6 @@ public class App {
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
-<<<<<<< HEAD
         
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -66,7 +65,6 @@ public class App {
         //CarroFrame tela = new CarroFrame(controller);
         //new Thread(tela).start();
         
-        Scanner teclado = new Scanner(System.in);        
 //        EstouNaRede enr = new EstouNaRede("239.0.0.1", 12347, controller);
 //        new Thread(enr).start();
 //
@@ -90,7 +88,6 @@ public class App {
 //        } catch (Exception e) {
 //            System.out.println("Nao foi possivel enviar a mensagem");
 //        }
-=======
         new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);
@@ -109,7 +106,6 @@ public class App {
         } catch (Exception e) {
             System.out.println("Nao foi possivel enviar a mensagem");
         }
->>>>>>> c11d9e6dfb21ab2353d338881e6d05cd0a22a4f3
         while (true) {
             controller.replicarMsg(teclado.nextLine());
         }
