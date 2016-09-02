@@ -7,7 +7,9 @@ package controller;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import util.Carro;
+import util.Quadrante;
 
 /**
  *
@@ -22,6 +24,7 @@ public class ControllerCarro {
     private int larguraTela;
     private int direcao;
     private int v = 5;
+    private ArrayList<Quadrante> trajeto;
 
     public ControllerCarro(int screenWidth, int screenHeight) {
         this.alturaTela = screenHeight;
@@ -38,6 +41,10 @@ public class ControllerCarro {
         g1.setColor(Color.RED);
         g1.fill(carro.draw());
         g1.dispose();
+    }
+
+    public ArrayList<Quadrante> getTrajeto() {
+        return trajeto;
     }
 
     public void andar() {
