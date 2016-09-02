@@ -23,7 +23,7 @@ public class ClienteMulticast {
       while(true) {
         try {       
           MulticastSocket mcs = new MulticastSocket(12347);
-          InetAddress grp = InetAddress.getByName("238.128.0.2");
+          InetAddress grp = InetAddress.getByName("239.0.0.1");
           mcs.joinGroup(grp);
           byte rec[] = new byte[256];
           DatagramPacket pkg = new DatagramPacket(rec, rec.length);
