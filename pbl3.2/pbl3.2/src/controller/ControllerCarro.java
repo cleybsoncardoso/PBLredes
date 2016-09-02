@@ -25,8 +25,10 @@ public class ControllerCarro {
     private int direcao;
     private int v = 5;
     private ArrayList<Quadrante> trajeto;
+    private int id;
 
-    public ControllerCarro(int screenWidth, int screenHeight) {
+    public ControllerCarro(int id, int screenWidth, int screenHeight) {
+        this.id = id;
         this.alturaTela = screenHeight;
         this.larguraTela = screenWidth;
         this.x = screenHeight / 2 + 30;

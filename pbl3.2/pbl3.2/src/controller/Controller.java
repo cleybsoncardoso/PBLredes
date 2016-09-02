@@ -17,7 +17,7 @@ public class Controller {
 
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
-    private HashMap<Integer, ControllerCarro> carros;
+    private ArrayList<ControllerCarro> carros;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
@@ -58,11 +58,11 @@ public class Controller {
     }
     
     public void adicionarCarro(int id){
-        ControllerCarro c = new ControllerCarro(480, 482);
-        carros.put(id, c);
+        ControllerCarro c = new ControllerCarro(id, 480, 482);
+        carros.add(id, c);
     }
     
-    public HashMap<Integer, ControllerCarro> getCarros(){
+    public ArrayList<ControllerCarro> getCarros(){
         return this.carros;
     }
 }
