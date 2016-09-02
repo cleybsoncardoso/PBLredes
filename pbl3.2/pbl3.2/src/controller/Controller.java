@@ -5,8 +5,12 @@
  */
 package controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Auxiliar;
 
 /**
@@ -18,53 +22,64 @@ public class Controller {
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
+<<<<<<< HEAD
     private int counter;
+=======
+    private String meuIp;
+>>>>>>> c11d9e6dfb21ab2353d338881e6d05cd0a22a4f3
 
-    public Controller() {
+    public Controller(String meuIp) {
         auxiliar = new Auxiliar(this);
         ips = new ArrayList<>();
+<<<<<<< HEAD
         carros = new ArrayList<>();
         counter = 0;
+=======
+        this.meuIp=meuIp;
+>>>>>>> c11d9e6dfb21ab2353d338881e6d05cd0a22a4f3
     }
 
-    public void primeiraConexao(String ip){
+    public void primeiraConexao(String ip) {
         auxiliar.primeiraConexao(ip);
         ips.add(ip);
     }
+
     public void iniciarConexao(String ip) {
         if (verificaIp(ip)) {
             auxiliar.iniciarConexao(ip);
             ips.add(ip);
         }
     }
-    
-    public void removerIp(String ip){
+
+    public void removerIp(String ip) {
         ips.remove(ip);
         auxiliar.removerCliente(ip);
     }
 
     private boolean verificaIp(String ip) {
+
         for (String ipAtual : ips) {
-            if (ipAtual.equals(ip)) {
+            if (ipAtual.equals(ip)||ipAtual.equals(meuIp)) {
                 return false;
             }
         }
         return true;
     }
-    
-    public ArrayList<String> getIps(){
+
+    public ArrayList<String> getIps() {
         return this.ips;
     }
 
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
     }
-    
-    public void adicionarCarro(int id){
+
+    public void adicionarCarro(int id) {
         ControllerCarro c = new ControllerCarro(id, 480, 482);
         carros.add(id, c);
         counter++;
     }
+<<<<<<< HEAD
     
     public ArrayList<ControllerCarro> getCarros(){
         ArrayList<ControllerCarro> aux = new ArrayList<>();
@@ -72,5 +87,10 @@ public class Controller {
             aux.add(this.carros.get(i));
         }
         return aux;
+=======
+
+    public ArrayList<ControllerCarro> getCarros() {
+        return this.carros;
+>>>>>>> c11d9e6dfb21ab2353d338881e6d05cd0a22a4f3
     }
 }

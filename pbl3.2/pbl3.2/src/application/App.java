@@ -29,10 +29,18 @@ import view.CarroFrame;
 public class App {
 
     public static void main(String[] args) {
-        Controller controller = new Controller();
+        String ip = null;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(ip);
+        } catch (UnknownHostException ex) {
+            System.out.println("não foi possivel verificar ip");
+        }
+        Controller controller = new Controller(ip);
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
+<<<<<<< HEAD
         
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -82,6 +90,26 @@ public class App {
 //        } catch (Exception e) {
 //            System.out.println("Nao foi possivel enviar a mensagem");
 //        }
+=======
+        new Thread(serverSocket).start();
+        Scanner teclado = new Scanner(System.in);
+        EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);
+        new Thread(enr).start();
+
+        String[] dados = new String[3];
+        dados[0] = "224.0.0.0";
+        dados[1] = "12347";
+        dados[2] = ip;
+        try {
+            byte[] b = dados[2].getBytes();
+            InetAddress addr = InetAddress.getByName(dados[0]);
+            DatagramSocket ds = new DatagramSocket();
+            DatagramPacket pkg = new DatagramPacket(b, b.length, addr, Integer.parseInt(dados[1]));
+            ds.send(pkg);
+        } catch (Exception e) {
+            System.out.println("Nao foi possivel enviar a mensagem");
+        }
+>>>>>>> c11d9e6dfb21ab2353d338881e6d05cd0a22a4f3
         while (true) {
             controller.replicarMsg(teclado.nextLine());
         }
