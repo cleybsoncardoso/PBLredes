@@ -15,13 +15,13 @@ import util.Coordenada;
  *
  * @author cleyb
  */
-public class Carro {
+public class Carro2 {
     private String origem, destino;
     private Coordenada coordenadaAtual;
     private ArrayList<Quadrante> trajeto;
     private Cliente cliente;
 
-    public Carro(String origem, String destino, Coordenada coordenadaAtual, ArrayList<Quadrante> trajeto) {
+    public Carro2(String origem, String destino, Coordenada coordenadaAtual, ArrayList<Quadrante> trajeto) {
         this.origem = origem;
         this.destino = destino;
         this.coordenadaAtual = coordenadaAtual;

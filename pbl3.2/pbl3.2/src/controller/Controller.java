@@ -8,7 +8,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Auxiliar;
-import model.Carro;
 
 /**
  *
@@ -18,8 +17,7 @@ public class Controller {
 
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
-    private ArrayList<Carro> carros;
-    private HashMap<Integer, Carro> carross;
+    private ArrayList<ControllerCarro> carros;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
@@ -60,5 +58,11 @@ public class Controller {
     }
     
     public void adicionarCarro(int id){
+        ControllerCarro c = new ControllerCarro(id, 480, 482);
+        carros.add(id, c);
+    }
+    
+    public ArrayList<ControllerCarro> getCarros(){
+        return this.carros;
     }
 }

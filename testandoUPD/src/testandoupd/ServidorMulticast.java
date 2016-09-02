@@ -23,27 +23,22 @@ import java.util.logging.Logger;
 public class ServidorMulticast {
 
     public static void main(String[] args) {
-        String[] teste = new String[3];
-        String ip = null;
-        try {
-            ip = InetAddress.getLocalHost().getHostAddress();
-            System.out.println(ip);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ServidorMulticast.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        teste[0] = "238.128.0.2";
-        teste[1] = "12347";
-        teste[2] = ip;
-        if (teste.length != 3) {
+
+        args = new String[3];
+
+        args[0] = "224.0.0.0";
+        args[1] = "12347";
+        args[2] = "teste";
+        if (args.length != 3) {
             System.out.println("Digite <endereco multicast> <porta> <mensagem>");
             System.exit(0);
         }
 
         try {
-            byte[] b = teste[2].getBytes();
-            InetAddress addr = InetAddress.getByName(teste[0]);
+            byte[] b = args[2].getBytes();
+            InetAddress addr = InetAddress.getByName(args[0]);
             DatagramSocket ds = new DatagramSocket();
-            DatagramPacket pkg = new DatagramPacket(b, b.length, addr, Integer.parseInt(teste[1]));
+            DatagramPacket pkg = new DatagramPacket(b, b.length, addr, Integer.parseInt(args[1]));
             ds.send(pkg);
         } catch (Exception e) {
             System.out.println("Nao foi possivel enviar a mensagem");
