@@ -7,8 +7,7 @@ package model;
 
 import java.net.Socket;
 import java.util.ArrayList;
-import util.Quadrante;
-import util.Coordenada;
+
 
 /**
  *

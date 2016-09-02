@@ -7,7 +7,6 @@ package model;
 
 import java.util.ArrayList;
 import util.Cliente;
-import util.Quadrante;
 import util.Replicador;
 
 /**

@@ -7,6 +7,7 @@ package model;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import util.Cliente;
 import util.Quadrante;
 import util.Coordenada;
 
@@ -18,9 +19,9 @@ public class Carro2 {
     private String origem, destino;
     private Coordenada coordenadaAtual;
     private ArrayList<Quadrante> trajeto;
-    private Socket cliente;
+    private Cliente cliente;
 
-    public Carro2(Socket cliente, String origem, String destino, Coordenada coordenadaAtual, ArrayList<Quadrante> trajeto) {
+    public Carro2(String origem, String destino, Coordenada coordenadaAtual, ArrayList<Quadrante> trajeto) {
         this.origem = origem;
         this.destino = destino;
         this.coordenadaAtual = coordenadaAtual;
@@ -42,10 +43,6 @@ public class Carro2 {
 
     public ArrayList<Quadrante> getTrajeto() {
         return trajeto;
-    }
-
-    public Socket getCliente() {
-        return cliente;
     }
     
 }
