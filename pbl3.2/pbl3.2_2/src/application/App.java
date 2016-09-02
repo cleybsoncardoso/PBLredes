@@ -6,18 +6,18 @@
 package application;
 
 import controller.Controller;
-import java.awt.EventQueue;
-import static java.lang.Thread.sleep;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.EstouNaRede;
 import util.Server;
-import view.CarroFrame;
+import util.TrataCliente;
 
 /**
  *
@@ -37,29 +37,6 @@ public class App {
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
-        
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                CarroFrame bf = new CarroFrame(controller);
-                bf.setVisible(true);
-                bf.startMainLoop();
-            }
-        });
-        
-        //adicionando carros no cruzamento
-        int i = 0;
-        while(i<10){
-            controller.adicionarCarro(i);
-            try {
-                sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            i++;
-        }
-        
-
         new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);

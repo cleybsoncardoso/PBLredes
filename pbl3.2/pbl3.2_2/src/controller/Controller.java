@@ -22,15 +22,12 @@ public class Controller {
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
-    private int counter;
     private String meuIp;
 
     public Controller(String meuIp) {
         auxiliar = new Auxiliar(this);
         ips = new ArrayList<>();
-        carros = new ArrayList<>();
-        counter = 0;
-        this.meuIp = meuIp;
+        this.meuIp=meuIp;
     }
 
     public void primeiraConexao(String ip) {
@@ -53,7 +50,7 @@ public class Controller {
     private boolean verificaIp(String ip) {
 
         for (String ipAtual : ips) {
-            if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
+            if (ipAtual.equals(ip)||ipAtual.equals(meuIp)) {
                 return false;
             }
         }
@@ -71,16 +68,9 @@ public class Controller {
     public void adicionarCarro(int id) {
         ControllerCarro c = new ControllerCarro(id, 480, 482);
         carros.add(id, c);
-        counter++;
     }
 
     public ArrayList<ControllerCarro> getCarros() {
-        ArrayList<ControllerCarro> aux = new ArrayList<>();
-        for (int i = 0; i < this.counter; i++) {
-            aux.add(this.carros.get(i));
-        }
-        return aux;
+        return this.carros;
     }
-
 }
-
