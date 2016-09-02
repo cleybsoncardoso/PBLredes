@@ -6,22 +6,24 @@
 package view;
 
 import controller.Controller;
-import controller.ControllerCarro;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import util.Carro;
 import util.MainLoop;
 
 /**
@@ -31,16 +33,20 @@ import util.MainLoop;
 public class CarroFrame extends JFrame {
 
     private MainLoop loop = new MainLoop(this, 60);
-    private ArrayList<ControllerCarro> carros;
-    private long previous = System.currentTimeMillis();
-    private Controller controller;
+    private Rectangle2D car;
 
-    //os controllers estarao no controller principal e quando for desenhar percorrer a lista de controllers e chamar o metodo de desenhar
-    //para isso é necessario que cada controller ja tenha iniciado seu veiculo
+    private long previous = System.currentTimeMillis();
+
+    private Controller control;
+    private Controller control2;
+
+    private int i = 0;
+
     private Image background;
 
-    public CarroFrame(Controller controller) {
+    public CarroFrame() {
         super("Cruzamento");
+        i = 0;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(482, 480);
         setResizable(false);
@@ -51,8 +57,6 @@ public class CarroFrame extends JFrame {
                 loop.stop();
             }
         });
-        this.controller = controller;
-        this.carros = this.controller.getCarros();
     }
 
     public void startMainLoop() {
@@ -63,6 +67,9 @@ public class CarroFrame extends JFrame {
     public void setup() {
         //Subtrai a decora��o da janela da largura e altura m�ximas
         //percorridas pela bola.
+        control = new Controller(getWidth() - getInsets().left - getInsets().right,
+                getHeight() - getInsets().top - getInsets().bottom);
+
         try {
             this.background = ImageIO.read(new File("background.png"));
         } catch (IOException ex) {
@@ -75,10 +82,8 @@ public class CarroFrame extends JFrame {
     public void processLogics() {
         //Calcula o tempo entre dois updates
         //long time = System.currentTimeMillis() - previous;
-        this.carros = this.controller.getCarros();
-        for (ControllerCarro carro : carros) {
-            carro.acao();
-        }
+
+        control.acao();
 
         //previous = System.currentTimeMillis();
         //i = 1;
@@ -87,14 +92,35 @@ public class CarroFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
         g.drawImage(background, 0, 0, null);
-
-        for (ControllerCarro carro : carros) {
-            carro.desenhar((Graphics2D) g);
+        i = 1;
+        if (control != null) {
+            control.desenhar((Graphics2D) g);
+            //carro.draw((Graphics2D) g); //Desenhamos a bola
         }
-
+//        if (control != null) {
+//            control.desenhar((Graphics2D) g); // desenha o carro
+//        }
+        // g.dispose(); //Liberamos o contexto criado.
     }
 
     public void paintScreen() {
         repaint();
     }
+
+    public void entrarCarro() {
+        control = new Controller(getWidth() - getInsets().left - getInsets().right,
+                getHeight() - getInsets().top - getInsets().bottom);
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                CarroFrame bf = new CarroFrame();
+                bf.setVisible(true);
+                bf.startMainLoop();
+            }
+        });
+    }
+
 }

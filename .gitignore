@@ -32,5 +32,15 @@
 /pbl3.2/pbl3.2/dist/
 /testandoUPD/build/
 /testandoUPD/nbproject/private/
+<<<<<<< HEAD
 /pbl3.2/pbl3.2_1/nbproject/private/
 /pbl3.2/pbl3.2_2/nbproject/private/
+=======
+/testearray/nbproject/private/
+/testearray/build/
+/pbl3.2 - Copia/Action/build/
+/pbl3.2 - Copia/Action/nbproject/private/
+/pbl3.2 - Copia/pbl3.2/build/
+/pbl3.2 - Copia/pbl3.2/dist/
+/pbl3.2 - Copia/pbl3.2/nbproject/private/
+>>>>>>> a7fd897e50f4d234067e744103493f2e6c83bc13
