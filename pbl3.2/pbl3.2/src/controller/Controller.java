@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import model.Auxiliar;
+import model.Carro;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Controller {
 
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
+    private ArrayList<Carro> carros;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
