@@ -7,6 +7,7 @@ package util;
 
 import controller.Controller;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -41,6 +42,11 @@ public class Server implements Runnable {
                 System.out.println("Conexao criada com " + ip);
                 TrataCliente tc = new TrataCliente(controller, cliente);
                 new Thread(tc).start();
+                try {
+                    sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 controller.iniciarConexao(ip);
 
             }
