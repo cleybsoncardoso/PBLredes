@@ -1,5 +1,6 @@
 package util;
 
+import static java.lang.Thread.sleep;
 import view.CarroFrame;
 
 public class MainLoop implements Runnable {
@@ -142,7 +143,6 @@ public class MainLoop implements Runnable {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException("Exception during game loop", e);
         }
 //        finally

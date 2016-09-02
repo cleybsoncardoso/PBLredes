@@ -14,8 +14,8 @@ import java.awt.geom.Rectangle2D;
 public class Carro {
 
     private static final float SPEED = 200; //Velocidade em 20 pixels / segundo
-    private int WIDTH = 20;
-    private int HEIGHT = 30;
+    private static int WIDTH = 20;
+    private static int HEIGHT = 30;
 
     private int x;
     private int y;
@@ -26,7 +26,13 @@ public class Carro {
     private int screenWidth;
     private int screenHeight;
 
-    private Rectangle2D car;
+    public Rectangle2D car;
+
+    public Carro(int screenWidth, int screenHeight) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
+        car = new Rectangle2D.Float(0, 0, WIDTH, HEIGHT);
+    }
 
     public Carro(int screenWidth, int screenHeight, int x, int y) {
         this.screenHeight = screenHeight;

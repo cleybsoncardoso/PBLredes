@@ -6,14 +6,16 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import util.Carro;
 
 /**
  *
  * @author paiva
  */
-public class ControllerCarro {
+public class Controller {
 
     private int x;
     private int y;
@@ -22,24 +24,22 @@ public class ControllerCarro {
     private int larguraTela;
     private int direcao;
     private int v = 5;
-    private int id;
 
-    public ControllerCarro(int id, int screenWidth, int screenHeight) {
-        this.id = id;
+    public Controller(int screenWidth, int screenHeight) {
         this.alturaTela = screenHeight;
         this.larguraTela = screenWidth;
-        this.x = screenHeight / 2 + 18;
+        this.x = screenHeight / 2 + 30;
         this.y = screenWidth;
         carro = new Carro(screenWidth, screenHeight, this.x, this.y);
         direcao = 0;
     }
 
     public void desenhar(Graphics2D g2d) {
-        //Graphics2D g1 = (Graphics2D) g2d.create();
+        Graphics2D g1 = (Graphics2D) g2d.create();
         //g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.RED);
-        g2d.fill(carro.draw());
-        //g1.dispose();
+        g1.setColor(Color.RED);
+        g1.fill(carro.draw());
+        g1.dispose();
     }
 
     public void andar() {
@@ -81,7 +81,7 @@ public class ControllerCarro {
     }
 
     public void acao() {
-        if ((y <= alturaTela / 2 - 25) && (direcao == 0)) {
+        if ((y <= alturaTela / 2 - 20) && (direcao == 0)) {
             virarEsquerda();
         } else {
             andar();
