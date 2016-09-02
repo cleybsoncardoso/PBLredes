@@ -5,8 +5,12 @@
  */
 package controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Auxiliar;
 
 /**
@@ -24,45 +28,54 @@ public class Controller {
         ips = new ArrayList<>();
     }
 
-    public void primeiraConexao(String ip){
+    public void primeiraConexao(String ip) {
         auxiliar.primeiraConexao(ip);
         ips.add(ip);
     }
+
     public void iniciarConexao(String ip) {
+        System.out.println("recebi: "+ip);
         if (verificaIp(ip)) {
+            System.err.println("acho q agora foi");
             auxiliar.iniciarConexao(ip);
             ips.add(ip);
         }
     }
-    
-    public void removerIp(String ip){
+
+    public void removerIp(String ip) {
         ips.remove(ip);
         auxiliar.removerCliente(ip);
     }
 
     private boolean verificaIp(String ip) {
-        for (String ipAtual : ips) {
-            if (ipAtual.equals(ip)) {
-                return false;
+        try {
+            String meuIp = InetAddress.getLocalHost().getHostAddress();
+            for (String ipAtual : ips) {
+                if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
+                    return false;
+                }
             }
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
-    
-    public ArrayList<String> getIps(){
+
+    public ArrayList<String> getIps() {
         return this.ips;
     }
 
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
     }
-    
-    public void adicionarCarro(int id){
+
+    public void adicionarCarro(int id) {
         ControllerCarro c = new ControllerCarro(id, 480, 482);
         carros.add(id, c);
     }
-    
-    public ArrayList<ControllerCarro> getCarros(){
+
+    public ArrayList<ControllerCarro> getCarros() {
         return this.carros;
     }
 }
