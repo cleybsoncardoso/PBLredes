@@ -36,9 +36,7 @@ public class Controller {
     }
 
     public void iniciarConexao(String ip) {
-        System.out.println("recebi: " + ip);
         if (verificaIp(ip)) {
-            System.err.println("acho q agora foi");
             auxiliar.iniciarConexao(ip);
             ips.add(ip);
         }
