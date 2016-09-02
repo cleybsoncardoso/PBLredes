@@ -51,7 +51,7 @@ public class Controller {
         try {
             String meuIp = InetAddress.getLocalHost().getHostAddress();
             for (String ipAtual : ips) {
-                if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
+                if (ipAtual.equals(ip)) {
                     return false;
                 }
             }
