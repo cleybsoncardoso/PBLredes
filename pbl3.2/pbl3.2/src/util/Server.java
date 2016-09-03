@@ -42,7 +42,11 @@ public class Server implements Runnable {
                 System.out.println("Conexao criada com " + ip);
                 TrataCliente tc = new TrataCliente(controller, cliente);
                 new Thread(tc).start();
-                
+                try {
+                    sleep(800);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 controller.iniciarConexao(ip);
 
             }
