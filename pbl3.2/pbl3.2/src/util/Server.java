@@ -42,6 +42,7 @@ public class Server implements Runnable {
                 System.out.println("Conexao criada com " + ip);
                 TrataCliente tc = new TrataCliente(controller, cliente);
                 new Thread(tc).start();
+                
                 controller.iniciarConexao(ip);
 
             }

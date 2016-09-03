@@ -34,14 +34,14 @@ public class Controller {
     }
 
     public void primeiraConexao(String ip) {
-        auxiliar.primeiraConexao(ip);
         ips.add(ip);
+        auxiliar.primeiraConexao(ip);   
     }
 
     public void iniciarConexao(String ip) {
         if (verificaIp(ip)) {
-            auxiliar.iniciarConexao(ip);
             ips.add(ip);
+            auxiliar.iniciarConexao(ip);
         }
     }
 
