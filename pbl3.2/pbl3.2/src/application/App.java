@@ -37,7 +37,7 @@ public class App {
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
-        
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -46,20 +46,21 @@ public class App {
                 bf.startMainLoop();
             }
         });
-        
-        //adicionando carros no cruzamento
-        int i = 0;
-        while(i<10){
-            controller.adicionarCarro(i);
-            try {
-                sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            i++;
-        }
-        
 
+        //adicionando carros no cruzamento
+        controller.adicionarCarro(0, "A", "B");
+        controller.adicionarCarro(1, "A", "C");
+        controller.adicionarCarro(2, "A", "D");
+        controller.adicionarCarro(3, "B", "A");
+        controller.adicionarCarro(4, "B", "C");
+        controller.adicionarCarro(5, "B", "D");
+        controller.adicionarCarro(6, "C", "A");
+        controller.adicionarCarro(7, "C", "B");
+        controller.adicionarCarro(8, "C", "D");
+        controller.adicionarCarro(9, "D", "A");
+        controller.adicionarCarro(10, "D", "B");
+        controller.adicionarCarro(11, "D", "C");
+        
         new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);

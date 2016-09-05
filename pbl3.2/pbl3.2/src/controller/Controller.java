@@ -35,7 +35,7 @@ public class Controller {
 
     public void primeiraConexao(String ip) {
         ips.add(ip);
-        auxiliar.primeiraConexao(ip);   
+        auxiliar.primeiraConexao(ip);
     }
 
     public void iniciarConexao(String ip) {
@@ -68,8 +68,8 @@ public class Controller {
         auxiliar.replicarMsg(msg);
     }
 
-    public void adicionarCarro(int id) {
-        ControllerCarro c = new ControllerCarro(id, 480, 482);
+    public void adicionarCarro(int id, String origem, String destino) {
+        ControllerCarro c = new ControllerCarro(id, 480, 482, origem, destino);
         carros.add(id, c);
         counter++;
     }
@@ -83,4 +83,3 @@ public class Controller {
     }
 
 }
-
