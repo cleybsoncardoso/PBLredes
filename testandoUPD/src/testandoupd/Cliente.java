@@ -27,10 +27,11 @@ public class Cliente {
 
     public void begin() {
         try {
-            Socket socket = new Socket("ip", 8080);
+            Socket socket = new Socket("192.168.0.126", 8080);
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
             String ip;
+            System.out.println("Entrou");
             while (true) {
                 ip = input.readObject().toString();
                 System.err.println(ip);
