@@ -39,15 +39,19 @@ public class ServidorMulticast {
         try {
             ServerSocket servidor = new ServerSocket(8080);
             Socket clienteM = servidor.accept();
+            System.out.println("chegou");
             ObjectInputStream input = new ObjectInputStream(clienteM.getInputStream());
+            System.out.println("chegou");
             ObjectOutputStream output = new ObjectOutputStream(clienteM.getOutputStream());
+            System.out.println("entrou");
             for (int i = 224; i < 240; i++) {
                 for (int j = 0; j < 256; j++) {
                     for (int k = 0; k < 256; k++) {
                         for (int l = 0; l < 256; l++) {
-                           
+                            System.out.println("chegou");
                             String ipEnviar = i+"."+j+"."+k+"."+l;
                             output.writeObject(ipEnviar);
+                            System.out.println(ipEnviar);
                             try {
                                 sleep(100);
                             } catch (InterruptedException ex) {
