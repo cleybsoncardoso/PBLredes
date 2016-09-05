@@ -15,6 +15,7 @@ public class Quadrante {
     private Coordenada coordenada;
 
     public Quadrante(String nome, int x, int y, int turn) {
+        this.nome=nome;
         coordenada = new Coordenada(x, y);
     }
 

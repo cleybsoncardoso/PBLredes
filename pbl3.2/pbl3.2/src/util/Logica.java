@@ -42,6 +42,7 @@ public class Logica {
         ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();
         switch (origem) {
             case "A":
+                System.out.println("entrou em a");
                 trajeto.add(new Quadrante("d", 0, 0, 1));
                 if (destino.equals("B")) {
                     return trajeto;
