@@ -5,16 +5,9 @@
  */
 package testandoupd;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
