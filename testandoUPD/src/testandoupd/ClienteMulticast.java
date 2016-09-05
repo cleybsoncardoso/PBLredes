@@ -6,34 +6,42 @@
 package testandoupd;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author cleyb
  */
-public class ClienteMulticast {
+public class ClienteMulticast implements Runnable {
 
-  public static void main(String[] args) {
+    private String ip;
 
-      while(true) {
-        try {       
-          MulticastSocket mcs = new MulticastSocket(12347);
-          InetAddress grp = InetAddress.getByName("224.0.0.0");
-          mcs.joinGroup(grp);
-          byte rec[] = new byte[256];
-          DatagramPacket pkg = new DatagramPacket(rec, rec.length);
-          mcs.receive(pkg);
-          String data = new String(pkg.getData());
-          System.out.println("Dados recebidos:" + data);
-      }
-      catch(Exception e) {
-        System.out.println("Erro: " + e.getMessage()); 
-      } 
+    public ClienteMulticast(String ip) {
+        this.ip = ip;
     }
-  }
+    
+
+    @Override
+    public void run() {
+        try {
+            MulticastSocket mcs = new MulticastSocket(12347);
+            InetAddress grp = InetAddress.getByName(ip);
+            mcs.joinGroup(grp);
+            byte rec[] = new byte[256];
+            DatagramPacket pkg = new DatagramPacket(rec, rec.length);
+            mcs.receive(pkg);
+            String data = new String(pkg.getData());
+            System.out.println("Dados recebidos:" + data);
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
 }
