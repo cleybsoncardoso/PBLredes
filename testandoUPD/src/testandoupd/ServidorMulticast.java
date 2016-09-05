@@ -40,7 +40,7 @@ public class ServidorMulticast {
             ServerSocket servidor = new ServerSocket(8080);
             Socket clienteM = servidor.accept();
             System.out.println("chegou");
-            ObjectInputStream input = new ObjectInputStream(clienteM.getInputStream());
+            //ObjectInputStream input = new ObjectInputStream(clienteM.getInputStream());
             System.out.println("chegou");
             ObjectOutputStream output = new ObjectOutputStream(clienteM.getOutputStream());
             System.out.println("entrou");
