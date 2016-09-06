@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import util.Carro;
+import util.Logica;
 import util.Quadrante;
 
 /**
@@ -28,6 +29,7 @@ public class ControllerCarro {
     private int id;
     private String origem;
     private String destino;
+    private Logica logica;
 
     public ControllerCarro(int id, int screenWidth, int screenHeight, String origem, String destino) {
         this.id = id;
@@ -35,7 +37,8 @@ public class ControllerCarro {
         this.destino = destino;
         this.alturaTela = screenHeight;
         this.larguraTela = screenWidth;
-        this.trajeto=trajeto;
+        this.logica=new Logica();
+        this.trajeto=logica.calcularTrajeto(origem, destino);
         this.setup();
 
     }
