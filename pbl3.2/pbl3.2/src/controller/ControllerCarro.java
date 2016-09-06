@@ -85,7 +85,10 @@ public class ControllerCarro {
     }
 
     public void andar() {
-
+        System.out.println(trajeto.get(0).getNome());
+        if(!trajeto.get(0).aindaQuadranteX(x)){
+            trajeto.remove(0);
+        }
         switch (direcao) {
             case 0:
                 y = y - v;

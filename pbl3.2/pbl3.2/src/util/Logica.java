@@ -49,51 +49,51 @@ public class Logica {
         switch (origem) {
             case "A":
                 System.out.println("entrou em a");
-                trajeto.add(new Quadrante("d", 0, 0, 1));
+                trajeto.add(new Quadrante("d"));
                 if (destino.equals("B")) {
                     return trajeto;
                 } else if (destino.equals("C")) {
-                    trajeto.add(new Quadrante("b", 0, 0, 2));
+                    trajeto.add(new Quadrante("b"));
                     return trajeto;
                 } else {
-                    trajeto.add(new Quadrante("b", 0, 0, 2));
-                    trajeto.add(new Quadrante("a", 0, 0, 3));
+                    trajeto.add(new Quadrante("b"));
+                    trajeto.add(new Quadrante("a"));
                     return trajeto;
                 }
             case "B":
-                trajeto.add(new Quadrante("b", 0, 0, 1));
+                trajeto.add(new Quadrante("b"));
                 if (destino.equals("C")) {
                     return trajeto;
                 } else if (destino.equals("D")) {
-                    trajeto.add(new Quadrante("a", 0, 0, 2));
+                    trajeto.add(new Quadrante("a"));
                     return trajeto;
                 } else {
-                    trajeto.add(new Quadrante("a", 0, 0, 2));
-                    trajeto.add(new Quadrante("c", 0, 0, 3));
+                    trajeto.add(new Quadrante("a"));
+                    trajeto.add(new Quadrante("c"));
                     return trajeto;
                 }
             case "C":
-                trajeto.add(new Quadrante("a", 0, 0, 1));
+                trajeto.add(new Quadrante("a"));
                 if (destino.equals("D")) {
                     return trajeto;
                 } else if (destino.equals("A")) {
-                    trajeto.add(new Quadrante("c", 0, 0, 2));
+                    trajeto.add(new Quadrante("c"));
                     return trajeto;
                 } else {
-                    trajeto.add(new Quadrante("c", 0, 0, 2));
-                    trajeto.add(new Quadrante("d", 0, 0, 3));
+                    trajeto.add(new Quadrante("c"));
+                    trajeto.add(new Quadrante("d"));
                     return trajeto;
                 }
             default:
-                trajeto.add(new Quadrante("c", 0, 0, 1));
+                trajeto.add(new Quadrante("c"));
                 if (destino.equals("A")) {
                     return trajeto;
                 } else if (destino.equals("B")) {
-                    trajeto.add(new Quadrante("d", 0, 0, 2));
+                    trajeto.add(new Quadrante("d"));
                     return trajeto;
                 } else {
-                    trajeto.add(new Quadrante("d", 0, 0, 2));
-                    trajeto.add(new Quadrante("b", 0, 0, 3));
+                    trajeto.add(new Quadrante("d"));
+                    trajeto.add(new Quadrante("b"));
                     return trajeto;
                 }
         }
