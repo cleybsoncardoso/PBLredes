@@ -35,8 +35,8 @@ public class Quadrante {
                 return true;
             }
         }
-        if(nome.equals("c")){
-            if(x<167){
+        if(nome.equals("a")){
+            if(x<163){
                 return false;
             }else{
                 return true;
