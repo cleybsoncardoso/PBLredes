@@ -5,16 +5,16 @@
  */
 package util;
 
-
 /**
  *
  * @author cleyb
  */
 public class Quadrante {
+
     private String nome;
 
     public Quadrante(String nome) {
-        this.nome=nome;
+        this.nome = nome;
     }
 
     public String getNome() {
@@ -22,36 +22,36 @@ public class Quadrante {
     }
 
     public boolean aindaQuadranteX(int x) {
-        if(nome.equals("d")){
-            if(x<288){
+        if (nome.equals("d")) {
+            if (x < 288) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }if(nome.equals("b")){
-            if(x<167){
+        } else if (nome.equals("b")) {
+            if (x < 167) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }
-        if(nome.equals("a")){
-            if(x<163){
+        } else if (nome.equals("a")) {
+            if (x < 163) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }
-        
-    }
-    public boolean aindaQuadranteY(int y) {
-        if(nome.equals("d")){
-            if(x<288){
+        }else{
+            if (x < 257) {
                 return false;
+            } else {
+                return true;
             }
-        }
-        
     }
 
-    
+}
+
+public boolean aindaQuadranteY(int y) {
+        return false;
+    }
+
 }
