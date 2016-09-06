@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import util.Logica;
 import util.Quadrante;
@@ -34,19 +35,20 @@ import util.Server;
  *
  * @author cleyb
  */
-public class Inicio implements ActionListener{
+public class Inicio extends JFrame implements ActionListener {
 
-    JFrame frame;
     private JComboBox dlist, olist;
+    private Controller controller;
 
-    public Inicio() {
-        frame = new JFrame("Rota");
+    public Inicio(Controller controller) {
+        super("Rota");
+        this.controller = controller;
         //frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 100);
-        frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 100);
+        setVisible(true);
         JPanel panel = new JPanel(new FlowLayout());
-        frame.add(panel);
+        add(panel);
         panel.add(new JLabel("Escolha sua origem"));
         String[] od = {"A", "B", "C", "D"};
         olist = new JComboBox(od);
@@ -57,27 +59,24 @@ public class Inicio implements ActionListener{
         JButton start = new JButton("START");
         panel.add(start);
         start.addActionListener(this);
-       
 
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String ip = null;
-        try {
-            ip = InetAddress.getLocalHost().getHostAddress();
-            System.out.println(ip);
-        } catch (UnknownHostException ex) {
-            System.out.println("não foi possivel verificar ip");
+        if (olist.getSelectedItem().toString().equals(dlist.getSelectedItem().toString())) {
+            JOptionPane.showMessageDialog(rootPane, "coloque destino diferente da origem");
+        } else {
+            controller.adicionarCarro(0, olist.getSelectedItem().toString(), dlist.getSelectedItem().toString());//primeiro cliente
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    CarroFrame bf = new CarroFrame(controller);
+                    bf.setVisible(true);
+                    bf.startMainLoop();
+                }
+            });
         }
-        Controller controller = new Controller(ip);
-        controller.primeiraConexao("25.12.22.120");
-        Server serverSocket = new Server(controller, 8080);
-    }
-
-    public static void main(String[] args) {
-        new Inicio();
     }
 
 }

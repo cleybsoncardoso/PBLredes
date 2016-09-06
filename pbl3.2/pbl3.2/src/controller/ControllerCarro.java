@@ -35,6 +35,7 @@ public class ControllerCarro {
         this.destino = destino;
         this.alturaTela = screenHeight;
         this.larguraTela = screenWidth;
+        this.trajeto=trajeto;
         this.setup();
 
     }

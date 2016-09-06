@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import model.EstouNaRede;
 import util.Server;
 import view.CarroFrame;
+import view.Inicio;
 
 /**
  *
@@ -34,32 +35,27 @@ public class App {
             System.out.println("não foi possivel verificar ip");
         }
         Controller controller = new Controller(ip);
+        Inicio telaInicial = new Inicio(controller);
+        System.out.println("saiu");
         //controller.iniciarConexao("25.12.22.120");
-        controller.primeiraConexao("25.12.22.120");
+        //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
 
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                CarroFrame bf = new CarroFrame(controller);
-                bf.setVisible(true);
-                bf.startMainLoop();
-            }
-        });
 
-        //adicionando carros no cruzamento
-        controller.adicionarCarro(0, "A", "B");
-        controller.adicionarCarro(1, "A", "C");
-        controller.adicionarCarro(2, "A", "D");
-        controller.adicionarCarro(3, "B", "A");
-        controller.adicionarCarro(4, "B", "C");
-        controller.adicionarCarro(5, "B", "D");
-        controller.adicionarCarro(6, "C", "A");
-        controller.adicionarCarro(7, "C", "B");
-        controller.adicionarCarro(8, "C", "D");
-        controller.adicionarCarro(9, "D", "A");
-        controller.adicionarCarro(10, "D", "B");
-        controller.adicionarCarro(11, "D", "C");
+//
+//        //adicionando carros no cruzamento
+//        controller.adicionarCarro(0, "A", "B");
+//        controller.adicionarCarro(1, "A", "C");
+//        controller.adicionarCarro(2, "A", "D");
+//        controller.adicionarCarro(3, "B", "A");
+//        controller.adicionarCarro(4, "B", "C");
+//        controller.adicionarCarro(5, "B", "D");
+//        controller.adicionarCarro(6, "C", "A");
+//        controller.adicionarCarro(7, "C", "B");
+//        controller.adicionarCarro(8, "C", "D");
+//        controller.adicionarCarro(9, "D", "A");
+//        controller.adicionarCarro(10, "D", "B");
+//        controller.adicionarCarro(11, "D", "C");
         
         new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
