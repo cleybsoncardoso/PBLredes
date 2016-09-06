@@ -18,19 +18,18 @@ import util.Quadrante;
  */
 public class ControllerCarro {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     public Carro carro;
     private int alturaTela;
     private int larguraTela;
     private int direcao;
-    private int v = 1;
+    private double v = 0.15;
     private ArrayList<Quadrante> trajeto;
     private int id;
     private String origem;
     private String destino;
     private Logica logica;
- 
 
     public ControllerCarro(int id, int screenWidth, int screenHeight, String origem, String destino) {
         this.id = id;
@@ -85,10 +84,6 @@ public class ControllerCarro {
     }
 
     public void andar() {
-        System.out.println(trajeto.get(0).getNome());
-        if(!trajeto.get(0).aindaQuadranteX(x)){
-            trajeto.remove(0);
-        }
         switch (direcao) {
             case 0:
                 y = y - v;
@@ -107,6 +102,16 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
+        
+        
+        System.out.println("Valor de x: " + this.x);
+        System.out.println(trajeto.get(0).getNome());
+        if (!trajeto.get(0).aindaQuadranteX(x)) {
+            if (trajeto.size() > 1) {
+                trajeto.remove(0);
+            }
+        }
+        
     }
 
     public void virarEsquerda() {
@@ -203,11 +208,11 @@ public class ControllerCarro {
 
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 

@@ -21,7 +21,7 @@ public class Quadrante {
         return nome;
     }
 
-    public boolean aindaQuadranteX(int x) {
+    public boolean aindaQuadranteX(double x) {
         if (nome.equals("d")) {
             if (x < 288) {
                 return false;
@@ -29,16 +29,16 @@ public class Quadrante {
                 return true;
             }
         } else if (nome.equals("b")) {
-            if (x < 167) {
-                return false;
-            } else {
+            if (x > 231) {
                 return true;
+            } else {
+                return false;
             }
         } else if (nome.equals("a")) {
-            if (x < 163) {
-                return false;
-            } else {
+            if (x > 194) {
                 return true;
+            } else {
+                return false;
             }
         } else if(nome.equals("c")){
             if (x < 257) {
@@ -47,16 +47,16 @@ public class Quadrante {
                 return true;
             }
         }else if(nome.equals("D")){
-            if (x < 163) {
-                return false;
-            } else {
+            if (x < 194) {
                 return true;
+            } else {
+                return false;
             }
         }else{
-            if (x < 288) {
-                return false;
-            } else {
+            if (x > 288) {
                 return true;
+            } else {
+                return false;
             }
         }
 

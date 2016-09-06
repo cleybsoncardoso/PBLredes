@@ -16,12 +16,12 @@ public class Carro {
     private int WIDTH = 20;
     private int HEIGHT = 30;
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     private Rectangle2D car;
 
-    public Carro(int x, int y, int direcao) {
+    public Carro(double x, double y, int direcao) {
         this.x = x;
         this.y = y;
         if (direcao == 3 || direcao == 9) {
@@ -29,14 +29,14 @@ public class Carro {
             HEIGHT = WIDTH;
             WIDTH = aux;
         }
-        car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
+        car = new Rectangle2D.Double(x, y, WIDTH, HEIGHT);
     }
 
     public Rectangle2D draw() {
         return car;
     }
 
-    public void setXY(int x, int y) {
+    public void setXY(double x, double y) {
         this.x = x;
         this.y = y;
         car.setRect(this.x, this.y, WIDTH, HEIGHT);
