@@ -61,29 +61,44 @@ public class Quadrante {
 
     }
 
-    public boolean aindaQuadranteY(int y) {
+     public boolean aindaQuadranteY(double y) {
+        y+=13.5;
         if (nome.equals("d")) {
-            if (y < 288) {
-                return false;
-            } else {
+            if (y > 263) {
                 return true;
+            } else {
+                return false;
             }
         } else if (nome.equals("b")) {
-            if (y < 167) {
-                return false;
-            } else {
+            if (y > 210) {
                 return true;
+            } else {
+                return false;
             }
         } else if (nome.equals("a")) {
-            if (y < 163) {
-                return false;
-            } else {
+            if (y < 208) {
                 return true;
+            } else {
+                return false;
             }
-        } else if (y < 257) {
-            return false;
-        } else {
-            return true;
+        } else if(nome.equals("c")){
+            if (y < 270) {
+                return true;
+            } else {
+                return false;
+            }
+        }else if(nome.equals("C")){
+            if (y < 174) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            if (y > 300) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
