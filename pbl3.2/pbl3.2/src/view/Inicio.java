@@ -15,6 +15,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Thread.sleep;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import util.Logica;
 import util.Quadrante;
+import util.Server;
 
 /**
  *
@@ -61,7 +64,16 @@ public class Inicio implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        String ip = null;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(ip);
+        } catch (UnknownHostException ex) {
+            System.out.println("não foi possivel verificar ip");
+        }
+        Controller controller = new Controller(ip);
+        controller.primeiraConexao("25.12.22.120");
+        Server serverSocket = new Server(controller, 8080);
     }
 
     public static void main(String[] args) {

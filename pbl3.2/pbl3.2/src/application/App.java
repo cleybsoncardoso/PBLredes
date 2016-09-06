@@ -35,7 +35,7 @@ public class App {
         }
         Controller controller = new Controller(ip);
         //controller.iniciarConexao("25.12.22.120");
-        //controller.primeiraConexao("25.12.22.120");
+        controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
 
         EventQueue.invokeLater(new Runnable() {
