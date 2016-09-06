@@ -72,9 +72,9 @@ public class ControllerCarro {
     }
 
     public void desenhar(Graphics2D g2d) {
-                g2d.setColor(Color.RED);
-                g2d.fill(carro.draw());
-        
+        g2d.setColor(Color.RED);
+        g2d.fill(carro.draw());
+
     }
 
     public ArrayList<Quadrante> getTrajeto() {
@@ -84,30 +84,44 @@ public class ControllerCarro {
     public void andar() {
         switch (direcao) {
             case 0:
+                if (!trajeto.get(0).aindaQuadranteY(y)) {
+                    if (trajeto.size() > 1) {
+                        trajeto.remove(0);
+                    }
+                }
                 y = y - v;
                 carro.setXY(x, y);
                 break;
             case 3:
+                if (!trajeto.get(0).aindaQuadranteX(x)) {
+                    if (trajeto.size() > 1) {
+                        trajeto.remove(0);
+                    }
+                }
                 x = x + v;
                 carro.setXY(x, y);
                 break;
             case 6:
+                if (!trajeto.get(0).aindaQuadranteY(y)) {
+                    if (trajeto.size() > 1) {
+                        trajeto.remove(0);
+                    }
+                }
                 y = y + v;
                 carro.setXY(x, y);
                 break;
             case 9:
+                if (!trajeto.get(0).aindaQuadranteX(x)) {
+                    if (trajeto.size() > 1) {
+                        trajeto.remove(0);
+                    }
+                }
                 x = x - v;
                 carro.setXY(x, y);
                 break;
         }
 
-        System.out.println("Valor de x: " + this.x);
         System.out.println(trajeto.get(0).getNome());
-        if (!trajeto.get(0).aindaQuadranteX(x)) {
-            if (trajeto.size() > 1) {
-                trajeto.remove(0);
-            }
-        }
 
     }
 
