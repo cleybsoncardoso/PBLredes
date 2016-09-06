@@ -9,11 +9,15 @@ import application.App;
 import controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Thread.sleep;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -21,66 +25,59 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import util.Logica;
+import util.Quadrante;
+import util.Server;
 
 /**
  *
  * @author cleyb
  */
-public class Inicio implements ActionListener{
+public class Inicio extends JFrame implements ActionListener {
 
-    JFrame frame;
     private JComboBox dlist, olist;
+    private Controller controller;
 
-    public Inicio() {
-        frame = new JFrame("Rota");
+    public Inicio(Controller controller) {
+        super("Rota");
+        this.controller = controller;
         //frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
-        frame.setVisible(true);
-        JPanel panel = new JPanel(new GridBagLayout());
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
-        frame.add(panel2);
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        panel.add(new JLabel("Escolha sua origem"), c);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 100);
+        
+        JPanel panel = new JPanel(new FlowLayout());
+        add(panel);
+        panel.add(new JLabel("Escolha sua origem"));
         String[] od = {"A", "B", "C", "D"};
         olist = new JComboBox(od);
-        c.gridx = 1;
-        c.gridy = 0;
-        panel.add(olist, c);
-        c.gridx = 0;
-        c.gridy = 1;
-        panel.add(new JLabel("Escolha seu Destino"), c);
+        panel.add(olist);
+        panel.add(new JLabel("Escolha seu Destino"));
         dlist = new JComboBox(od);
-        c.gridx = 1;
-        c.gridy = 2;
-        panel.add(dlist, c);
+        panel.add(dlist);
         JButton start = new JButton("START");
-        panel2.add(panel);
-        panel2.add(start);
+        panel.add(start);
         start.addActionListener(this);
-       
+        setVisible(true);
 
-    }
-
-    public JComboBox getDlist() {
-        return dlist;
-    }
-
-    public JComboBox getOlist() {
-        return olist;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-    }
-
-    public static void main(String[] args) {
-        new Inicio();
+        if (olist.getSelectedItem().toString().equals(dlist.getSelectedItem().toString())) {
+            JOptionPane.showMessageDialog(rootPane, "coloque destino diferente da origem");
+        } else {
+            controller.adicionarCarro(0, olist.getSelectedItem().toString(), dlist.getSelectedItem().toString());//primeiro cliente
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    CarroFrame bf = new CarroFrame(controller);
+                    bf.setVisible(true);
+                    bf.startMainLoop();
+                }
+            });
+        }
     }
 
 }

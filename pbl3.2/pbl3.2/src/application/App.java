@@ -6,18 +6,14 @@
 package application;
 
 import controller.Controller;
-import java.awt.EventQueue;
-import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.EstouNaRede;
 import util.Server;
-import view.CarroFrame;
+import view.Inicio;
 
 /**
  *
@@ -33,33 +29,30 @@ public class App {
         } catch (UnknownHostException ex) {
             System.out.println("não foi possivel verificar ip");
         }
-        Controller controller = new Controller(ip);
+        Controller controller = Controller.novoController(ip);
+        
+        Inicio telaInicial = new Inicio(controller);
+        System.out.println("saiu");
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
-        
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                CarroFrame bf = new CarroFrame(controller);
-                bf.setVisible(true);
-                bf.startMainLoop();
-            }
-        });
-        
-        //adicionando carros no cruzamento
-        int i = 0;
-        while(i<10){
-            controller.adicionarCarro(i);
-            try {
-                sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            i++;
-        }
-        
 
+
+//
+//        //adicionando carros no cruzamento
+//        controller.adicionarCarro(0, "A", "B");
+//        controller.adicionarCarro(1, "A", "C");
+//        controller.adicionarCarro(2, "A", "D");
+//        controller.adicionarCarro(3, "B", "A");
+//        controller.adicionarCarro(4, "B", "C");
+//        controller.adicionarCarro(5, "B", "D");
+//        controller.adicionarCarro(6, "C", "A");
+//        controller.adicionarCarro(7, "C", "B");
+//        controller.adicionarCarro(8, "C", "D");
+//        controller.adicionarCarro(9, "D", "A");
+//        controller.adicionarCarro(10, "D", "B");
+//        controller.adicionarCarro(11, "D", "C");
+        
         new Thread(serverSocket).start();
         Scanner teclado = new Scanner(System.in);
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);

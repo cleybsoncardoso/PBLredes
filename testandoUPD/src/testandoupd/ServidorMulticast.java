@@ -7,7 +7,6 @@ package testandoupd;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
@@ -15,7 +14,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,15 +37,19 @@ public class ServidorMulticast {
         try {
             ServerSocket servidor = new ServerSocket(8080);
             Socket clienteM = servidor.accept();
-            ObjectInputStream input = new ObjectInputStream(clienteM.getInputStream());
+            System.out.println("chegou");
+            //ObjectInputStream input = new ObjectInputStream(clienteM.getInputStream());
+            System.out.println("chegou");
             ObjectOutputStream output = new ObjectOutputStream(clienteM.getOutputStream());
+            System.out.println("entrou");
             for (int i = 224; i < 240; i++) {
                 for (int j = 0; j < 256; j++) {
                     for (int k = 0; k < 256; k++) {
                         for (int l = 0; l < 256; l++) {
-                           
+                            System.out.println("chegou");
                             String ipEnviar = i+"."+j+"."+k+"."+l;
                             output.writeObject(ipEnviar);
+                            System.out.println(ipEnviar);
                             try {
                                 sleep(100);
                             } catch (InterruptedException ex) {

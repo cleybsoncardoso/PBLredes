@@ -19,6 +19,7 @@ import model.Auxiliar;
  */
 public class Controller {
 
+    private static Controller controller;
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
@@ -32,10 +33,19 @@ public class Controller {
         counter = 0;
         this.meuIp = meuIp;
     }
+    
+    public static Controller novoController(String ip){
+        controller = new Controller(ip);
+        return controller;
+    }
+    
+    public static Controller getInstance() {
+        return controller;
+    }
 
     public void primeiraConexao(String ip) {
         ips.add(ip);
-        auxiliar.primeiraConexao(ip);   
+        auxiliar.primeiraConexao(ip);
     }
 
     public void iniciarConexao(String ip) {
@@ -68,8 +78,8 @@ public class Controller {
         auxiliar.replicarMsg(msg);
     }
 
-    public void adicionarCarro(int id) {
-        ControllerCarro c = new ControllerCarro(id, 480, 482);
+    public void adicionarCarro(int id, String origem, String destino) {
+        ControllerCarro c = new ControllerCarro(id, 480, 482, origem, destino);
         carros.add(id, c);
         counter++;
     }
@@ -81,6 +91,17 @@ public class Controller {
         }
         return aux;
     }
+    
+    public ArrayList<ControllerCarro> getCarros1() {
+        ArrayList<ControllerCarro> aux = new ArrayList<>();
+        for (int i = 1; i < this.counter; i++) {
+            aux.add(this.carros.get(i));
+        }
+        return aux;
+    }
+
+    public ControllerCarro getCarro(int id) {
+        return carros.get(id);
+    }
 
 }
-

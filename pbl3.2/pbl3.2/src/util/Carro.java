@@ -13,26 +13,22 @@ import java.awt.geom.Rectangle2D;
  */
 public class Carro {
 
-    private static final float SPEED = 200; //Velocidade em 20 pixels / segundo
-    private int WIDTH = 20;
-    private int HEIGHT = 30;
+    private int WIDTH = 15;
+    private int HEIGHT = 23;
 
-    private int x;
-    private int y;
-
-    private float vx = SPEED;
-    private float vy = SPEED / 2;
-
-    private int screenWidth;
-    private int screenHeight;
+    private double x;
+    private double y;
 
     private Rectangle2D car;
 
-    public Carro(int screenWidth, int screenHeight, int x, int y) {
-        this.screenHeight = screenHeight;
-        this.screenWidth = screenWidth;
+    public Carro(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
+        if (direcao == 3 || direcao == 9) {
+            int aux = HEIGHT;
+            HEIGHT = WIDTH;
+            WIDTH = aux;
+        }
         car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
 
@@ -40,16 +36,13 @@ public class Carro {
         return car;
     }
 
-    public void setXY(int x, int y) {
+    public void setXY(double x, double y) {
         this.x = x;
         this.y = y;
-        if (car == null) {
-            car = new Rectangle2D.Float(0, 0, WIDTH, HEIGHT);
-        }
         car.setRect(this.x, this.y, WIDTH, HEIGHT);
     }
 
-    public void virar(){
+    public void virar() {
         int aux = HEIGHT;
         HEIGHT = WIDTH;
         WIDTH = aux;

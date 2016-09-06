@@ -7,13 +7,11 @@ package view;
 
 import controller.Controller;
 import controller.ControllerCarro;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +30,6 @@ public class CarroFrame extends JFrame {
 
     private MainLoop loop = new MainLoop(this, 60);
     private ArrayList<ControllerCarro> carros;
-    private long previous = System.currentTimeMillis();
     private Controller controller;
 
     //os controllers estarao no controller principal e quando for desenhar percorrer a lista de controllers e chamar o metodo de desenhar
@@ -68,20 +65,16 @@ public class CarroFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(CarroFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         repaint();
     }
 
     public void processLogics() {
-        //Calcula o tempo entre dois updates
-        //long time = System.currentTimeMillis() - previous;
         this.carros = this.controller.getCarros();
         for (ControllerCarro carro : carros) {
-            carro.acao();
+            if (carro != null) {
+                carro.acao();
+            }
         }
-
-        //previous = System.currentTimeMillis();
-        //i = 1;
     }
 
     @Override
@@ -89,9 +82,10 @@ public class CarroFrame extends JFrame {
         g.drawImage(background, 0, 0, null);
 
         for (ControllerCarro carro : carros) {
-            carro.desenhar((Graphics2D) g);
+            if (carro != null) {
+                carro.desenhar((Graphics2D) g);
+            }
         }
-
     }
 
     public void paintScreen() {
