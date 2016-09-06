@@ -17,9 +17,15 @@ public class Logica {
 
     private Controller controller;
     private ControllerCarro meuCarro;
+    
+    public Logica(ControllerCarro meuCarro){
+        this.meuCarro = meuCarro;
+        this.controller = Controller.getInstance();
+        
+    }
 
     public boolean conflito() {
-        for (ControllerCarro carroAtual : controller.getCarros()) {
+        for (ControllerCarro carroAtual : controller.getCarros1()) {
             int j = 0;
             //verifica qual o maior trajeto, para basear se vai ter conflito
             if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {

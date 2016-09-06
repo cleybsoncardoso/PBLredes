@@ -30,6 +30,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
+ 
 
     public ControllerCarro(int id, int screenWidth, int screenHeight, String origem, String destino) {
         this.id = id;
@@ -37,10 +38,9 @@ public class ControllerCarro {
         this.destino = destino;
         this.alturaTela = screenHeight;
         this.larguraTela = screenWidth;
-        this.logica=new Logica();
-        this.trajeto=logica.calcularTrajeto(origem, destino);
+        this.logica = new Logica(this);
+        this.trajeto = logica.calcularTrajeto(origem, destino);
         this.setup();
-
     }
 
     private void setup() {
@@ -124,68 +124,78 @@ public class ControllerCarro {
 
     public void acao() {
 
-        if (origem.equals("A") && destino.equals("D")) {
-            if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
-                virarEsquerda();
-            } else {
-                andar();
-            }
-        } else if (origem.equals("A") && destino.equals("B")) {
-            if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
-                virarDireita();
-            } else {
-                andar();
-            }
-        } else if (origem.equals("A") && destino.equals("C")) {
+        if (origem.equals("A") && this.y > 287) {
             andar();
-        }
+        } else if (origem.equals("C") && this.y < 161) {
+            andar();
+        } else if (origem.equals("B") && this.x > 288) {
+            andar();
+        } else if (origem.equals("D") && this.x < 163) {
+            andar();
+        } else if (!logica.conflito()) {
+            if (origem.equals("A") && destino.equals("D")) {
+                if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("A") && destino.equals("B")) {
+                if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("A") && destino.equals("C")) {
+                andar();
+            }
 
-        if (origem.equals("C") && destino.equals("D")) {
-            if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
-                virarDireita();
-            } else {
+            if (origem.equals("C") && destino.equals("D")) {
+                if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("C") && destino.equals("B")) {
+                if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("C") && destino.equals("A")) {
                 andar();
             }
-        } else if (origem.equals("C") && destino.equals("B")) {
-            if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
-                virarEsquerda();
-            } else {
-                andar();
-            }
-        } else if (origem.equals("C") && destino.equals("A")) {
-            andar();
-        }
 
-        if (origem.equals("B") && destino.equals("C")) {
-            if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
-                virarDireita();
-            } else {
+            if (origem.equals("B") && destino.equals("C")) {
+                if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("B") && destino.equals("A")) {
+                if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("B") && destino.equals("D")) {
                 andar();
             }
-        } else if (origem.equals("B") && destino.equals("A")) {
-            if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
-                virarEsquerda();
-            } else {
-                andar();
-            }
-        } else if (origem.equals("B") && destino.equals("D")) {
-            andar();
-        }
 
-        if (origem.equals("D") && destino.equals("C")) {
-            if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
-                virarEsquerda();
-            } else {
+            if (origem.equals("D") && destino.equals("C")) {
+                if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("D") && destino.equals("A")) {
+                if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("D") && destino.equals("B")) {
                 andar();
             }
-        } else if (origem.equals("D") && destino.equals("A")) {
-            if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
-                virarDireita();
-            } else {
-                andar();
-            }
-        } else if (origem.equals("D") && destino.equals("B")) {
-            andar();
         }
 
     }

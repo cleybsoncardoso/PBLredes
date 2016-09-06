@@ -19,6 +19,7 @@ import model.Auxiliar;
  */
 public class Controller {
 
+    private static Controller controller;
     private Auxiliar auxiliar;
     private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
@@ -31,6 +32,15 @@ public class Controller {
         carros = new ArrayList<>();
         counter = 0;
         this.meuIp = meuIp;
+    }
+    
+    public static Controller novoController(String ip){
+        controller = new Controller(ip);
+        return controller;
+    }
+    
+    public static Controller getInstance() {
+        return controller;
     }
 
     public void primeiraConexao(String ip) {
@@ -80,6 +90,18 @@ public class Controller {
             aux.add(this.carros.get(i));
         }
         return aux;
+    }
+    
+    public ArrayList<ControllerCarro> getCarros1() {
+        ArrayList<ControllerCarro> aux = new ArrayList<>();
+        for (int i = 1; i < this.counter; i++) {
+            aux.add(this.carros.get(i));
+        }
+        return aux;
+    }
+
+    public ControllerCarro getCarro(int id) {
+        return carros.get(id);
     }
 
 }

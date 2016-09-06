@@ -46,7 +46,7 @@ public class Inicio extends JFrame implements ActionListener {
         //frame.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 100);
-        setVisible(true);
+        
         JPanel panel = new JPanel(new FlowLayout());
         add(panel);
         panel.add(new JLabel("Escolha sua origem"));
@@ -59,6 +59,7 @@ public class Inicio extends JFrame implements ActionListener {
         JButton start = new JButton("START");
         panel.add(start);
         start.addActionListener(this);
+        setVisible(true);
 
     }
 

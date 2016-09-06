@@ -6,18 +6,13 @@
 package application;
 
 import controller.Controller;
-import java.awt.EventQueue;
-import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.EstouNaRede;
 import util.Server;
-import view.CarroFrame;
 import view.Inicio;
 
 /**
@@ -34,7 +29,8 @@ public class App {
         } catch (UnknownHostException ex) {
             System.out.println("não foi possivel verificar ip");
         }
-        Controller controller = new Controller(ip);
+        Controller controller = Controller.novoController(ip);
+        
         Inicio telaInicial = new Inicio(controller);
         System.out.println("saiu");
         //controller.iniciarConexao("25.12.22.120");
