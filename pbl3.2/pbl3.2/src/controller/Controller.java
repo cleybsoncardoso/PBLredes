@@ -61,7 +61,7 @@ public class Controller {
     }
 
     private boolean verificaIp(String ip) {
-
+        System.out.println("tamanho = " + ips.size());
         for (String ipAtual : ips) {
             if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
                 return false;
