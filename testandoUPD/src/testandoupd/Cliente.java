@@ -27,11 +27,13 @@ public class Cliente {
 
     public void begin() {
         try {
-            Socket socket = new Socket("ip", 8080);
+            Socket socket = new Socket("192.168.0.4", 8080);
+            System.out.println("conectado");
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+            //ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
             String ip;
             while (true) {
+                System.out.println("entrou");
                 ip = input.readObject().toString();
                 System.err.println(ip);
                 ClienteMulticast clienteM  = new ClienteMulticast(ip);
