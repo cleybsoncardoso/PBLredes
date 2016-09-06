@@ -22,14 +22,15 @@ public class Quadrante {
     }
 
     public boolean aindaQuadranteX(double x) {
+        x = x + 13.5;
         if (nome.equals("d")) {
-            if (x < 288) {
-                return false;
-            } else {
+            if (x < 264.5) {
                 return true;
+            } else {
+                return false;
             }
         } else if (nome.equals("b")) {
-            if (x > 231) {
+            if (x > 256) {
                 return true;
             } else {
                 return false;
@@ -40,24 +41,22 @@ public class Quadrante {
             } else {
                 return false;
             }
-        } else if(nome.equals("c")){
-            if (x < 257) {
-                return false;
-            } else {
-                return true;
-            }
-        }else if(nome.equals("D")){
-            if (x < 194) {
+        } else if (nome.equals("c")) {
+            if (x < 217.5) {
                 return true;
             } else {
                 return false;
             }
-        }else{
-            if (x > 288) {
+        } else if (nome.equals("D")) {
+            if (x < 170.5) {
                 return true;
             } else {
                 return false;
             }
+        } else if (x > 316.5) {
+            return true;
+        } else {
+            return false;
         }
 
     }
@@ -87,5 +86,4 @@ public class Quadrante {
             return true;
         }
     }
-
 }

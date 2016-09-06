@@ -18,13 +18,13 @@ import util.Quadrante;
  */
 public class ControllerCarro {
 
-    private double x;
-    private double y;
+    private float x;
+    private float y;
     public Carro carro;
     private int alturaTela;
     private int larguraTela;
     private int direcao;
-    private double v = 0.15;
+    private float v = 0.3f;
     private ArrayList<Quadrante> trajeto;
     private int id;
     private String origem;
@@ -72,11 +72,9 @@ public class ControllerCarro {
     }
 
     public void desenhar(Graphics2D g2d) {
-        //Graphics2D g1 = (Graphics2D) g2d.create();
-        //g1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.RED);
-        g2d.fill(carro.draw());
-        //g1.dispose();
+                g2d.setColor(Color.RED);
+                g2d.fill(carro.draw());
+        
     }
 
     public ArrayList<Quadrante> getTrajeto() {
@@ -102,8 +100,7 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        
-        
+
         System.out.println("Valor de x: " + this.x);
         System.out.println(trajeto.get(0).getNome());
         if (!trajeto.get(0).aindaQuadranteX(x)) {
@@ -111,7 +108,7 @@ public class ControllerCarro {
                 trajeto.remove(0);
             }
         }
-        
+
     }
 
     public void virarEsquerda() {

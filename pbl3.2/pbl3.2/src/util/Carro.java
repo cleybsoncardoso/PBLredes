@@ -13,15 +13,15 @@ import java.awt.geom.Rectangle2D;
  */
 public class Carro {
 
-    private int WIDTH = 20;
-    private int HEIGHT = 30;
+    private int WIDTH = 15;
+    private int HEIGHT = 23;
 
     private double x;
     private double y;
 
     private Rectangle2D car;
 
-    public Carro(double x, double y, int direcao) {
+    public Carro(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
         if (direcao == 3 || direcao == 9) {
@@ -29,7 +29,7 @@ public class Carro {
             HEIGHT = WIDTH;
             WIDTH = aux;
         }
-        car = new Rectangle2D.Double(x, y, WIDTH, HEIGHT);
+        car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
 
     public Rectangle2D draw() {
