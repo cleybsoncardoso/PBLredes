@@ -40,18 +40,52 @@ public class Quadrante {
             } else {
                 return true;
             }
-        }else{
+        } else if(nome.equals("c")){
             if (x < 257) {
                 return false;
             } else {
                 return true;
             }
+        }else if(nome.equals("D")){
+            if (x < 163) {
+                return false;
+            } else {
+                return true;
+            }
+        }else{
+            if (x < 288) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     }
 
-}
-
-public boolean aindaQuadranteY(int y) {
-        return false;
+    public boolean aindaQuadranteY(int y) {
+        if (nome.equals("d")) {
+            if (y < 288) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (nome.equals("b")) {
+            if (y < 167) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (nome.equals("a")) {
+            if (y < 163) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (y < 257) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
