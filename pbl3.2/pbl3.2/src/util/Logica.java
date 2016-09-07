@@ -37,10 +37,11 @@ public class Logica {
             for(Quadrante q: meuCarro.getTrajeto()){
                 System.out.print(q.getNome()+", ");
             }
-            System.out.println("\n tua: ");
+            System.out.print("\t tua: ");
             for(Quadrante q: carroAtual.getTrajeto()){
                 System.out.print(q.getNome()+", ");
             }
+            System.out.println(" ");
             //busca direta, para verificar se vai ter conflito
             for (int i = 0; i < j; i++) {
                 if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
