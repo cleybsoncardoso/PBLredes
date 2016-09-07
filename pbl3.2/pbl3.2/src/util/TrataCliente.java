@@ -67,7 +67,7 @@ public class TrataCliente implements Runnable {
                 ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
                 //System.out.println("mensagem recebida");
                 if (modifier == 0) {
-                    controller.adicionarCarro(id, x, y, direcao);
+                    controller.adicionarCarro(id, x, y, direcao, trajeto);
                     modifier = 1;
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);

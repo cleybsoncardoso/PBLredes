@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Auxiliar;
+import util.Quadrante;
 
 /**
  *
@@ -61,7 +62,6 @@ public class Controller {
     }
 
     private boolean verificaIp(String ip) {
-        System.out.println("tamanho = " + ips.size());
         for (String ipAtual : ips) {
             if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
                 return false;
@@ -88,8 +88,8 @@ public class Controller {
         counter++;
     }
 
-    public void adicionarCarro(int id, float x, float y, int direcao) {
-        ControllerCarro c = new ControllerCarro(id, x, y, direcao);
+    public void adicionarCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
+        ControllerCarro c = new ControllerCarro(id, x, y, direcao, trajeto);
         carros.add(c);
         counter++;
     }

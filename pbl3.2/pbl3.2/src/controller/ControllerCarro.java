@@ -40,11 +40,12 @@ public class ControllerCarro {
         this.setup();
     }
 
-    public ControllerCarro(int id, float x, float y, int direcao) {
+    public ControllerCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.direcao = direcao;
+        this.trajeto = trajeto;
         this.setup2();
     }
 
@@ -67,6 +68,8 @@ public class ControllerCarro {
                 carro = new Carro(this.x, this.y, direcao);
                 break;
         }
+        this.origem = trajeto.get(0).getNome();
+        this.destino = trajeto.get(3).getNome();
     }
 
     private void setup() {
@@ -153,8 +156,8 @@ public class ControllerCarro {
         msg.add(direcao);
         msg.add(trajeto);
         System.out.println(" ");
-        for(Quadrante q:trajeto){
-            System.out.print(q.getNome()+", ");
+        for (Quadrante q : trajeto) {
+            System.out.print(q.getNome() + ", ");
         }
         Controller.getInstance().replicarMsg(msg);
     }
@@ -264,38 +267,43 @@ public class ControllerCarro {
     public void setXY(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
-
         carro.setXY(x, y);
-
-        if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
-            virarEsquerda();
-        }
-        if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
-            virarDireita();
-        }
-
-        if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
-            virarDireita();
-        }
-        if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
-            virarEsquerda();
-        }
-
-        if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
-            virarDireita();
-        }
-        if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
-            virarEsquerda();
-        }
-
-        if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
-            virarEsquerda();
-        }
-        if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
-            virarDireita();
-        }
-
         this.direcao = direcao;
+
+        if (origem.equals("A") && destino.equals("D")) {
+            if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
+                virarEsquerda();
+            }
+        } else if (origem.equals("A") && destino.equals("B")) {
+            if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
+                virarDireita();
+            }
+        } else if (origem.equals("C") && destino.equals("D")) {
+            if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
+                virarDireita();
+            }
+        } else if (origem.equals("C") && destino.equals("B")) {
+            if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
+                virarEsquerda();
+            }
+        } else if (origem.equals("B") && destino.equals("C")) {
+            if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
+                virarDireita();
+            }
+        } else if (origem.equals("B") && destino.equals("A")) {
+            if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
+                virarEsquerda();
+            }
+        } else if (origem.equals("D") && destino.equals("C")) {
+            if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
+                virarEsquerda();
+            }
+        } else if (origem.equals("D") && destino.equals("A")) {
+            if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
+                virarDireita();
+            }
+        }
+
     }
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
