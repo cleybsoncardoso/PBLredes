@@ -57,10 +57,17 @@ public class TrataCliente implements Runnable {
             return;
         }
 
+        controller.adicionarCarro(this.id);
+        
         while (true) {
             try {
-                String msg = (String) input.readObject();
-                System.out.println(msg);
+                ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
+                int x = (int) mensagem.get(0);
+                int y = (int) mensagem.get(1);
+                int direcao = (int) mensagem.get(2);
+                ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
+                controller.getCarro(this.id).setXY(x, y, direcao);
+                controller.getCarro(this.id).setTrajeto(trajeto);
             } catch (IOException ex) {
                 controller.removerIp(this.ip);
                 System.out.println("Conexão perdida com " + ip);

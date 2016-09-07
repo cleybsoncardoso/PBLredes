@@ -21,8 +21,8 @@ public class ControllerCarro {
     private float x;
     private float y;
     public Carro carro;
-    private int alturaTela;
-    private int larguraTela;
+    private int alturaTela = 480;
+    private int larguraTela = 482;
     private int direcao;
     private float v = 0.3f;
     private ArrayList<Quadrante> trajeto;
@@ -31,12 +31,19 @@ public class ControllerCarro {
     private String destino;
     private Logica logica;
 
-    public ControllerCarro(int id, int screenWidth, int screenHeight, String origem, String destino) {
+    public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
         this.origem = origem;
         this.destino = destino;
-        this.alturaTela = screenHeight;
-        this.larguraTela = screenWidth;
+        this.logica = new Logica(this);
+        this.trajeto = logica.calcularTrajeto(origem, destino);
+        this.setup();
+    }
+    
+    public ControllerCarro(int id) {
+        this.id = id;
+        this.origem = origem;
+        this.destino = destino;
         this.logica = new Logica(this);
         this.trajeto = logica.calcularTrajeto(origem, destino);
         this.setup();
@@ -120,7 +127,7 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        ArrayList <Object> msg = new ArrayList<Object>();
+        ArrayList<Object> msg = new ArrayList<Object>();
         msg.add(x);
         msg.add(y);
         msg.add(trajeto);
@@ -221,12 +228,50 @@ public class ControllerCarro {
 
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
+    }
+
+    public void setXY(float x, float y, int direcao) {
+        this.x = x;
+        this.y = y;
+        this.direcao = direcao;
+
+        if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
+            virarEsquerda();
+        }
+        if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
+            virarDireita();
+        }
+
+        if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
+            virarDireita();
+        }
+        if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
+            virarEsquerda();
+        }
+
+        if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
+            virarDireita();
+        }
+        if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
+            virarEsquerda();
+        }
+
+        if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
+            virarEsquerda();
+        }
+        if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
+            virarDireita();
+        }
+    }
+
+    public void setTrajeto(ArrayList<Quadrante> trajeto) {
+        this.trajeto = trajeto;
     }
 
 }

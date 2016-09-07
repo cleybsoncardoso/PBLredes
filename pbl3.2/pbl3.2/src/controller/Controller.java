@@ -83,7 +83,13 @@ public class Controller {
     }
 
     public void adicionarCarro(int id, String origem, String destino) {
-        ControllerCarro c = new ControllerCarro(id, 480, 482, origem, destino);
+        ControllerCarro c = new ControllerCarro(id, origem, destino);
+        carros.add(id, c);
+        counter++;
+    }
+    
+    public void adicionarCarro(int id) {
+        ControllerCarro c = new ControllerCarro(id);
         carros.add(id, c);
         counter++;
     }
