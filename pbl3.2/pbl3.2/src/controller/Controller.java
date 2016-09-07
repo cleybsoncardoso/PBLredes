@@ -90,7 +90,7 @@ public class Controller {
 
     public void adicionarCarro(int id, float x, float y, int direcao) {
         ControllerCarro c = new ControllerCarro(id, x, y, direcao);
-        carros.add(c);
+        carros.add(id, c);
         counter++;
     }
 
