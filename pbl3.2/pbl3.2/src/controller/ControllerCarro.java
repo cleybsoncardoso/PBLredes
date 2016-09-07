@@ -120,9 +120,11 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-
-        System.out.println(trajeto.get(0).getNome());
-
+        ArrayList <Object> msg = new ArrayList<Object>();
+        msg.add(x);
+        msg.add(y);
+        msg.add(trajeto);
+        Controller.getInstance().replicarMsg(msg);
     }
 
     public void virarEsquerda() {

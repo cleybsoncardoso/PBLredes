@@ -41,6 +41,12 @@ public class Auxiliar {
             c.enviarMsg(msg);
         }
     }
+    
+    public void replicarMsg(ArrayList<Object> msg) {
+        for (Cliente c : clientes) {
+            c.enviarMsg(msg);
+        }
+    }
 
     public void removerCliente(String ip) {
         for (Cliente c : clientes) {
