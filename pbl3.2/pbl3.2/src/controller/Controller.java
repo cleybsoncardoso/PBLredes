@@ -84,13 +84,13 @@ public class Controller {
 
     public void adicionarCarro(int id, String origem, String destino) {
         ControllerCarro c = new ControllerCarro(id, origem, destino);
-        carros.add(id, c);
+        carros.add(c);
         counter++;
     }
 
     public void adicionarCarro(int id, float x, float y, int direcao) {
         ControllerCarro c = new ControllerCarro(id, x, y, direcao);
-        carros.add(id, c);
+        carros.add(c);
         counter++;
     }
 
@@ -111,7 +111,13 @@ public class Controller {
     }
 
     public ControllerCarro getCarro(int id) {
-        return carros.get(id);
+        
+        for(ControllerCarro c : carros){
+            if(c.getId()==id){
+                return c;
+            }
+        }
+        return null;
     }
 
 }

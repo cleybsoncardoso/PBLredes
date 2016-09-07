@@ -47,6 +47,10 @@ public class ControllerCarro {
         this.direcao = direcao;
         this.setup2();
     }
+    
+    public int getId(){
+        return this.id;
+    }
 
     private void setup2() {
         switch (direcao) {
