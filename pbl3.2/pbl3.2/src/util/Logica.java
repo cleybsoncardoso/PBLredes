@@ -35,7 +35,9 @@ public class Logica {
             }
             //busca direta, para verificar se vai ter conflito
             for (int i = 0; i < j; i++) {
-                if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
+                if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))&&!meuCarro.getTrajeto().get(i).getNome().equals("A")
+                        &&!meuCarro.getTrajeto().get(i).getNome().equals("B")&&!meuCarro.getTrajeto().get(i).getNome().equals("C")
+                        &&!meuCarro.getTrajeto().get(i).getNome().equals("D")) {
                     return true;
                 }
             }

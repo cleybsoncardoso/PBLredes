@@ -33,7 +33,7 @@ public class App {
         
         Inicio telaInicial = new Inicio(controller);
         System.out.println("saiu");
-        controller.iniciarConexao("192.168.0.3");
+        //controller.iniciarConexao("192.168.0.3");
         //controller.primeiraConexao("25.12.22.120");
         Server serverSocket = new Server(controller, 8080);
 
