@@ -72,7 +72,7 @@ public class TrataCliente implements Runnable {
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
                     controller.getCarro(this.id).setTrajeto(trajeto);
-                    System.out.println("Trajeto do carro " + controller.getCarro(id).getTrajeto());
+                    System.out.println("Trajeto do carro " + controller.getCarro(id).getTrajeto().get(0).getNome());
                 }
 
             } catch (IOException ex) {
