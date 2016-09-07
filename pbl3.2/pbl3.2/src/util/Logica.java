@@ -41,6 +41,7 @@ public class Logica {
                     System.out.println("meu: " + meuCarro.getTrajeto().get(i).getNome() + " dele: "+ carroAtual.getTrajeto().get(i).getNome());
                     return true;
                 }
+                j++;
             }
 
         }
