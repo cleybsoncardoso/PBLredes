@@ -39,14 +39,30 @@ public class ControllerCarro {
         this.trajeto = logica.calcularTrajeto(origem, destino);
         this.setup();
     }
-    
-    public ControllerCarro(int id) {
+
+    public ControllerCarro(int id, int x, int y, int direcao) {
         this.id = id;
-        this.origem = origem;
-        this.destino = destino;
-        this.logica = new Logica(this);
-        this.trajeto = logica.calcularTrajeto(origem, destino);
-        this.setup();
+        this.x = x;
+        this.y = y;
+        this.direcao = direcao;
+        this.setup2();
+    }
+
+    private void setup2() {
+        switch (direcao) {
+            case 0:
+                carro = new Carro(this.x, this.y, direcao);
+                break;
+            case 9:
+                carro = new Carro(this.x, this.y, direcao);
+                break;
+            case 6:
+                carro = new Carro(this.x, this.y, direcao);
+                break;
+            case 3:
+                carro = new Carro(this.x, this.y, direcao);
+                break;
+        }
     }
 
     private void setup() {

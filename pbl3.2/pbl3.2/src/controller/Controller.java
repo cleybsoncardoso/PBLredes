@@ -33,12 +33,12 @@ public class Controller {
         counter = 0;
         this.meuIp = meuIp;
     }
-    
-    public static Controller novoController(String ip){
+
+    public static Controller novoController(String ip) {
         controller = new Controller(ip);
         return controller;
     }
-    
+
     public static Controller getInstance() {
         return controller;
     }
@@ -77,7 +77,7 @@ public class Controller {
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
     }
-    
+
     public void replicarMsg(ArrayList<Object> msg) {
         auxiliar.replicarMsg(msg);
     }
@@ -87,9 +87,9 @@ public class Controller {
         carros.add(id, c);
         counter++;
     }
-    
-    public void adicionarCarro(int id) {
-        ControllerCarro c = new ControllerCarro(id);
+
+    public void adicionarCarro(int id, int x, int y, int direcao) {
+        ControllerCarro c = new ControllerCarro(id, x, y, direcao);
         carros.add(id, c);
         counter++;
     }
@@ -101,7 +101,7 @@ public class Controller {
         }
         return aux;
     }
-    
+
     public ArrayList<ControllerCarro> getCarros1() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
         for (int i = 1; i < this.counter; i++) {

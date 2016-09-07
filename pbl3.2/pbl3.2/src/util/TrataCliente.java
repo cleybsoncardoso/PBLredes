@@ -26,6 +26,7 @@ public class TrataCliente implements Runnable {
     private Server servidor;
     private String ip;
     private int id;
+    private int modifier = 0;
 
     TrataCliente(Controller controller, Socket cliente) {
         this.id = id_counter;
@@ -57,8 +58,6 @@ public class TrataCliente implements Runnable {
             return;
         }
 
-        controller.adicionarCarro(this.id);
-        
         while (true) {
             try {
                 ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
@@ -66,8 +65,13 @@ public class TrataCliente implements Runnable {
                 int y = (int) mensagem.get(1);
                 int direcao = (int) mensagem.get(2);
                 ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
-                controller.getCarro(this.id).setXY(x, y, direcao);
-                controller.getCarro(this.id).setTrajeto(trajeto);
+                if (modifier == 0) {
+                    controller.adicionarCarro(id, x, y, direcao);
+                } else {
+                    controller.getCarro(this.id).setXY(x, y, direcao);
+                    controller.getCarro(this.id).setTrajeto(trajeto);
+                }
+
             } catch (IOException ex) {
                 controller.removerIp(this.ip);
                 System.out.println("Conexão perdida com " + ip);
