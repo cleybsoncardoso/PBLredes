@@ -33,6 +33,14 @@ public class Logica {
             } else {
                 j = meuCarro.getTrajeto().size();
             }
+            System.out.print("minha: ");
+            for(Quadrante q: meuCarro.getTrajeto()){
+                System.out.print(q.getNome()+", ");
+            }
+            System.out.println("\n tua: ");
+            for(Quadrante q: carroAtual.getTrajeto()){
+                System.out.print(q.getNome()+", ");
+            }
             //busca direta, para verificar se vai ter conflito
             for (int i = 0; i < j; i++) {
                 if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
