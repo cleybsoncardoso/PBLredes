@@ -152,6 +152,10 @@ public class ControllerCarro {
         msg.add(y);
         msg.add(direcao);
         msg.add(trajeto);
+        System.out.println(" ");
+        for(Quadrante q:trajeto){
+            System.out.print(q+", ");
+        }
         Controller.getInstance().replicarMsg(msg);
     }
 
