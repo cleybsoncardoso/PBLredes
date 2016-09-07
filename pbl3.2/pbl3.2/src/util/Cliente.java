@@ -55,6 +55,7 @@ public class Cliente implements Runnable {
             }
             if (enviarMsg) {
                 try {
+                    System.out.println(msg);
                     output.writeObject(msg);
                     enviarMsg = false;
                     System.out.println("Mensagem enviada");

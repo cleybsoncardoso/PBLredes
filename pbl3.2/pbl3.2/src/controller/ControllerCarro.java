@@ -40,7 +40,7 @@ public class ControllerCarro {
         this.setup();
     }
 
-    public ControllerCarro(int id, int x, int y, int direcao) {
+    public ControllerCarro(int id, float x, float y, int direcao) {
         this.id = id;
         this.x = x;
         this.y = y;
