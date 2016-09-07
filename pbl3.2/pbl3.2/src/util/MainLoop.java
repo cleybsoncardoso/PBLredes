@@ -1,5 +1,7 @@
 package util;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import view.CarroFrame;
 
 public class MainLoop implements Runnable {
@@ -118,32 +120,31 @@ public class MainLoop implements Runnable {
     @Override
     public void run() {
         running = true;
-        try {
-            game.setup();
-            while (true) {
-                beforeTime = System.nanoTime();
-                //skipFramesInExcessTime();
+        game.setup();
+        while (true) {
+            beforeTime = System.nanoTime();
+            //skipFramesInExcessTime();
 
-                // Updates, renders and paint the screen
-                game.processLogics();
-                game.paintScreen();
-                
-                //sleep(30);
-                afterTime = System.nanoTime();
+            // Updates, renders and paint the screen
+            game.processLogics();
+            game.paintScreen();
 
-                long sleepTime = calculateSleepTime();
+            //sleep(30);
+            afterTime = System.nanoTime();
 
-                if (sleepTime >= 0) {
+            long sleepTime = calculateSleepTime();
+
+            if (sleepTime >= 0) {
+                try {
                     sleep(sleepTime);
-                } else {
-                    excessTime -= sleepTime; // Sleep time is negative
-                    overSleepTime = 0L;
-                    yieldIfNeed();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainLoop.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                excessTime -= sleepTime; // Sleep time is negative
+                overSleepTime = 0L;
+                yieldIfNeed();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("Exception during game loop", e);
         }
 //        finally
 //        {
