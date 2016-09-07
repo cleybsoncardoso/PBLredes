@@ -47,8 +47,8 @@ public class ControllerCarro {
         this.direcao = direcao;
         this.setup2();
     }
-    
-    public int getId(){
+
+    public int getId() {
         return this.id;
     }
 
@@ -260,8 +260,7 @@ public class ControllerCarro {
     public void setXY(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
-        this.direcao = direcao;
-        
+
         carro.setXY(x, y);
 
         if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
@@ -291,6 +290,8 @@ public class ControllerCarro {
         if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
             virarDireita();
         }
+
+        this.direcao = direcao;
     }
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
