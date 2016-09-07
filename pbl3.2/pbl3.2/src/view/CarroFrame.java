@@ -70,11 +70,7 @@ public class CarroFrame extends JFrame {
 
     public void processLogics() {
         this.carros = this.controller.getCarros();
-        for (ControllerCarro carro : carros) {
-            if (carro != null) {
-                carro.acao();
-            }
-        }
+        controller.getCarro(0).acao();
     }
 
     @Override
