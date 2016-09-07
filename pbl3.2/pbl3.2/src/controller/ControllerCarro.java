@@ -130,6 +130,7 @@ public class ControllerCarro {
         ArrayList<Object> msg = new ArrayList<Object>();
         msg.add(x);
         msg.add(y);
+        msg.add(direcao);
         msg.add(trajeto);
         Controller.getInstance().replicarMsg(msg);
     }
