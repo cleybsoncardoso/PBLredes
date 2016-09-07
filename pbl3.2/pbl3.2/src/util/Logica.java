@@ -38,6 +38,7 @@ public class Logica {
                 if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))&&!meuCarro.getTrajeto().get(i).getNome().equals("A")
                         &&!meuCarro.getTrajeto().get(i).getNome().equals("B")&&!meuCarro.getTrajeto().get(i).getNome().equals("C")
                         &&!meuCarro.getTrajeto().get(i).getNome().equals("D")) {
+                    System.out.println("meu: " + meuCarro.getTrajeto().get(i).getNome() + "dele: "+ carroAtual.getTrajeto().get(i).getNome());
                     return true;
                 }
             }
