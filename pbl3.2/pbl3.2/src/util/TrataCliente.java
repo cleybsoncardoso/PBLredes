@@ -51,7 +51,7 @@ public class TrataCliente implements Runnable {
         try {
             enviaIps();
         } catch (IOException ex) {
- //           controller.removerIp(this.ip);
+            //           controller.removerIp(this.ip);
             System.out.println("Conexão perdida com " + ip);
             return;
         } catch (ClassNotFoundException ex) {
@@ -72,7 +72,7 @@ public class TrataCliente implements Runnable {
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
                     controller.getCarro(this.id).setTrajeto(trajeto);
-                    System.out.println("Trajeto do carro " +controller.getCarro(id).getTrajeto());
+                    System.out.println("Trajeto do carro " + controller.getCarro(id).getTrajeto());
                 }
 
             } catch (IOException ex) {

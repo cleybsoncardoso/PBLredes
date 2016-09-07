@@ -261,6 +261,8 @@ public class ControllerCarro {
         this.x = x;
         this.y = y;
         this.direcao = direcao;
+        
+        carro.setXY(x, y);
 
         if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
             virarEsquerda();
