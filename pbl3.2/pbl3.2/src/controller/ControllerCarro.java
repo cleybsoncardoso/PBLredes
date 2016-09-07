@@ -154,7 +154,7 @@ public class ControllerCarro {
         msg.add(trajeto);
         System.out.println(" ");
         for(Quadrante q:trajeto){
-            System.out.print(q+", ");
+            System.out.print(q.getNome()+", ");
         }
         Controller.getInstance().replicarMsg(msg);
     }
