@@ -88,7 +88,7 @@ public class Controller {
         counter++;
     }
 
-    public void adicionarCarro(int id, int x, int y, int direcao) {
+    public void adicionarCarro(int id, float x, float y, int direcao) {
         ControllerCarro c = new ControllerCarro(id, x, y, direcao);
         carros.add(id, c);
         counter++;

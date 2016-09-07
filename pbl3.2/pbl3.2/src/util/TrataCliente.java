@@ -61,8 +61,8 @@ public class TrataCliente implements Runnable {
         while (true) {
             try {
                 ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
-                int x = (int) mensagem.get(0);
-                int y = (int) mensagem.get(1);
+                float x = (float) mensagem.get(0);
+                float y = (float) mensagem.get(1);
                 int direcao = (int) mensagem.get(2);
                 ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
                 System.out.println("mensagem recebida");
