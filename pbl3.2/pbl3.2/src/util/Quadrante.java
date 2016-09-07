@@ -5,11 +5,13 @@
  */
 package util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author cleyb
  */
-public class Quadrante {
+public class Quadrante implements Serializable{
 
     private String nome;
 
