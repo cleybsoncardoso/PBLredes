@@ -49,8 +49,9 @@ public class Controller {
 
     public void primeiraConexao(String ip) {
         if (value.incrementAndGet() == 1) {
-            System.out.println("entrei e me conectei****** value:" + value.intValue());
+            
             if (verificaIp(ip)) {
+                System.out.println("entrei e me conectei****** value:" + value.intValue());
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
@@ -63,8 +64,9 @@ public class Controller {
 
     public void iniciarConexao(String ip) {
         if (value.incrementAndGet() == 1) {
-            System.out.println("entrei e me conectei****** value:" + value.intValue());
+            
             if (verificaIp(ip)) {
+                System.out.println("entrei e me conectei****** value:" + value.intValue());
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
