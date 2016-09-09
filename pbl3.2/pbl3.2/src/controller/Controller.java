@@ -45,8 +45,10 @@ public class Controller {
     }
 
     public void primeiraConexao(String ip) {
-        ips.add(ip);
-        auxiliar.primeiraConexao(ip);
+        if (verificaIp(ip)) {
+            ips.add(ip);
+            auxiliar.iniciarConexao(ip);
+        }
     }
 
     public void iniciarConexao(String ip) {
