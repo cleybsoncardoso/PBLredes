@@ -30,6 +30,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
+    private boolean tonaVia = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -195,7 +196,8 @@ public class ControllerCarro {
             andar();
         } else if (origem.equals("D") && this.x < 163) {
             andar();
-        } else if (!logica.conflito()) {
+        } else if (!logica.conflito()||logica.conflito()&&tonaVia) {
+            tonaVia=true;
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
                     virarEsquerda();
