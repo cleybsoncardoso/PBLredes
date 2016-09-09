@@ -50,10 +50,8 @@ public class Controller {
 
     public void primeiraConexao(String ip) {
         while (!value.get()) {
-            System.out.println("entrei no while do negocio***");
             value.set(true);
             if (verificaIp(ip)) {
-                System.out.println("entrei e me conectei****** value:" + value.get());
                 ips.add(ip);
                 auxiliar.primeiraConexao(ip);
             }
@@ -63,10 +61,8 @@ public class Controller {
 
     public void iniciarConexao(String ip) {
         while (!value.get()) {
-            System.out.println("entrei no while do negocio***");
             value.set(true);
             if (verificaIp(ip)) {
-                System.out.println("entrei e me conectei****** value:" + value.get());
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
