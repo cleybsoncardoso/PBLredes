@@ -151,7 +151,7 @@ public class ControllerCarro {
                 break;
         }
         for (int i = 0; i < Controller.getInstance().getCarros().size(); i++) {
-            System.out.print("\nPosição do carro " + Controller.getInstance().getCarros().get(i) + trajeto.get(0).getNome() + "vai para: ");
+            System.out.print("\nPosição do carro " + Controller.getInstance().getCarros().get(i).getId() + trajeto.get(0).getNome() + "vai para: ");
             for(Quadrante q: Controller.getInstance().getCarros().get(i).getTrajeto()){
                 System.out.print(q.getNome() + ", ");
             }

@@ -91,7 +91,6 @@ public class TrataCliente implements Runnable {
         String msg = (String) input.readObject();
         System.out.println(msg);
         if (msg.equals("primeiro")) {
-            System.out.println("entrou");
             ArrayList<String> aux = new ArrayList<>();
             aux.addAll(controller.getIps());
             aux.remove(this.ip);
