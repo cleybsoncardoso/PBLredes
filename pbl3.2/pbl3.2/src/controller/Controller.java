@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +28,7 @@ public class Controller {
     private ArrayList<ControllerCarro> carros;
     private int counter;
     private String meuIp;
-    private AtomicInteger value;
+    private AtomicBoolean value;
 
     public Controller(String meuIp) {
         auxiliar = new Auxiliar(this);
@@ -35,7 +36,7 @@ public class Controller {
         carros = new ArrayList<>();
         counter = 0;
         this.meuIp = meuIp;
-        value = new AtomicInteger();
+        value = new AtomicBoolean();
     }
 
     public static Controller novoController(String ip) {
@@ -48,18 +49,26 @@ public class Controller {
     }
 
     public void primeiraConexao(String ip) {
-        if (verificaIp(ip)) {
-            System.out.println("entrei e me conectei****** value:" + value.intValue());
-            ips.add(ip);
-            auxiliar.primeiraConexao(ip);
+        if (!value.get()) {
+            value.set(true);
+            if (verificaIp(ip)) {
+                System.out.println("entrei e me conectei****** value:" + value.get());
+                ips.add(ip);
+                auxiliar.primeiraConexao(ip);
+            }
+            value.set(false);
         }
     }
 
     public void iniciarConexao(String ip) {
-        if (verificaIp(ip)) {
-            System.out.println("entrei e me conectei****** value:" + value.intValue());
-            ips.add(ip);
-            auxiliar.iniciarConexao(ip);
+        if (!value.get()) {
+            value.set(true);
+            if (verificaIp(ip)) {
+                System.out.println("entrei e me conectei****** value:" + value.get());
+                ips.add(ip);
+                auxiliar.iniciarConexao(ip);
+            }
+            value.set(false);
         }
 
     }
