@@ -105,10 +105,6 @@ public class ControllerCarro {
     public void desenhar(Graphics2D g2d) {
         g2d.setColor(Color.RED);
         g2d.fill(carro.draw());
-        System.out.print("\nPosição do carro " + this.id + " " + this.trajeto.get(0).getNome() + " vai para: ");
-        for (Quadrante q : this.trajeto) {
-            System.out.print(q.getNome() + ", ");
-        }
 
     }
 
