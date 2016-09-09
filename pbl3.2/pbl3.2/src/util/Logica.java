@@ -42,9 +42,11 @@ public class Logica {
                     System.err.println("Comparando Meu: " + meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getTrajeto().get(i).getNome());
 
                     if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                        if (carroAtual.getTrajeto().get(i+1).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                            System.out.println("Aqui");
-                            return true;
+                        if (i < carroAtual.getTrajeto().size()) {
+                            if (carroAtual.getTrajeto().get(i + 1).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                                System.out.println("Aqui");
+                                return true;
+                            }
                         }
                     } else if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                         System.out.println("Aqui");
