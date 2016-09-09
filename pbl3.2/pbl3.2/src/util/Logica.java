@@ -44,7 +44,7 @@ public class Logica {
                         System.out.println("Aqui");
                         return true;
                     }
-                    if (i == 0) {
+                    if (i == 0&&i+1<meuCarro.getTrajeto().size()) {
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i+1).getNome())) {
                             System.out.println("Conflito aqui");
                             return true;
