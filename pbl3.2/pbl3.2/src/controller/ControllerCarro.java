@@ -69,7 +69,7 @@ public class ControllerCarro {
                 break;
         }
         this.origem = trajeto.get(0).getNome();
-        this.destino = trajeto.get(3).getNome();
+        this.destino = trajeto.get(trajeto.size()-1).getNome();
     }
 
     private void setup() {
