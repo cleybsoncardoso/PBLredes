@@ -69,7 +69,7 @@ public class ControllerCarro {
                 break;
         }
         this.origem = trajeto.get(0).getNome();
-        this.destino = trajeto.get(trajeto.size()-1).getNome();
+        this.destino = trajeto.get(trajeto.size() - 1).getNome();
     }
 
     private void setup() {
@@ -150,7 +150,14 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
+        for (int i = 0; i < Controller.getInstance().getCarros().size(); i++) {
+            System.out.print("\nPosição do carro " + Controller.getInstance().getCarros().get(i) + trajeto.get(0).getNome() + "vai para: ");
+            for(Quadrante q: Controller.getInstance().getCarros().get(i).getTrajeto()){
+                System.out.print(q.getNome() + ", ");
+            }
+        }
         ArrayList<Object> msg = new ArrayList<Object>();
+
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
