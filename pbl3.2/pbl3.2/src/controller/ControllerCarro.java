@@ -167,9 +167,7 @@ public class ControllerCarro {
         msg.add(y);
         msg.add(direcao);
         msg.add(trajeto.size());
-        System.out.println("Tranjeto enviado do meuCarro");
         for (Quadrante q : trajeto) {
-            System.out.println(q.getNome());
             msg.add(q);
         }
         Controller.getInstance().replicarMsg(msg);
