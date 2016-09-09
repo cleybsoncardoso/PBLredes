@@ -50,6 +50,10 @@ public class Logica {
 //                            return true;
 //                        }
 //                    }
+                    System.out.println("Rota de lucas: ");
+                    for (Quadrante q : carroAtual.getTrajeto()) {
+                        System.out.println(q.getNome());
+                    }
 
                 }
             }
