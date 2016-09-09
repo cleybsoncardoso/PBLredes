@@ -70,8 +70,6 @@ public class TrataCliente implements Runnable {
 
                 //ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
                 int tamanhoDoTrajeto = (int) mensagem.get(3);
-                System.out.println("Tabamnho do trajeto recebido: " + tamanhoDoTrajeto);
-                System.out.println("Quadrante recebido: ");
                 for (int j = 4; j < tamanhoDoTrajeto+4; j++) {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     System.out.println(q.getNome());
@@ -85,11 +83,6 @@ public class TrataCliente implements Runnable {
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
                     controller.getCarro(this.id).setTrajeto(trajeto);
-                    System.out.println("\n\nTrajeto recebido do Carro de cley: ");
-                    for (Quadrante d : trajeto) {
-                        System.out.println(d.getNome());
-                    }
-                    System.out.println("\n\n");
                 }
 
             } catch (IOException ex) {
