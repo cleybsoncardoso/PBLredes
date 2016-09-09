@@ -62,7 +62,7 @@ public class TrataCliente implements Runnable {
             try {
 //                String msg = (String) input.readObject();
 //                System.out.println(msg);
-                
+
                 ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
                 float x = (float) mensagem.get(0);
                 float y = (float) mensagem.get(1);
@@ -75,6 +75,10 @@ public class TrataCliente implements Runnable {
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
                     controller.getCarro(this.id).setTrajeto(trajeto);
+                    System.out.println("\n\nTrajeto recebido do Carro de cley: ");
+                    for (Quadrante d : trajeto) {
+                        System.out.println(d.getNome());
+                    }
                 }
 
             } catch (IOException ex) {
