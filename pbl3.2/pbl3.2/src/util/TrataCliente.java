@@ -76,6 +76,7 @@ public class TrataCliente implements Runnable {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     System.out.println(q.getNome());
                     trajeto.add(q);
+                    System.out.println(j);
                 }
                 //System.out.println("mensagem recebida");
                 if (modifier == 0) {
