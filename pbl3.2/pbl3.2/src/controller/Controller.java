@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Auxiliar;
@@ -26,6 +27,7 @@ public class Controller {
     private ArrayList<ControllerCarro> carros;
     private int counter;
     private String meuIp;
+    private AtomicInteger value;
 
     public Controller(String meuIp) {
         auxiliar = new Auxiliar(this);
@@ -33,6 +35,7 @@ public class Controller {
         carros = new ArrayList<>();
         counter = 0;
         this.meuIp = meuIp;
+        value = new AtomicInteger();
     }
 
     public static Controller novoController(String ip) {
@@ -45,16 +48,24 @@ public class Controller {
     }
 
     public void primeiraConexao(String ip) {
-        if (verificaIp(ip)) {
-            ips.add(ip);
-            auxiliar.iniciarConexao(ip);
+        if (value.intValue() == 0) {
+            value.set(1);
+            if (verificaIp(ip)) {
+                ips.add(ip);
+                auxiliar.iniciarConexao(ip);
+            }
+            value.set(0);
         }
     }
 
     public void iniciarConexao(String ip) {
-        if (verificaIp(ip)) {
-            ips.add(ip);
-            auxiliar.iniciarConexao(ip);
+        if (value.intValue() == 0) {
+            value.set(1);
+            if (verificaIp(ip)) {
+                ips.add(ip);
+                auxiliar.iniciarConexao(ip);
+            }
+            value.set(0);
         }
     }
 
@@ -113,9 +124,9 @@ public class Controller {
     }
 
     public ControllerCarro getCarro(int id) {
-        
-        for(ControllerCarro c : carros){
-            if(c.getId()==id){
+
+        for (ControllerCarro c : carros) {
+            if (c.getId() == id) {
                 return c;
             }
         }
