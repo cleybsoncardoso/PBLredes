@@ -43,12 +43,12 @@ public class Logica {
                     if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                         return true;
                     }
-                    if (i == 0) {
-                        if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i+1).getNome())) {
-                            System.out.println("Conflito aqui");
-                            return true;
-                        }
-                    }
+//                    if (i == 0) {
+//                        if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i+1).getNome())) {
+//                            System.out.println("Conflito aqui");
+//                            return true;
+//                        }
+//                    }
 
                 }
             }
