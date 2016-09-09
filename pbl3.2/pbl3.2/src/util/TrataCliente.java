@@ -62,12 +62,20 @@ public class TrataCliente implements Runnable {
             try {
 //                String msg = (String) input.readObject();
 //                System.out.println(msg);
-
+                ArrayList<Quadrante> trajeto = new ArrayList<>();
                 ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
                 float x = (float) mensagem.get(0);
                 float y = (float) mensagem.get(1);
                 int direcao = (int) mensagem.get(2);
-                ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
+
+                //ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
+                
+                int tamanhoDoTrajeto = (int) mensagem.get(3);
+
+                for (int j = 4; j < tamanhoDoTrajeto; j++) {
+                    Quadrante q = (Quadrante) mensagem.get(j);
+                    trajeto.add(q);
+                }
                 //System.out.println("mensagem recebida");
                 if (modifier == 0) {
                     controller.adicionarCarro(id, x, y, direcao, trajeto);
@@ -79,6 +87,7 @@ public class TrataCliente implements Runnable {
                     for (Quadrante d : trajeto) {
                         System.out.println(d.getNome());
                     }
+                    System.out.println("\n\n");
                 }
 
             } catch (IOException ex) {
