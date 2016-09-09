@@ -150,10 +150,7 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        System.out.print("\nPosição do carro " + this.id + " " + this.trajeto.get(0).getNome() + " vai para: ");
-        for (Quadrante q : this.trajeto) {
-            System.out.print(q.getNome() + ", ");
-        }
+
         ArrayList<Object> msg = new ArrayList<Object>();
 
         msg.add(x);
@@ -266,6 +263,12 @@ public class ControllerCarro {
     }
 
     public void setXY(float x, float y, int direcao) {
+
+        System.out.print("\nPosição do carro " + this.id + " " + this.trajeto.get(0).getNome() + " vai para: ");
+        for (Quadrante q : this.trajeto) {
+            System.out.print(q.getNome() + ", ");
+        }
+
         this.x = x;
         this.y = y;
         carro.setXY(x, y);
