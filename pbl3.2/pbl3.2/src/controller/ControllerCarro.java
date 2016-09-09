@@ -99,6 +99,7 @@ public class ControllerCarro {
                 carro = new Carro(this.x, this.y, direcao);
                 break;
         }
+        this.msgMandar();
     }
 
     public void desenhar(Graphics2D g2d) {
@@ -154,7 +155,12 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
+        this.msgMandar();
 
+    }
+    
+    private void msgMandar(){
+        
         ArrayList<Object> msg = new ArrayList<Object>();
 
         msg.add(x);
