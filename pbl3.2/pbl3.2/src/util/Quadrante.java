@@ -26,36 +26,36 @@ public class Quadrante implements Serializable{
     public boolean aindaQuadranteX(double x) {
         x = x + 13.5;
         if (nome.equals("d")) {
-            if (x < 264.5) {
+            if (x < 283) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("b")) {
-            if (x > 256) {
+            if (x > 250) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("a")) {
-            if (x > 194) {
+            if (x > 176) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("c")) {
-            if (x < 217.5) {
+            if (x < 210) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("D")) {
-            if (x < 170.5) {
+            if (x < 170) {
                 return true;
             } else {
                 return false;
             }
-        } else if (x > 316.5) {
+        } else if (x > 288) {
             return true;
         } else {
             return false;
@@ -66,37 +66,37 @@ public class Quadrante implements Serializable{
      public boolean aindaQuadranteY(double y) {
         y+=13.5;
         if (nome.equals("d")) {
-            if (y > 263) {
+            if (y > 247) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("b")) {
-            if (y > 210) {
+            if (y > 174) {
                 return true;
             } else {
                 return false;
             }
         } else if (nome.equals("a")) {
-            if (y < 208) {
+            if (y < 210) {
                 return true;
             } else {
                 return false;
             }
         } else if(nome.equals("c")){
-            if (y < 270) {
+            if (y < 280) {
                 return true;
             } else {
                 return false;
             }
         }else if(nome.equals("C")){
-            if (y < 174) {
+            if (y < 169) {
                 return true;
             } else {
                 return false;
             }
         }else{
-            if (y > 300) {
+            if (y > 288) {
                 return true;
             } else {
                 return false;
