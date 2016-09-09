@@ -40,7 +40,13 @@ public class Logica {
 
                 for (int i = 0; i < j; i++) {
                     System.err.println("Comparando Meu: " + meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getTrajeto().get(i).getNome());
-                    if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+
+                    if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+                        if (carroAtual.getTrajeto().get(i+1).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                            System.out.println("Aqui");
+                            return true;
+                        }
+                    } else if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                         System.out.println("Aqui");
                         return true;
                     }
@@ -50,8 +56,12 @@ public class Logica {
 //                            return true;
 //                        }
 //                    }
-                    System.out.println("Rota de lucas: ");
+                    System.out.println("Rota de tua: ");
                     for (Quadrante q : carroAtual.getTrajeto()) {
+                        System.out.println(q.getNome());
+                    }
+                    System.out.println("Rota de minha: ");
+                    for (Quadrante q : meuCarro.getTrajeto()) {
                         System.out.println(q.getNome());
                     }
 
