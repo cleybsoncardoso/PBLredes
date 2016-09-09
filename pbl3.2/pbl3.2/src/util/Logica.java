@@ -39,8 +39,8 @@ public class Logica {
                 //busca direta, para verificar se vai ter conflito
                 
                 for (int i = 0; i < j; i++) {
-                    System.err.println("Comparando Meu: "+meuCarro.getTrajeto().get(i) + "teu: " + carroAtual.getTrajeto().get(i));
-                    if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
+                    System.err.println("Comparando Meu: "+meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getTrajeto().get(i).getNome());
+                    if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                         return true;
                     }
 
