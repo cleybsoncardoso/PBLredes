@@ -48,24 +48,30 @@ public class Controller {
     }
 
     public void primeiraConexao(String ip) {
-        if (value.intValue() == 0) {
-            value.set(1);
+        if (value.incrementAndGet() == 1) {
+            System.out.println("entrei e me conectei****** value:" + value.intValue());
             if (verificaIp(ip)) {
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
-            value.set(0);
+            value.decrementAndGet();
+        }else{
+            System.out.println("nao entrei ******");
+            value.decrementAndGet();
         }
     }
 
     public void iniciarConexao(String ip) {
-        if (value.intValue() == 0) {
-            value.set(1);
+        if (value.incrementAndGet() == 1) {
+            System.out.println("entrei e me conectei****** value:" + value.intValue());
             if (verificaIp(ip)) {
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
-            value.set(0);
+            value.decrementAndGet();
+        }else{
+            System.out.println("nao entrei ******");
+            value.decrementAndGet();
         }
     }
 
