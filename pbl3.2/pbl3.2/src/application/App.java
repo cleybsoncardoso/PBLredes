@@ -35,7 +35,7 @@ public class App {
         //controller.iniciarConexao("25.4.73.30");
         controller.primeiraConexao("25.12.22.120");
         //controller.iniciarConexao("25.12.22.120");
-        Server serverSocket = new Server(controller, 8080);
+        Server serverSocket = new Server(8080);
 
 
 //

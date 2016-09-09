@@ -24,8 +24,8 @@ public class Server implements Runnable {
     private Controller controller;
     private ArrayList<Socket> clientes;
 
-    public Server(Controller controller, int porta) {
-        this.controller = controller;
+    public Server(int porta) {
+        this.controller = Controller.getInstance();
         this.porta = porta;
         clientes = new ArrayList<>();
     }
@@ -40,7 +40,7 @@ public class Server implements Runnable {
                 Socket cliente = servidor.accept();
                 String ip = cliente.getInetAddress().getHostAddress();
                 System.out.println("Conexao criada com " + ip);
-                TrataCliente tc = new TrataCliente(controller, cliente);
+                TrataCliente tc = new TrataCliente(cliente);
                 new Thread(tc).start();
                 System.out.println("Conectando pelo server");
                 controller.iniciarConexao(ip);

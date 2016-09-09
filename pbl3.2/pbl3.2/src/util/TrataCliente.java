@@ -28,11 +28,11 @@ public class TrataCliente implements Runnable {
     private int id;
     private int modifier = 0;
 
-    TrataCliente(Controller controller, Socket cliente) {
+    TrataCliente(Socket cliente) {
         this.id = id_counter;
         this.id_counter++;
         System.out.println(id);
-        this.controller = controller;
+        this.controller = Controller.getInstance();
         this.cliente = cliente;
         this.ip = this.cliente.getInetAddress().getHostAddress();
         this.servidor = servidor;
