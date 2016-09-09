@@ -41,6 +41,7 @@ public class Logica {
                 for (int i = 0; i < j; i++) {
                     System.err.println("Comparando Meu: " + meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getTrajeto().get(i).getNome());
                     if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                        System.out.println("Aqui");
                         return true;
                     }
 //                    if (i == 0) {
