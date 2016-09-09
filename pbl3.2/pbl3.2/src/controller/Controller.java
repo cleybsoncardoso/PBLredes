@@ -57,8 +57,8 @@ public class Controller {
                 ips.add(ip);
                 auxiliar.primeiraConexao(ip);
             }
-            value.set(false);
         }
+        value.set(false);
     }
 
     public void iniciarConexao(String ip) {
@@ -70,8 +70,8 @@ public class Controller {
                 ips.add(ip);
                 auxiliar.iniciarConexao(ip);
             }
-            value.set(false);
         }
+        value.set(false);
 
     }
 
