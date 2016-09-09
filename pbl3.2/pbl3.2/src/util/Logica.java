@@ -17,30 +17,50 @@ public class Logica {
 
     private Controller controller;
     private ControllerCarro meuCarro;
-    
-    public Logica(ControllerCarro meuCarro){
+
+    public Logica(ControllerCarro meuCarro) {
         this.meuCarro = meuCarro;
         this.controller = Controller.getInstance();
-        
+
     }
 
     public boolean conflito() {
-        for (ControllerCarro carroAtual : controller.getCarros1()) {
-            int j = 0;
-            //verifica qual o maior trajeto, para basear se vai ter conflito
-            if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
-                j = carroAtual.getTrajeto().size();
-            } else {
-                j = meuCarro.getTrajeto().size();
-            }
-            //busca direta, para verificar se vai ter conflito
-            for (int i = 0; i < j; i++) {
-                if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
-                    return true;
+        this.meuCarro = controller.getCarros().get(0);
+        if (controller.getCarros().size() > 1) {
+            for (int l = 1; l < controller.getCarros().size(); l++) {
+                ControllerCarro carroAtual = controller.getCarros().get(l);
+                int j = 0;
+                //verifica qual o maior trajeto, para basear se vai ter conflito
+                if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
+                    j = carroAtual.getTrajeto().size();
+                } else {
+                    j = meuCarro.getTrajeto().size();
                 }
-                
-            }
+                //busca direta, para verificar se vai ter conflito
+                for (int i = 0; i < j; i++) {
+                    if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
+                        return true;
+                    }
 
+                }
+            }
+//            for (ControllerCarro carroAtual : controller.getCarros1()) {
+//                int j = 0;
+//                //verifica qual o maior trajeto, para basear se vai ter conflito
+//                if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
+//                    j = carroAtual.getTrajeto().size();
+//                } else {
+//                    j = meuCarro.getTrajeto().size();
+//                }
+//                //busca direta, para verificar se vai ter conflito
+//                for (int i = 0; i < j; i++) {
+//                    if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
+//                        return true;
+//                    }
+//
+//                }
+//
+//            }
         }
         return false;
     }
