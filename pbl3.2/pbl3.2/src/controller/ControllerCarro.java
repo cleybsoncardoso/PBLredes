@@ -196,7 +196,7 @@ public class ControllerCarro {
             andar();
         } else if (origem.equals("D") && this.x < 163) {
             andar();
-        } else if (!logica.conflito()||logica.conflito()&&tonaVia) {
+        } else if (!logica.conflito()||tonaVia) {
             tonaVia=true;
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
