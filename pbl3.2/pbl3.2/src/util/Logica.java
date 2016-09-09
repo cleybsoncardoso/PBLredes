@@ -37,30 +37,15 @@ public class Logica {
                     j = meuCarro.getTrajeto().size();
                 }
                 //busca direta, para verificar se vai ter conflito
+                
                 for (int i = 0; i < j; i++) {
+                    System.err.println("Comparando Meu: "+meuCarro.getTrajeto().get(i) + "teu: " + carroAtual.getTrajeto().get(i));
                     if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
                         return true;
                     }
 
                 }
             }
-//            for (ControllerCarro carroAtual : controller.getCarros1()) {
-//                int j = 0;
-//                //verifica qual o maior trajeto, para basear se vai ter conflito
-//                if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
-//                    j = carroAtual.getTrajeto().size();
-//                } else {
-//                    j = meuCarro.getTrajeto().size();
-//                }
-//                //busca direta, para verificar se vai ter conflito
-//                for (int i = 0; i < j; i++) {
-//                    if (carroAtual.getTrajeto().get(i).equals(meuCarro.getTrajeto().get(i))) {
-//                        return true;
-//                    }
-//
-//                }
-//
-//            }
         }
         return false;
     }
