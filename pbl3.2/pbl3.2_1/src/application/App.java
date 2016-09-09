@@ -6,12 +6,15 @@
 package application;
 
 import controller.Controller;
+import controller.ControllerCarro;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import model.EstouNaRede;
+import util.Quadrante;
 import util.Server;
 import view.Inicio;
 
@@ -30,13 +33,12 @@ public class App {
             System.out.println("não foi possivel verificar ip");
         }
         Controller controller = Controller.novoController(ip);
-        
-        Inicio telaInicial = new Inicio(controller);
+
+        Inicio telaInicial = Inicio.novoController(controller);
         //controller.iniciarConexao("25.4.73.30");
-        controller.primeiraConexao("25.12.22.120");
+        //controller.primeiraConexao("25.12.22.120");
         //controller.iniciarConexao("25.12.22.120");
         Server serverSocket = new Server(8080);
-
 
 //
 //        //adicionando carros no cruzamento
@@ -52,9 +54,8 @@ public class App {
 //        controller.adicionarCarro(9, "D", "A");
 //        controller.adicionarCarro(10, "D", "B");
 //        controller.adicionarCarro(11, "D", "C");
-        
         new Thread(serverSocket).start();
-        
+
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);
         new Thread(enr).start();
 
@@ -73,7 +74,19 @@ public class App {
         }
         Scanner teclado = new Scanner(System.in);
         while (true) {
-            controller.replicarMsg(teclado.nextLine());
+
+            ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();
+            trajeto.add(new Quadrante("A"));
+            trajeto.add(new Quadrante("A"));
+            trajeto.add(new Quadrante("B"));
+            controller.adicionarCarro(1, 0, 0, 3, trajeto);
+            while (true) {
+                float z = teclado.nextFloat();
+                float t = teclado.nextFloat();
+                //int d = teclado.nextInt();
+                System.out.println("envia");
+                controller.getCarro(1).setXY(z,t,3);
+            }
         }
     }
 }
