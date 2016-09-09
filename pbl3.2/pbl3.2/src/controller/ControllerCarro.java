@@ -76,26 +76,26 @@ public class ControllerCarro {
     private void setup() {
         switch (origem) {
             case "A":
-                this.x = larguraTela / 2 + 18;
+                this.x = 260;
                 this.y = alturaTela;
                 this.direcao = 0;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "B":
                 this.x = larguraTela;
-                this.y = alturaTela / 2 - 35;
+                this.y = 200;
                 this.direcao = 9;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "C":
-                this.x = larguraTela / 2 - 35;
+                this.x = larguraTela / 2 - 40;
                 this.y = 0;
                 this.direcao = 6;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "D":
                 this.x = 0;
-                this.y = alturaTela / 2 + 15;
+                this.y = 260;
                 this.direcao = 3;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
@@ -190,7 +190,7 @@ public class ControllerCarro {
 
         if (origem.equals("A") && this.y > 287) {
             andar();
-        } else if (origem.equals("C") && this.y < 161) {
+        } else if (origem.equals("C") && this.y < 169) {
             andar();
         } else if (origem.equals("B") && this.x > 288) {
             andar();
