@@ -104,6 +104,10 @@ public class ControllerCarro {
     public void desenhar(Graphics2D g2d) {
         g2d.setColor(Color.RED);
         g2d.fill(carro.draw());
+        System.out.print("\nPosição do carro " + this.id + " " + this.trajeto.get(0).getNome() + " vai para: ");
+        for (Quadrante q : this.trajeto) {
+            System.out.print(q.getNome() + ", ");
+        }
 
     }
 
@@ -263,12 +267,6 @@ public class ControllerCarro {
     }
 
     public void setXY(float x, float y, int direcao) {
-
-        System.out.print("\nPosição do carro " + this.id + " " + this.trajeto.get(0).getNome() + " vai para: ");
-        for (Quadrante q : this.trajeto) {
-            System.out.print(q.getNome() + ", ");
-        }
-
         this.x = x;
         this.y = y;
         carro.setXY(x, y);
