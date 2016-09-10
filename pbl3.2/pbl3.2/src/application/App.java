@@ -31,28 +31,11 @@ public class App {
         }
         Controller controller = Controller.novoController(ip);
         
-        Inicio telaInicial = new Inicio(controller);
+        Inicio telaInicial = Inicio.novoController(controller);
         //controller.iniciarConexao("25.4.73.30");
         //controller.primeiraConexao("25.12.22.120");
         //controller.iniciarConexao("25.12.22.120");
         Server serverSocket = new Server(8080);
-
-
-//
-//        //adicionando carros no cruzamento
-//        controller.adicionarCarro(0, "A", "B");
-//        controller.adicionarCarro(1, "A", "C");
-//        controller.adicionarCarro(2, "A", "D");
-//        controller.adicionarCarro(3, "B", "A");
-//        controller.adicionarCarro(4, "B", "C");
-//        controller.adicionarCarro(5, "B", "D");
-//        controller.adicionarCarro(6, "C", "A");
-//        controller.adicionarCarro(7, "C", "B");
-//        controller.adicionarCarro(8, "C", "D");
-//        controller.adicionarCarro(9, "D", "A");
-//        controller.adicionarCarro(10, "D", "B");
-//        controller.adicionarCarro(11, "D", "C");
-        
         new Thread(serverSocket).start();
         
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);

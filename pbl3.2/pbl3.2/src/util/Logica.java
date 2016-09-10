@@ -25,10 +25,9 @@ public class Logica {
     }
 
     public boolean conflito() {
-        this.meuCarro = controller.getCarros().get(0);
         if (controller.getCarros().size() > 1) {
             for (int l = 1; l < controller.getCarros().size(); l++) {
-                ControllerCarro carroAtual = controller.getCarros().get(l);
+                ControllerCarro carroAtual = Controller.getInstance().getCarros().get(l);
                 int j = 0;
                 //verifica qual o maior trajeto, para basear se vai ter conflito
                 if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {
@@ -40,23 +39,12 @@ public class Logica {
 
                 for (int i = 0; i < j; i++) {
                     System.err.println("Comparando Meu: " + meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getTrajeto().get(i).getNome());
-
-                    if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                        if (i+1 < carroAtual.getTrajeto().size()) {
-                            if (carroAtual.getTrajeto().get(i + 1).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                                return true;
-                            }
+                    if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                        if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+                            return true;
                         }
-                    } else if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                        System.out.println("Aqui");
-                        return true;
                     }
-//                    if (i == 0&&i+1<meuCarro.getTrajeto().size()) {
-//                        if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i+1).getNome())) {
-//                            System.out.println("Conflito aqui");
-//                            return true;
-//                        }
-//                    }
+
                     System.out.println("Rota de tua: ");
                     for (Quadrante q : carroAtual.getTrajeto()) {
                         System.out.println(q.getNome());

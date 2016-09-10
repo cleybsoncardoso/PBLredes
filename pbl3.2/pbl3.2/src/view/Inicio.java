@@ -8,6 +8,7 @@ package view;
 import application.App;
 import controller.Controller;
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -27,6 +28,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import util.Logica;
 import util.Quadrante;
 import util.Server;
@@ -39,15 +42,27 @@ public class Inicio extends JFrame implements ActionListener {
 
     private JComboBox dlist, olist;
     private Controller controller;
+    private JTextArea comunicacao;
+    private String atual;
+    private static Inicio inicio;
+    private JPanel panel;
+    
+     public static Inicio novoController(Controller controller) {
+        inicio = new Inicio(controller);
+        return inicio;
+    }
+
+    public static Inicio getInstance() {
+        return inicio;
+    }
 
     public Inicio(Controller controller) {
         super("Rota");
         this.controller = controller;
-        //frame.setResizable(false);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 100);
-        
-        JPanel panel = new JPanel(new FlowLayout());
+        panel = new JPanel(new FlowLayout());
         add(panel);
         panel.add(new JLabel("Escolha sua origem"));
         String[] od = {"A", "B", "C", "D"};
@@ -62,12 +77,31 @@ public class Inicio extends JFrame implements ActionListener {
         setVisible(true);
 
     }
+    
+    private void mensagens() {
+        setSize(600, 600);
+        atual = "";
+        remove(panel);
+        Container cont = this.getContentPane();
+        cont.setLayout(new BorderLayout());
+        comunicacao = new JTextArea();
+        comunicacao.setEditable(false);
+        JScrollPane scroll = new JScrollPane(comunicacao);
+        cont.add(scroll, BorderLayout.CENTER);
+        setVisible(true);
+    }
+    
+    public void mostrar(String msg){
+        atual= atual + "\n" + msg;
+        comunicacao.setText(atual);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (olist.getSelectedItem().toString().equals(dlist.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(rootPane, "coloque destino diferente da origem");
         } else {
+            this.mensagens();
             controller.adicionarCarro(0, olist.getSelectedItem().toString(), dlist.getSelectedItem().toString());//primeiro cliente
             EventQueue.invokeLater(new Runnable() {
                 @Override
