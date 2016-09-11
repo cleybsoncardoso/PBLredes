@@ -8,9 +8,6 @@ package controller;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import util.Carro;
 import util.Logica;
 import util.Quadrante;
@@ -35,11 +32,8 @@ public class ControllerCarro {
     private String destino;
     private Logica logica;
     private boolean tonaVia = false;
-    private AtomicBoolean value;
-    
+
     public ControllerCarro(int id, String origem, String destino) {
-        value= new AtomicBoolean();
-        value.set(false);
         this.id = id;
         this.origem = origem;
         this.destino = destino;
@@ -50,8 +44,6 @@ public class ControllerCarro {
     }
 
     public ControllerCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
-        value= new AtomicBoolean();
-        value.set(false);
         this.id = id;
         this.x = x;
         this.y = y;
@@ -121,9 +113,6 @@ public class ControllerCarro {
     }
 
     public ArrayList<Quadrante> getTrajeto() {
-        if(value.get()){
-            this.getTrajeto();
-        }
         return trajeto;
     }
 
@@ -338,14 +327,12 @@ public class ControllerCarro {
     }
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
-        value.set(true);
-        System.out.print("Set isso: ");
+        System.out.print("Setando isso: ");
         for(Quadrante q:trajeto){
-            System.out.print(q.getNome());
+            System.out.print(q.getNome()+", ");
         }
         System.out.println(" ");
         this.trajeto = trajeto;
-        value.set(false);
     }
 
 }
