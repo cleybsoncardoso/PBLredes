@@ -82,11 +82,6 @@ public class TrataCliente implements Runnable {
                     modifier = 1;
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
-                    System.out.println("recebi isso: ");
-                    for (Quadrante q : trajeto) {
-                        System.out.print(q.getNome() + ", ");
-                    }
-                    System.out.println(" ");
                     controller.getCarro(this.id).setTrajeto(trajeto);
 
                 }
