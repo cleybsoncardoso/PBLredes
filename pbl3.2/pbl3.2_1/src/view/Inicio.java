@@ -93,7 +93,10 @@ public class Inicio extends JFrame implements ActionListener {
     
     public void mostrar(String msg){
         atual= atual + "\n" + msg;
-        comunicacao.setText(atual);
+        if(comunicacao!=null){
+            comunicacao.setText(atual);
+        }
+        
     }
 
     @Override
