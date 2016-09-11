@@ -49,7 +49,7 @@ public class ControllerCarro {
         this.y = y;
         this.direcao = direcao;
         this.trajeto = trajeto;
-        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + trajeto.get(0).getNome());
+//        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + trajeto.get(0).getNome());
         this.setup2();
     }
 
