@@ -42,12 +42,13 @@ public class Logica {
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
                                 System.out.println("Deu true");
-                                if(carroAtual.isParado()==true){
+                                if (carroAtual.isParado() == true) {
                                     meuCarro.setParado(false);
                                     return false;
+                                } else {
+                                    meuCarro.setParado(true);
+                                    return true;
                                 }
-                                meuCarro.setParado(true);
-                                return true;
                             }
                         }
                     }
