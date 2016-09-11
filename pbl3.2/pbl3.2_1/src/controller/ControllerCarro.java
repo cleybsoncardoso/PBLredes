@@ -79,7 +79,7 @@ public class ControllerCarro {
     private void setup() {
         switch (origem) {
             case "A":
-                this.x = 260;
+                this.x = 250;
                 this.y = alturaTela;
                 this.direcao = 0;
                 carro = new Carro(this.x, this.y, direcao);
