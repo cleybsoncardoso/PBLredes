@@ -327,11 +327,6 @@ public class ControllerCarro {
     }
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
-        System.out.print("Setando isso: ");
-        for(Quadrante q:trajeto){
-            System.out.print(q.getNome()+", ");
-        }
-        System.out.println(" ");
         this.trajeto = trajeto;
     }
 
