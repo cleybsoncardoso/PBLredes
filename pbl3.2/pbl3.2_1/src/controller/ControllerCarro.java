@@ -166,11 +166,9 @@ public class ControllerCarro {
         this.msgMandar();
 
     }
-    
-    
-    
-    private void msgMandar(){
-        
+
+    private void msgMandar() {
+
         ArrayList<Object> msg = new ArrayList<Object>();
 
         msg.add(x);
@@ -207,8 +205,6 @@ public class ControllerCarro {
     public void setParado(boolean parado) {
         this.parado = parado;
     }
-    
-    
 
     public void acao() {
 
@@ -220,7 +216,6 @@ public class ControllerCarro {
             andar();
         } else if (origem.equals("D") && this.x < 163) {
             andar();
-        } else if (!logica.conflito()&&!parado) {
         } else if (!logica.conflito()) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
@@ -341,6 +336,6 @@ public class ControllerCarro {
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
         this.trajeto = trajeto;
-   }
+    }
 
 }
