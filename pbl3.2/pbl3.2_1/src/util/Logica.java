@@ -40,15 +40,17 @@ public class Logica {
                     for (int i = 0; i < j; i++) {
                         System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + " teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                            if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                                System.out.println("Deu true");
-                                if (carroAtual.isParado() == true) {
-                                    meuCarro.setParado(false);
-                                    return false;
-                                } else {
-                                    meuCarro.setParado(true);
-                                    return true;
-                                }
+//                            if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+//                                System.out.println("Deu true");
+//                            }
+                            if (carroAtual.isParado() == true) {
+                                System.out.println("cley ta parado");
+                                meuCarro.setParado(false);
+                                return false;
+                            } else {
+                                System.out.println("cley ta andando");
+                                meuCarro.setParado(true);
+                                return true;
                             }
                         }
                     }
