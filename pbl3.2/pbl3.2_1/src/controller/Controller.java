@@ -114,14 +114,6 @@ public class Controller {
         for (int i = 0; i < this.counter; i++) {
             aux.add(this.carros.get(i));
         }
-        
-        for(ControllerCarro c:aux){
-            System.out.print("Carro " + c.getId() + "ROta: ");
-            for(Quadrante q: c.getTrajeto()){
-                System.out.print(q.getNome() + ", ");
-            }
-            System.out.println(" ");
-        }
         return aux;
     }
 
