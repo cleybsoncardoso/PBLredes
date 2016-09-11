@@ -26,7 +26,7 @@ public class Logica {
 
     public boolean conflito() {
         if (controller.getCarros().size() > 1) {
-            for (int l = 1; l < controller.getCarros().size(); l++) {
+            for (int l = 0; l < controller.getCarros().size(); l++) {
                 ControllerCarro carroAtual = Controller.getInstance().getCarros().get(l);
                 int j = 0;
                 //verifica qual o maior trajeto, para basear se vai ter conflito
@@ -36,13 +36,14 @@ public class Logica {
                     j = meuCarro.getTrajeto().size();
                 }
                 //busca direta, para verificar se vai ter conflito
-
-                for (int i = 0; i < j; i++) {
-                    System.err.println("Comparando Meu: " + meuCarro.getId() + " "+ meuCarro.getTrajeto().get(i).getNome() + "teu: "+ carroAtual.getId() +" " + carroAtual.getTrajeto().get(i).getNome());
-                    if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                        if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                            System.out.println("Deu true");
-                            return true;
+                if (carroAtual.getId() != meuCarro.getId()) {
+                    for (int i = 0; i < j; i++) {
+                        System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + "teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
+                        if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                            if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+                                System.out.println("Deu true");
+                                return true;
+                            }
                         }
                     }
 
