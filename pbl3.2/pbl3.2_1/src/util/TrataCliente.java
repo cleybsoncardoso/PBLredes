@@ -27,6 +27,7 @@ public class TrataCliente implements Runnable {
     private String ip;
     private int id;
     private int modifier = 0;
+    private Quadrante quadranteAtual;
 
     TrataCliente(Socket cliente) {
         this.id = id_counter;
@@ -36,6 +37,7 @@ public class TrataCliente implements Runnable {
         this.cliente = cliente;
         this.ip = this.cliente.getInetAddress().getHostAddress();
         this.servidor = servidor;
+        this.quadranteAtual = new Quadrante("");
         try {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
@@ -70,7 +72,7 @@ public class TrataCliente implements Runnable {
 
                 //ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
                 int tamanhoDoTrajeto = (int) mensagem.get(3);
-                for (int j = 4; j < tamanhoDoTrajeto+4; j++) {
+                for (int j = 4; j < tamanhoDoTrajeto + 4; j++) {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     trajeto.add(q);
                 }
@@ -80,8 +82,10 @@ public class TrataCliente implements Runnable {
                     modifier = 1;
                 } else {
                     controller.getCarro(this.id).setXY(x, y, direcao);
-                    
-                    controller.getCarro(this.id).setTrajeto(trajeto);
+                    if (!trajeto.get(0).getNome().equals(quadranteAtual.getNome())) {
+                        
+                        controller.getCarro(this.id).setTrajeto(trajeto);
+                    }
                 }
 
             } catch (IOException ex) {
