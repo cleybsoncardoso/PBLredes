@@ -31,7 +31,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean tonaVia = false;
+    private boolean parado = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -167,6 +167,8 @@ public class ControllerCarro {
 
     }
     
+    
+    
     private void msgMandar(){
         
         ArrayList<Object> msg = new ArrayList<Object>();
@@ -174,6 +176,7 @@ public class ControllerCarro {
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
+        msg.add(parado);
         msg.add(trajeto.size());
         for (Quadrante q : trajeto) {
             msg.add(q);
@@ -197,6 +200,16 @@ public class ControllerCarro {
         carro.virar();
     }
 
+    public boolean isParado() {
+        return parado;
+    }
+
+    public void setParado(boolean parado) {
+        this.parado = parado;
+    }
+    
+    
+
     public void acao() {
 
         if (origem.equals("A") && this.y > 287) {
@@ -207,8 +220,7 @@ public class ControllerCarro {
             andar();
         } else if (origem.equals("D") && this.x < 163) {
             andar();
-        } else if (!logica.conflito()||tonaVia) {
-            tonaVia=true;
+        } else if (!logica.conflito()||parado) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
                     virarEsquerda();
@@ -328,6 +340,6 @@ public class ControllerCarro {
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
         this.trajeto = trajeto;
-    }
+   }
 
 }
