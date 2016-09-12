@@ -91,7 +91,7 @@ public class ControllerCarro {
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "C":
-                this.x = 205;
+                this.x = larguraTela / 2 - 40;
                 this.y = 0;
                 this.direcao = 6;
                 carro = new Carro(this.x, this.y, direcao);

@@ -32,7 +32,7 @@ public class ControllerCarro {
     private String destino;
     private Logica logica;
     private boolean parado = false;
-
+    
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
         this.origem = origem;
@@ -332,7 +332,6 @@ public class ControllerCarro {
                 virarDireita();
             }
         }
-
     }
 
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
