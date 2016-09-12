@@ -337,5 +337,9 @@ public class ControllerCarro {
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
         this.trajeto = trajeto;
     }
+    
+    public int getDirecao(){
+        return this.direcao;
+    }
 
 }
