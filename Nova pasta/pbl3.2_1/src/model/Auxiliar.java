@@ -31,7 +31,7 @@ public class Auxiliar {
 
     public void iniciarConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
-        System.out.println("conectou com " + ip);
+        System.out.println("Me conectei com " + ip);
         new Thread(client).start();
         client.enviarMsg("segundo");
         clientes.add(client);
@@ -59,7 +59,7 @@ public class Auxiliar {
 
     public void primeiraConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
-        System.out.println("conectou com " + ip);
+        System.out.println("Me conectei com " + ip);
         new Thread(client).start();
         client.enviarMsg("primeiro");
         try {
