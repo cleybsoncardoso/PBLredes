@@ -6,6 +6,7 @@
 package util;
 
 import controller.Controller;
+import controller.ControllerCarro;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -69,10 +70,11 @@ public class TrataCliente implements Runnable {
                 float x = (float) mensagem.get(0);
                 float y = (float) mensagem.get(1);
                 int direcao = (int) mensagem.get(2);
+                boolean parado = (boolean) mensagem.get(3);
 
                 //ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
-                int tamanhoDoTrajeto = (int) mensagem.get(3);
-                for (int j = 4; j < tamanhoDoTrajeto + 4; j++) {
+                int tamanhoDoTrajeto = (int) mensagem.get(4);
+                for (int j = 5; j < tamanhoDoTrajeto + 5; j++) {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     trajeto.add(q);
                 }
@@ -81,9 +83,10 @@ public class TrataCliente implements Runnable {
                     controller.adicionarCarro(id, x, y, direcao, trajeto);
                     modifier = 1;
                 } else {
-                    controller.getCarro(this.id).setXY(x, y, direcao);
-                    controller.getCarro(this.id).setTrajeto(trajeto);
-
+                    ControllerCarro carroAtual = controller.getCarro(this.id);
+                    carroAtual.setXY(x, y, direcao);
+                    carroAtual.setTrajeto(trajeto);
+                    carroAtual.setParado(parado);
                 }
 
             } catch (IOException ex) {

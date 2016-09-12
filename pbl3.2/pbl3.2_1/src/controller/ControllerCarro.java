@@ -31,7 +31,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean tonaVia = false;
+    private boolean parado = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -79,7 +79,7 @@ public class ControllerCarro {
     private void setup() {
         switch (origem) {
             case "A":
-                this.x = 260;
+                this.x = 250;
                 this.y = alturaTela;
                 this.direcao = 0;
                 carro = new Carro(this.x, this.y, direcao);
@@ -166,14 +166,15 @@ public class ControllerCarro {
         this.msgMandar();
 
     }
-    
-    private void msgMandar(){
-        
+
+    private void msgMandar() {
+
         ArrayList<Object> msg = new ArrayList<Object>();
 
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
+        msg.add(parado);
         msg.add(trajeto.size());
         for (Quadrante q : trajeto) {
             msg.add(q);
@@ -197,6 +198,14 @@ public class ControllerCarro {
         carro.virar();
     }
 
+    public boolean isParado() {
+        return parado;
+    }
+
+    public void setParado(boolean parado) {
+        this.parado = parado;
+    }
+
     public void acao() {
 
         if (origem.equals("A") && this.y > 287) {
@@ -207,8 +216,8 @@ public class ControllerCarro {
             andar();
         } else if (origem.equals("D") && this.x < 163) {
             andar();
-        } else if (!logica.conflito()||tonaVia) {
-            tonaVia=true;
+        }
+        if (!logica.conflito()) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
                     virarEsquerda();
