@@ -12,7 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import view.Inicio;
 
 /**
  *
@@ -79,22 +78,14 @@ public class TrataCliente implements Runnable {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     trajeto.add(q);
                 }
-                
                 //System.out.println("mensagem recebida");
                 if (modifier == 0) {
                     controller.adicionarCarro(id, x, y, direcao, trajeto);
-                    Inicio.getInstance().mostrar("iniciando carro " + id + "na pista " + trajeto.get(0).getNome());
-                    quadranteAtual=trajeto.get(0);
                     modifier = 1;
                 } else {
                     ControllerCarro carroAtual = controller.getCarro(this.id);
                     carroAtual.setXY(x, y, direcao);
                     carroAtual.setTrajeto(trajeto);
-                    if(!quadranteAtual.getNome().equals(trajeto.get(0).getNome())){
-                        Inicio.getInstance().mostrar("Carro "+ id + " entrando em quadrante " + quadranteAtual.getNome());
-                        Inicio.getInstance().mostrar("Carro "+ id + " saindo do quadrante " + trajeto.get(0).getNome());
-                        quadranteAtual=trajeto.get(0);
-                    }
                     carroAtual.setParado(parado);
                 }
 
