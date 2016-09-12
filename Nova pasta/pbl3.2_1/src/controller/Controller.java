@@ -77,11 +77,6 @@ public class Controller {
     }
 
     private boolean verificaIp(String ip) {
-<<<<<<< HEAD
-        for (String ipAtual : ips) {
-            if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
-                return false;
-=======
         if (ip.trim().equals(meuIp.trim())) {
             return false;
         } else {
@@ -89,7 +84,6 @@ public class Controller {
                 if (ipAtual.equals(ip)) {
                     return false;
                 }
->>>>>>> ad056ddc786a6852de8463372da5e8a86c8c622c
             }
         }
         return true;

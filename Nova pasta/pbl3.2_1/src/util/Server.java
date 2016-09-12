@@ -36,22 +36,12 @@ public class Server implements Runnable {
             ServerSocket servidor = new ServerSocket(this.porta);
             System.out.println("Servidor Aberto..");
             while (true) {
-<<<<<<< HEAD
-                System.out.println("Esperando Cliente...");
-                Socket cliente = servidor.accept();
-                String ip = cliente.getInetAddress().getHostAddress();
-                System.out.println("Conexao criada com " + ip);
-                TrataCliente tc = new TrataCliente(cliente);
-                new Thread(tc).start();
-                System.out.println("Conectando pelo server");
-=======
                 System.out.println("Esperando Cliente...\n");
                 Socket cliente = servidor.accept();
                 String ip = cliente.getInetAddress().getHostAddress();
                 System.out.println(ip + " se conectou comigo");
                 TrataCliente tc = new TrataCliente(cliente);
                 new Thread(tc).start();
->>>>>>> ad056ddc786a6852de8463372da5e8a86c8c622c
                 controller.iniciarConexao(ip);
 
             }
