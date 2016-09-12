@@ -40,10 +40,10 @@ public class Logica {
                     for (int i = 0; i < j; i++) {
                         System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + " teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
-                            if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                                meuCarro.setParado(false);
-                                return false;
-                            }
+//                            if (!carroAtual.getTrajeto().get(0).getNome().equals("A") || !carroAtual.getTrajeto().get(0).getNome().equals("B") || !carroAtual.getTrajeto().get(0).getNome().equals("C") || !carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+//                                meuCarro.setParado(false);
+//                                return false;
+//                            }
 
                             if (carroAtual.isParado() == true) {
                                 System.out.println("cley ta parado");
