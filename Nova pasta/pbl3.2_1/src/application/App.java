@@ -38,6 +38,10 @@ public class App {
         //controller.iniciarConexao("25.12.22.120");
         //controller.primeiraConexao("192.168.0.6");
         //controller.iniciarConexao("25.12.22.120");
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad056ddc786a6852de8463372da5e8a86c8c622c
         Server serverSocket = new Server(8080);
         new Thread(serverSocket).start();
 
@@ -45,7 +49,11 @@ public class App {
         new Thread(enr).start();
 
         Scanner teclado = new Scanner(System.in);
+<<<<<<< HEAD
 //        while (true) {
+=======
+        //while (true) {
+>>>>>>> ad056ddc786a6852de8463372da5e8a86c8c622c
         String[] dados = new String[3];
         dados[0] = "224.0.0.0";
         dados[1] = "12347";
@@ -64,7 +72,12 @@ public class App {
             sleep(4000);
         } catch (InterruptedException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+<<<<<<< HEAD
             //}
         }
+=======
+        }
+        //  }
+>>>>>>> ad056ddc786a6852de8463372da5e8a86c8c622c
     }
 }
