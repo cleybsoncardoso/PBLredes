@@ -35,9 +35,9 @@ public class Carro {
         }
         car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
-
+    
     //retorna o retangulo do carro
-    public Rectangle2D draw() {
+    public Rectangle2D getRect() {
         return car;
     }
 

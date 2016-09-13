@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 /**
- *
+ * Classe fica escutando tudo do grupo mlticast
  * @author cleyb
  */
 public class EstouNaRede implements Runnable {
@@ -37,7 +37,7 @@ public class EstouNaRede implements Runnable {
                 DatagramPacket pkg = new DatagramPacket(rec, rec.length);
                 mcs.receive(pkg);
                 String data = new String(pkg.getData());
-                controller.primeiraConexao(data);
+                controller.primeiraConexao(data);//quando recebe a lista de ip, ele manda o controller conectar todos da lista
             } catch (Exception e) {
                 System.out.println("Erro: " + e.getMessage());
             }

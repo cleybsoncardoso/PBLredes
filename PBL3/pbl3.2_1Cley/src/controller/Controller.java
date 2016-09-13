@@ -103,9 +103,27 @@ public class Controller {
     }
 
     public void adicionarCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
-        ControllerCarro c = new ControllerCarro(id, x, y, direcao, trajeto);
-        carros.add(c);
-        counter++;
+        ControllerCarro c1 = new ControllerCarro(id, x, y, direcao, trajeto);
+        boolean add = true;
+        for (ControllerCarro c : this.getCarros()) {
+            if (c.getOrigem().equals(trajeto.get(0).getNome())) {
+                if (c.getOrigem().equals("A") && c.getY() > 455) {
+                    add = false;
+                } else if (c.getOrigem().equals("C") && c.getY() < 25) {
+                    add = false;
+                } else if (c.getOrigem().equals("B") && c.getX() > 452) {
+                    add = false;
+                } else if (c.getOrigem().equals("D") && c.getX() < 25) {
+                    add = false;
+                }
+            }
+        }
+        if (add) {
+            this.adicionarCarro(id, x, y, direcao, trajeto);
+        } else {
+            carros.add(c1);
+            counter++;
+        }
     }
 
     public void removerCarro(int id) {
