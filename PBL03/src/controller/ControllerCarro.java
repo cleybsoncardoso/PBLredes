@@ -108,12 +108,17 @@ public class ControllerCarro {
     }
 
     public void desenhar(Graphics2D g2d) {
-        g2d.setColor(Color.RED);
+        if (this.id == 0) {
+            g2d.setColor(Color.BLUE);
+        } else {
+            g2d.setColor(Color.RED);
+        }
+
         g2d.fill(carro.getRect());
 
     }
-    
-    public Rectangle2D getRect(){
+
+    public Rectangle2D getRect() {
         return this.carro.getRect();
     }
 

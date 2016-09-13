@@ -6,10 +6,6 @@ import view.CarroFrame;
 
 public class MainLoop implements Runnable {
 
-    public static final int DEFAULT_UPS = 80;
-    public static final int DEFAULT_NO_DELAYS_PER_YIELD = 16;
-    public static final int DEFAULT_MAX_FRAME_SKIPS = 5;
-
     private CarroFrame game;
     private long desiredUpdateTime;
     private boolean running;
@@ -18,12 +14,6 @@ public class MainLoop implements Runnable {
     private long beforeTime = System.currentTimeMillis();
 
     private long overSleepTime = 0;
-    private long excessTime = 0;
-
-    private int noDelaysPerYield = DEFAULT_NO_DELAYS_PER_YIELD;
-    private int maxFrameSkips = DEFAULT_MAX_FRAME_SKIPS;
-
-    int noDelays = 0;
 
     /**
      * Create a new MainLoop object.
@@ -36,10 +26,7 @@ public class MainLoop implements Runnable {
      * dellay between two frames, the delay will be enforced in this counter, so
      * other threads can process their actions.
      */
-    public MainLoop(CarroFrame loopSteps,
-            int ups,
-            int maxFrameSkips,
-            int noDelaysPerYield) {
+    public MainLoop(CarroFrame loopSteps, int ups) {
         super();
 
         if (ups < 1) {
@@ -52,29 +39,7 @@ public class MainLoop implements Runnable {
 
         this.game = loopSteps;
         this.desiredUpdateTime = 1000000000L / ups;
-        this.running = true;
 
-        this.maxFrameSkips = maxFrameSkips;
-        this.noDelaysPerYield = noDelaysPerYield;
-    }
-
-    /**
-     * Create a new MainLoop object.
-     *
-     * @param loopSteps The LoopSteps that will be controlled by this loop.
-     * @param ups Number of desired updates per second.
-     */
-    public MainLoop(CarroFrame loopSteps, int ups) {
-        this(loopSteps, ups, DEFAULT_MAX_FRAME_SKIPS, DEFAULT_NO_DELAYS_PER_YIELD);
-    }
-
-    /**
-     * Create a new MainLoop object and an update per second factor of 80.
-     *
-     * @param loopSteps The LoopSteps that will be controlled by this loop.
-     */
-    public MainLoop(CarroFrame loopSteps) {
-        this(loopSteps, DEFAULT_UPS);
     }
 
     /**
@@ -85,22 +50,11 @@ public class MainLoop implements Runnable {
      * @throws InterruptedException If the thread was interrupted
      */
     private void sleep(long nanos) throws InterruptedException {
-        noDelays = 0;
         long beforeSleep = System.nanoTime();
         Thread.sleep(nanos / 1000000L, (int) (nanos % 1000000L));
         overSleepTime = System.nanoTime() - beforeSleep - nanos;
     }
 
-    /**
-     * If the number of frames without a delay is reached, force the thread to
-     * yield, allowing other threads to process.
-     */
-    private void yieldIfNeed() {
-        if (++noDelays == noDelaysPerYield) {
-            Thread.yield();
-            noDelays = 0;
-        }
-    }
 
     /**
      * Calculates the sleep time based in the calculation the previous loop. To
@@ -110,7 +64,7 @@ public class MainLoop implements Runnable {
      * so the system can compensate this overtime.
      */
     private long calculateSleepTime() {
-        return desiredUpdateTime - (afterTime - beforeTime);// - overSleepTime;
+        return desiredUpdateTime - (afterTime - beforeTime);
     }
 
     /**
@@ -119,17 +73,14 @@ public class MainLoop implements Runnable {
      */
     @Override
     public void run() {
-        running = true;
         game.setup();
         while (true) {
             beforeTime = System.nanoTime();
-            //skipFramesInExcessTime();
 
             // Updates, renders and paint the screen
             game.processLogics();
             game.paintScreen();
 
-            //sleep(30);
             afterTime = System.nanoTime();
 
             long sleepTime = calculateSleepTime();
@@ -140,43 +91,7 @@ public class MainLoop implements Runnable {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(MainLoop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                excessTime -= sleepTime; // Sleep time is negative
-                overSleepTime = 0L;
-                yieldIfNeed();
             }
         }
-//        finally
-//        {
-//            running = false;
-//            //System.exit(0);
-//        }
-    }
-
-    /**
-     * Skip the number of frames according to the given excess time. This allow
-     * the game to run with the same speed even if the computer has a frame rate
-     * minor than the necessary.The number of total skips are limited to
-     * MAX_FRAME_SKIPS.
-     *
-     * @param exceededTime The exceeded time. If the time is bigger enough to
-     * skip one or more frames, they will be skipped.
-     * @return The remaining excess time, after the skips.
-     */
-    private void skipFramesInExcessTime() {
-        int skips = 0;
-        while ((excessTime > desiredUpdateTime) && (skips < maxFrameSkips)) {
-            excessTime -= desiredUpdateTime;
-            game.processLogics();
-            skips++;
-        }
-    }
-
-    /**
-     * Stops the main loop thread. Normally game applications finishes
-     * afterwards.
-     */
-    public void stop() {
-        running = false;
     }
 }
