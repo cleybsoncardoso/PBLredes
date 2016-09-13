@@ -72,14 +72,18 @@ public class Controller {
     }
 
     public void removerIp(String ip) {
-//        ips.remove(ip);
-//        auxiliar.removerCliente(ip);
+        ips.remove(ip);
+        auxiliar.removerCliente(ip);
     }
 
     private boolean verificaIp(String ip) {
-        for (String ipAtual : ips) {
-            if (ipAtual.equals(ip) || ipAtual.equals(meuIp)) {
-                return false;
+        if (ip.trim().equals(meuIp.trim())) {
+            return false;
+        } else {
+            for (String ipAtual : ips) {
+                if (ipAtual.equals(ip)) {
+                    return false;
+                }
             }
         }
         return true;

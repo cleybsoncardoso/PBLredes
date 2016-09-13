@@ -12,6 +12,7 @@ import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.Inicio;
 
 /**
  *
@@ -58,7 +59,15 @@ public class Cliente implements Runnable {
                     output.writeObject(msg);
                     enviarMsg = false;
                 } catch (IOException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Inicio.getInstance().mostrar("Carro de cliente " + ip + "se desconectou");
+                    controller.Controller.getInstance().removerIp(ip);
+                    try {
+                        cliente.close();
+                        return;
+                        //controller.Controller.getInstance().getCarros()
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
             }
         }
