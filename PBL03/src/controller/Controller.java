@@ -145,7 +145,7 @@ public class Controller {
                 }
             }
             return null;
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             this.getCarro(id);
         }
         return null;
