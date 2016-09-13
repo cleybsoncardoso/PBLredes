@@ -31,7 +31,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean parado = true;
+    private boolean naVia = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -174,7 +174,7 @@ public class ControllerCarro {
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
-        msg.add(parado);
+        msg.add(naVia);
         msg.add(trajeto.size());
         for (Quadrante q : trajeto) {
             msg.add(q);
@@ -198,12 +198,12 @@ public class ControllerCarro {
         carro.virar();
     }
 
-    public boolean isParado() {
-        return parado;
+    public boolean taNaVia() {
+        return naVia;
     }
 
-    public void setParado(boolean parado) {
-        this.parado = parado;
+    public void setNaVia(boolean naVia) {
+        this.naVia = naVia;
     }
 
     public void acao() {
@@ -217,70 +217,79 @@ public class ControllerCarro {
         } else if (origem.equals("D") && this.x < 163) {
             andar();
         }
-        if (!logica.conflito()||!parado) {
-            if (origem.equals("A") && destino.equals("D")) {
-                if ((y <= 208) && (direcao == 0)) {
-                    virarEsquerda();
-                } else {
+
+        if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
+            naVia = false;
+        } else {
+       //     naVia = true;
+
+            if (!logica.conflito() || naVia) {
+                naVia = true;
+                if (origem.equals("A") && destino.equals("D")) {
+                    if ((y <= 208) && (direcao == 0)) {
+                        virarEsquerda();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("A") && destino.equals("B")) {
+                    if ((y <= 257) && (direcao == 0)) {
+                        virarDireita();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("A") && destino.equals("C")) {
                     andar();
                 }
-            } else if (origem.equals("A") && destino.equals("B")) {
-                if ((y <= 257) && (direcao == 0)) {
-                    virarDireita();
-                } else {
+
+                if (origem.equals("C") && destino.equals("D")) {
+                    if ((y >= 208) && (direcao == 6)) {
+                        virarDireita();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("C") && destino.equals("B")) {
+                    if ((y >= 257) && (direcao == 6)) {
+                        virarEsquerda();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("C") && destino.equals("A")) {
                     andar();
                 }
-            } else if (origem.equals("A") && destino.equals("C")) {
-                andar();
+
+                if (origem.equals("B") && destino.equals("C")) {
+                    if ((x <= 257) && (direcao == 9)) {
+                        virarDireita();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("B") && destino.equals("A")) {
+                    if ((x <= 210) && (direcao == 9)) {
+                        virarEsquerda();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("B") && destino.equals("D")) {
+                    andar();
+                }
+
+                if (origem.equals("D") && destino.equals("C")) {
+                    if ((x >= 257) && (direcao == 3)) {
+                        virarEsquerda();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("D") && destino.equals("A")) {
+                    if ((x >= 210) && (direcao == 3)) {
+                        virarDireita();
+                    } else {
+                        andar();
+                    }
+                } else if (origem.equals("D") && destino.equals("B")) {
+                    andar();
+                }
             }
 
-            if (origem.equals("C") && destino.equals("D")) {
-                if ((y >= 208) && (direcao == 6)) {
-                    virarDireita();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("C") && destino.equals("B")) {
-                if ((y >= 257) && (direcao == 6)) {
-                    virarEsquerda();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("C") && destino.equals("A")) {
-                andar();
-            }
-
-            if (origem.equals("B") && destino.equals("C")) {
-                if ((x <= 257) && (direcao == 9)) {
-                    virarDireita();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("B") && destino.equals("A")) {
-                if ((x <= 210) && (direcao == 9)) {
-                    virarEsquerda();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("B") && destino.equals("D")) {
-                andar();
-            }
-
-            if (origem.equals("D") && destino.equals("C")) {
-                if ((x >= 257) && (direcao == 3)) {
-                    virarEsquerda();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("D") && destino.equals("A")) {
-                if ((x >= 210) && (direcao == 3)) {
-                    virarDireita();
-                } else {
-                    andar();
-                }
-            } else if (origem.equals("D") && destino.equals("B")) {
-                andar();
-            }
         }
 
     }
@@ -304,8 +313,8 @@ public class ControllerCarro {
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
         this.trajeto = trajeto;
     }
-    
-    public int getDirecao(){
+
+    public int getDirecao() {
         return this.direcao;
     }
 
