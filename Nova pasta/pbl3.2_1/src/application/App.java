@@ -6,14 +6,11 @@
 package application;
 
 import controller.Controller;
-import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.EstouNaRede;
 import util.Server;
 import view.Inicio;
@@ -35,8 +32,6 @@ public class App {
         Controller controller = Controller.novoController(ip);
 
         Inicio telaInicial = Inicio.novoController(controller);
-        //controller.iniciarConexao("25.12.22.120");
-        //controller.primeiraConexao("192.168.0.6");
         //controller.iniciarConexao("25.12.22.120");
 
         Server serverSocket = new Server(8080);
@@ -60,12 +55,5 @@ public class App {
         } catch (Exception e) {
             System.out.println("Nao foi possivel enviar a mensagem");
         }
-
-        try {
-            sleep(4000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //  }
     }
 }
