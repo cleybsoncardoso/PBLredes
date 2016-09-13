@@ -217,71 +217,71 @@ public class ControllerCarro {
         } else if (origem.equals("D") && this.x < 163) {
             andar();
         }
-//        if (!logica.conflito()) {
-//            if (origem.equals("A") && destino.equals("D")) {
-//                if ((y <= 208) && (direcao == 0)) {
-//                    virarEsquerda();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("A") && destino.equals("B")) {
-//                if ((y <= 257) && (direcao == 0)) {
-//                    virarDireita();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("A") && destino.equals("C")) {
-//                andar();
-//            }
-//
-//            if (origem.equals("C") && destino.equals("D")) {
-//                if ((y >= 208) && (direcao == 6)) {
-//                    virarDireita();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("C") && destino.equals("B")) {
-//                if ((y >= 257) && (direcao == 6)) {
-//                    virarEsquerda();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("C") && destino.equals("A")) {
-//                andar();
-//            }
-//
-//            if (origem.equals("B") && destino.equals("C")) {
-//                if ((x <= 257) && (direcao == 9)) {
-//                    virarDireita();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("B") && destino.equals("A")) {
-//                if ((x <= 210) && (direcao == 9)) {
-//                    virarEsquerda();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("B") && destino.equals("D")) {
-//                andar();
-//            }
-//
-//            if (origem.equals("D") && destino.equals("C")) {
-//                if ((x >= 257) && (direcao == 3)) {
-//                    virarEsquerda();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("D") && destino.equals("A")) {
-//                if ((x >= 210) && (direcao == 3)) {
-//                    virarDireita();
-//                } else {
-//                    andar();
-//                }
-//            } else if (origem.equals("D") && destino.equals("B")) {
-//                andar();
-//            }
-//        }
+        if (!logica.conflito()) {
+            if (origem.equals("A") && destino.equals("D")) {
+                if ((y <= 208) && (direcao == 0)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("A") && destino.equals("B")) {
+                if ((y <= 257) && (direcao == 0)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("A") && destino.equals("C")) {
+                andar();
+            }
+
+            if (origem.equals("C") && destino.equals("D")) {
+                if ((y >= 208) && (direcao == 6)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("C") && destino.equals("B")) {
+                if ((y >= 257) && (direcao == 6)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("C") && destino.equals("A")) {
+                andar();
+            }
+
+            if (origem.equals("B") && destino.equals("C")) {
+                if ((x <= 257) && (direcao == 9)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("B") && destino.equals("A")) {
+                if ((x <= 210) && (direcao == 9)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("B") && destino.equals("D")) {
+                andar();
+            }
+
+            if (origem.equals("D") && destino.equals("C")) {
+                if ((x >= 257) && (direcao == 3)) {
+                    virarEsquerda();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("D") && destino.equals("A")) {
+                if ((x >= 210) && (direcao == 3)) {
+                    virarDireita();
+                } else {
+                    andar();
+                }
+            } else if (origem.equals("D") && destino.equals("B")) {
+                andar();
+            }
+        }
 
     }
 
