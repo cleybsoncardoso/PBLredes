@@ -52,18 +52,19 @@ public class Logica {
                                 conflito = true;
                             }
                         }
-                        return true;
-                    }
-                    
-                    System.out.println("Rota de tua: ");
-                    for (Quadrante q : carroAtual.getTrajeto()) {
-                        System.out.println(q.getNome());
-                    }
-                    System.out.println("Rota de minha: ");
-                    for (Quadrante q : meuCarro.getTrajeto()) {
-                        System.out.println(q.getNome());
+
                     }
 
+                    return conflito;
+
+                }
+                System.out.println("Rota de tua: ");
+                for (Quadrante q : carroAtual.getTrajeto()) {
+                    System.out.println(q.getNome());
+                }
+                System.out.println("Rota de minha: ");
+                for (Quadrante q : meuCarro.getTrajeto()) {
+                    System.out.println(q.getNome());
                 }
             }
         }
