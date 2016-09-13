@@ -44,28 +44,26 @@ public class Logica {
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
                                 System.out.println("atual ta saindo");
-                            } else if (carroAtual.isParado() == true) {
-                                System.out.println("atual ta parado");
-                            } else if (carroAtual.getDirecao() > meuCarro.getDirecao()) {
-                                System.out.println("recebi preferencia");
+                            } else if (carroAtual.taNaVia() == true) {
+                                System.out.println("atual ta na via");
+                                conflito = true;
                             } else {
                                 System.out.println("atual ta andando");
                                 conflito = true;
                             }
                         }
-                        meuCarro.setParado(conflito);
-                        return conflito;
                     }
 
-                    System.out.println("Rota de tua: ");
-                    for (Quadrante q : carroAtual.getTrajeto()) {
-                        System.out.println(q.getNome());
-                    }
-                    System.out.println("Rota de minha: ");
-                    for (Quadrante q : meuCarro.getTrajeto()) {
-                        System.out.println(q.getNome());
-                    }
+                    return conflito;
 
+                }
+                System.out.println("Rota de tua: ");
+                for (Quadrante q : carroAtual.getTrajeto()) {
+                    System.out.println(q.getNome());
+                }
+                System.out.println("Rota de minha: ");
+                for (Quadrante q : meuCarro.getTrajeto()) {
+                    System.out.println(q.getNome());
                 }
             }
         }
