@@ -222,7 +222,6 @@ public class ControllerCarro {
             naVia = false;
         } else {
             naVia = true;
-
         }
 
         if (!logica.conflito() || naVia) {
