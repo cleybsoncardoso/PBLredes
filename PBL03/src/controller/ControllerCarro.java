@@ -50,7 +50,19 @@ public class ControllerCarro {
         this.y = y;
         this.direcao = direcao;
         this.trajeto = trajeto;
-        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + trajeto.get(0).getNome());
+        String cor;
+        if (this.id == 0) {
+            cor = "azul";
+        } else if (this.id == 1) {
+            cor = "amarelo";
+        } else if (this.id == 2) {
+            cor = "verde";
+        } else if (this.id == 3) {
+            cor = "preto";
+        } else {
+            cor = "vermelho";
+        }
+        Inicio.getInstance().mostrar("Iniciando Carro " + cor + " em pista " + trajeto.get(0).getNome());
         this.setup2();
     }
 
@@ -137,9 +149,9 @@ public class ControllerCarro {
             case 0:
                 if (!trajeto.get(0).aindaQuadranteY(y)) {
                     if (trajeto.size() > 1) {
-                        Inicio.getInstance().mostrar("carro azul saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul saindo da pista " + trajeto.get(0).getNome());
                         trajeto.remove(0);
-                        Inicio.getInstance().mostrar("carro azul entrando na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul entrando na pista " + trajeto.get(0).getNome());
                     }
                 }
                 y = y - v;
@@ -148,9 +160,9 @@ public class ControllerCarro {
             case 3:
                 if (!trajeto.get(0).aindaQuadranteX(x)) {
                     if (trajeto.size() > 1) {
-                        Inicio.getInstance().mostrar("carro azul saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul saindo da pista " + trajeto.get(0).getNome());
                         trajeto.remove(0);
-                        Inicio.getInstance().mostrar("carro azul entrando na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul entrando na pista " + trajeto.get(0).getNome());
                     }
                 }
                 x = x + v;
@@ -161,7 +173,7 @@ public class ControllerCarro {
                     if (trajeto.size() > 1) {
                         Inicio.getInstance().mostrar("carro azul saindo da pista " + trajeto.get(0).getNome());
                         trajeto.remove(0);
-                        Inicio.getInstance().mostrar("carro azul entrando na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul entrando na pista " + trajeto.get(0).getNome());
                     }
                 }
                 y = y + v;
@@ -170,9 +182,9 @@ public class ControllerCarro {
             case 9:
                 if (!trajeto.get(0).aindaQuadranteX(x)) {
                     if (trajeto.size() > 1) {
-                        Inicio.getInstance().mostrar("carro azul saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul saindo da pista " + trajeto.get(0).getNome());
                         trajeto.remove(0);
-                        Inicio.getInstance().mostrar("carro azul entrando na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro azul entrando na pista " + trajeto.get(0).getNome());
                     }
                 }
                 x = x - v;

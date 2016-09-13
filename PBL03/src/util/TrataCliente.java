@@ -84,7 +84,7 @@ public class TrataCliente implements Runnable {
                         cor = "vermelho";
                     }
 
-                    Inicio.getInstance().mostrar("iniciando carro " + cor + "na pista " + trajeto.get(0).getNome());
+                    Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
                     quadranteAtual = trajeto.get(0);
                     modifier = 1;
                 } else {//atualiza os dados do carro
