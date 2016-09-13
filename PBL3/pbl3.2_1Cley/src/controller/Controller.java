@@ -120,13 +120,14 @@ public class Controller {
                 if (c.getId() == id) {
 
                     carros.remove(c);
-
+                    System.out.println("carro " + id + " foi removido");
+                    counter--;
                 }
             }
         } catch (ConcurrentModificationException ex) {
             removerCarro(id);
             System.out.println("carro " + id + " foi removido");
-            counter--;
+
         }
     }
 
