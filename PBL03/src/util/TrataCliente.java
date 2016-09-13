@@ -84,7 +84,7 @@ public class TrataCliente implements Runnable {
                         cor = "vermelho";
                     }
 
-                    Inicio.getInstance().mostrar("iniciando carro " + id + "na pista " + trajeto.get(0).getNome());
+                    Inicio.getInstance().mostrar("iniciando carro " + cor + "na pista " + trajeto.get(0).getNome());
                     quadranteAtual = trajeto.get(0);
                     modifier = 1;
                 } else {//atualiza os dados do carro
@@ -93,8 +93,8 @@ public class TrataCliente implements Runnable {
                     carroAtual.setTrajeto(trajeto);
 
                     if (!quadranteAtual.getNome().equals(trajeto.get(0).getNome())) {//verifica se o carro ainda está no quadrante para pode exibir a msg
-                        Inicio.getInstance().mostrar("Carro " + cor + " saindo da pista " + trajeto.get(0).getNome());
-                        Inicio.getInstance().mostrar("Carro " + cor + " entrando  na pista " + quadranteAtual.getNome());
+                        Inicio.getInstance().mostrar("Carro " + cor + " saindo da pista " + quadranteAtual.getNome());
+                        Inicio.getInstance().mostrar("Carro " + cor + " entrando  na pista " + trajeto.get(0).getNome());
                         quadranteAtual = trajeto.get(0);
                     }
                     carroAtual.noCruzamento(parado);

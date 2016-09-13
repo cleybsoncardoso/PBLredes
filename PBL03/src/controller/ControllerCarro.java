@@ -40,7 +40,7 @@ public class ControllerCarro {
         this.destino = destino;
         this.logica = new Logica(this);
         this.trajeto = logica.calcularTrajeto(origem, destino);
-        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + origem);
+        Inicio.getInstance().mostrar("Iniciando Carro " + "azul" + " em pista " + origem);
         this.setup();
     }
 
