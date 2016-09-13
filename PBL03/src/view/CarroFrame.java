@@ -21,36 +21,55 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import util.MainLoop;
 
 /**
+ * Classe que representa a tela onde serão apresentados os veículos presentes na
+ * aplicação. Está classe é responsável por desenhar os carros e acionar o
+ * movimento do veículo principal (veículo do usuário).
  *
- * @author paiva
+ * @author Lucas e Cleybson
+ *
+ * @see MainLoop
  */
 public class CarroFrame extends JFrame {
 
-    private MainLoop loop = new MainLoop(this, 60);
-    private ArrayList<ControllerCarro> carros;
+    private MainLoop loop = new MainLoop(this, 60); //variável que guarda o loop da movimentação.
+    private ArrayList<ControllerCarro> carros; //array contendo os carros presentes na via.
     private Controller controller;
+    private Image background; //imagem de fundo que representa as vias e o cruzamento.
 
-    //os controllers estarao no controller principal e quando for desenhar percorrer a lista de controllers e chamar o metodo de desenhar
-    //para isso é necessario que cada controller ja tenha iniciado seu veiculo
-    private Image background;
-
-    public CarroFrame(Controller controller) {
+    /**
+     * Contrutor que define características à tela. Aqui são definidos as
+     * dimensoes da tela e desabilita a possibilidade de mudar o tamanho da
+     * tela.
+     *
+     * @see JFrame
+     */
+    public CarroFrame() {
         super("Cruzamento");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(482, 480);
         setResizable(false);
-        this.controller = controller;
+        this.controller = Controller.getInstance();
         this.carros = this.controller.getCarros();
     }
 
+    /**
+     * Método que inicia o loop da aplicação responsável pela movimentação dos
+     * veículos.
+     *
+     * @see MainLoop
+     */
     public void startMainLoop() {
         //Iniciamos o main loop
         new Thread(loop, "Main loop").start();
     }
 
+    /**
+     * Método que carrega a imagem do plano de fundo que representa o ambiente
+     * que os veículos se movem.
+     *
+     * @see Image
+     */
     public void setup() {
-        //Subtrai a decora��o da janela da largura e altura m�ximas
-        //percorridas pela bola.
         try {
             this.background = ImageIO.read(new File("background.png"));
         } catch (IOException ex) {
@@ -59,6 +78,12 @@ public class CarroFrame extends JFrame {
         repaint();
     }
 
+    /**
+     * Método que aciona a operação no veículo principal da aplicação (carro
+     * deste usuário).
+     *
+     * @see ControllerCarro
+     */
     public void processLogics() {
         this.carros = this.controller.getCarros();
         if (controller.getCarro(0) != null) {
@@ -77,6 +102,9 @@ public class CarroFrame extends JFrame {
         }
     }
 
+    /**
+     * Método que repinta o frame chamando a função paint.
+     */
     public void paintScreen() {
         repaint();
     }

@@ -22,8 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
+ * Frame responsável pela exibição do menu inicial e visualização das mensagens
+ * trocada entre usuários.
  *
- * @author cleyb
+ * @author Lucas e Cleybson
  */
 public class Inicio extends JFrame implements ActionListener {
 
@@ -34,15 +36,32 @@ public class Inicio extends JFrame implements ActionListener {
     private static Inicio inicio;
     private JPanel panel;
 
+    /**
+     * Método que inicia a classe para ser visualizada estaticamente.
+     *
+     * @param controller
+     * @return
+     */
     public static Inicio novoController(Controller controller) {
         inicio = new Inicio(controller);
         return inicio;
     }
 
+    /**
+     * Método que retorna a instancia atual da classe.
+     *
+     * @return
+     */
     public static Inicio getInstance() {
         return inicio;
     }
 
+    /**
+     * Construtor que configura as dimensões e operações da tela bem como o
+     * arranjo dos botoões.
+     *
+     * @param controller
+     */
     public Inicio(Controller controller) {
         super("Rota");
         this.controller = controller;
@@ -65,6 +84,9 @@ public class Inicio extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Método que torna visível as mensagens trocadas entre os usuários.
+     */
     private void mensagens() {
         setSize(600, 600);
         atual = "";
@@ -78,6 +100,11 @@ public class Inicio extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Método que adiciona uma mensagem na tela de mensagens.
+     *
+     * @param msg
+     */
     public void mostrar(String msg) {
         atual = atual + "\n" + msg;
         if (comunicacao != null) {
@@ -96,7 +123,7 @@ public class Inicio extends JFrame implements ActionListener {
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    CarroFrame bf = new CarroFrame(controller);
+                    CarroFrame bf = new CarroFrame();
                     bf.setVisible(true);
                     bf.startMainLoop();
                 }
