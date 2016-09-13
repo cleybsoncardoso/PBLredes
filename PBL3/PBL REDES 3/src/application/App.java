@@ -34,7 +34,7 @@ public class App {
         Inicio telaInicial = Inicio.novoController(controller);
         //controller.iniciarConexao("192.168.0.4");
         //controller.iniciarConexao("192.168.0.6");
-        controller.primeiraConexao("25.12.22.120");
+        //controller.primeiraConexao("25.12.22.120");
         //controller.primeiraConexao("192.168.0.6");
         controller.iniciarConexao("25.12.22.120");
         Server serverSocket = new Server(8080);
@@ -56,16 +56,13 @@ public class App {
 //        } catch (Exception e) {
 //            System.out.println("Nao foi possivel enviar a mensagem");
 //        }
-<<<<<<< HEAD
 //        Scanner teclado = new Scanner(System.in);
 //        while (true) {
 //            controller.replicarMsg(teclado.nextLine());
 //        }
-=======
         Scanner teclado = new Scanner(System.in);
         while (true) {
             controller.replicarMsg(teclado.nextLine());
         }
->>>>>>> d014dd7fc291bac759a729c0c3158047e1859093
     }
 }

@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
 public class Carro {
 
     private int WIDTH = 15;
-    private int HEIGHT = 23;
+    private int HEIGHT = 20;
 
     private double x;
     private double y;
@@ -42,11 +42,24 @@ public class Carro {
         car.setRect(this.x, this.y, WIDTH, HEIGHT);
     }
 
+    public void setXY(double x, double y, int direcao) {
+        this.x = x;
+        this.y = y;
+        if (direcao == 3 || direcao == 9) {
+            HEIGHT = 15;
+            WIDTH = 20;
+        }else{
+            HEIGHT = 20;
+            WIDTH = 15;
+        }
+        car.setRect(this.x, this.y, WIDTH, HEIGHT);
+    }
+
+    
     public void virar() {
         int aux = HEIGHT;
         HEIGHT = WIDTH;
         WIDTH = aux;
         car.setRect(this.x, this.y, HEIGHT, WIDTH);
-        System.out.println("virou");
     }
 }

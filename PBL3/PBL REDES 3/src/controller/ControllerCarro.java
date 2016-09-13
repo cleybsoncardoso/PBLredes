@@ -79,26 +79,26 @@ public class ControllerCarro {
     private void setup() {
         switch (origem) {
             case "A":
-                this.x = 250;
+                this.x = 257;
                 this.y = alturaTela;
                 this.direcao = 0;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "B":
                 this.x = larguraTela;
-                this.y = 200;
+                this.y = 208;
                 this.direcao = 9;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "C":
-                this.x = 205;
+                this.x = 210;
                 this.y = 0;
                 this.direcao = 6;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "D":
                 this.x = 0;
-                this.y = 260;
+                this.y = 257;
                 this.direcao = 3;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
@@ -296,42 +296,43 @@ public class ControllerCarro {
     public void setXY(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
-        carro.setXY(x, y);
         this.direcao = direcao;
-
-        if (origem.equals("A") && destino.equals("D")) {
-            if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("A") && destino.equals("B")) {
-            if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
-                virarDireita();
-            }
-        } else if (origem.equals("C") && destino.equals("D")) {
-            if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
-                virarDireita();
-            }
-        } else if (origem.equals("C") && destino.equals("B")) {
-            if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("B") && destino.equals("C")) {
-            if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
-                virarDireita();
-            }
-        } else if (origem.equals("B") && destino.equals("A")) {
-            if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("D") && destino.equals("C")) {
-            if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("D") && destino.equals("A")) {
-            if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
-                virarDireita();
-            }
-        }
+        carro.setXY(x, y, direcao);
+        
+//
+//        if (origem.equals("A") && destino.equals("D")) {
+//            if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
+//                virarEsquerda();
+//            }
+//        } else if (origem.equals("A") && destino.equals("B")) {
+//            if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
+//                virarDireita();
+//            }
+//        } else if (origem.equals("C") && destino.equals("D")) {
+//            if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
+//                virarDireita();
+//            }
+//        } else if (origem.equals("C") && destino.equals("B")) {
+//            if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
+//                virarEsquerda();
+//            }
+//        } else if (origem.equals("B") && destino.equals("C")) {
+//            if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
+//                virarDireita();
+//            }
+//        } else if (origem.equals("B") && destino.equals("A")) {
+//            if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
+//                virarEsquerda();
+//            }
+//        } else if (origem.equals("D") && destino.equals("C")) {
+//            if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
+//                virarEsquerda();
+//            }
+//        } else if (origem.equals("D") && destino.equals("A")) {
+//            if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
+//                virarDireita();
+//            }
+//        }
 
     }
 
