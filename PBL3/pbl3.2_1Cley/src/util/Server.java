@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author paiva
+ * classe com o serversocket
+ * @author Cleybson e Lucas
  */
 public class Server implements Runnable {
 
@@ -33,9 +33,7 @@ public class Server implements Runnable {
     public void run() {
         try {
             ServerSocket servidor = new ServerSocket(this.porta);
-            System.out.println("Servidor Aberto..");
             while (true) {
-                System.out.println("Esperando Cliente...\n");
                 Socket cliente = servidor.accept();
                 String ip = cliente.getInetAddress().getHostAddress();
                 System.out.println(ip + " se conectou comigo");
@@ -45,7 +43,7 @@ public class Server implements Runnable {
 
             }
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 }

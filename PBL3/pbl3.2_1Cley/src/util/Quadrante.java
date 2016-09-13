@@ -8,8 +8,8 @@ package util;
 import java.io.Serializable;
 
 /**
- *
- * @author cleyb
+ * classe que contem as informações de cada quadrante, as delimitações e o nome dele
+ * @author cleybson e Lucas
  */
 public class Quadrante implements Serializable{
 
@@ -23,6 +23,11 @@ public class Quadrante implements Serializable{
         return nome;
     }
 
+    /**
+     * verifica pelo x, se o carro ainda esta naquele quadrante
+     * @param x
+     * @return 
+     */
     public boolean aindaQuadranteX(double x) {
         if (nome.equals("d")) {
             if (x < 278) {
@@ -62,6 +67,11 @@ public class Quadrante implements Serializable{
 
     }
 
+    /**
+     * verifica pelo y, se o carro ainda esta naquele quadrante
+     * @param y
+     * @return 
+     */
      public boolean aindaQuadranteY(double y) {
         if (nome.equals("d")) {
             if (y > 229) {

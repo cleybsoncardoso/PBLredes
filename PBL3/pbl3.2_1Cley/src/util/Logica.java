@@ -25,9 +25,13 @@ public class Logica {
 
     }
 
+    /**
+     * Classe que verifica se tem ou não conflito
+     * @return 
+     */
     public boolean conflito() {
-        if (controller.getCarros().size() > 1) {
-            for (int l = 0; l < controller.getCarros().size(); l++) {
+        if (controller.getCarros().size() > 1) {//verifica se tem carro conectado
+            for (int l = 0; l < controller.getCarros().size(); l++) {//caso tenha, 
                 ControllerCarro carroAtual = Controller.getInstance().getCarros().get(l);
                 int j = 0;
                 //verifica qual o maior trajeto, para basear se vai ter conflito
@@ -37,14 +41,12 @@ public class Logica {
                     j = meuCarro.getTrajeto().size();
                 }
                 //busca direta, para verificar se vai ter conflito
-                if (carroAtual.getId() != meuCarro.getId()) {
+                if (carroAtual.getId() != meuCarro.getId()) {//verifica se o carro não é o meu
                     conflito = false;
-                    for (int i = 0; i < j; i++){
+                    for (int i = 0; i < j; i++){//percorre carro por carro, analisando se o carro ja esta no cruzamento ou se ta na via principal
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                                System.out.println("Carro" + carroAtual.getId() + " esta na via principal");
-                            } else if (carroAtual.taNaVia() == true) {
-                                System.out.println("Carro" + carroAtual.getId() + " esta na via");
+                            } else if (carroAtual.noCruzamento() == true) {
                                 conflito = true;
                             }
                         }
@@ -58,6 +60,12 @@ public class Logica {
         return false;
     }
 
+    /**
+     * Calcula apartir da origem e do destino, qual o trajeto a ser feito
+     * @param origem
+     * @param destino
+     * @return 
+     */
     public ArrayList<Quadrante> calcularTrajeto(String origem, String destino) {
         ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();
         switch (origem) {
