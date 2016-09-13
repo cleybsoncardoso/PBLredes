@@ -46,7 +46,6 @@ public class Logica {
                                 System.out.println("atual ta saindo");
                             } else if (carroAtual.isParado() == true) {
                                 System.out.println("atual ta parado");
-
                             } else if (carroAtual.getDirecao() > meuCarro.getDirecao()) {
                                 System.out.println("recebi preferencia");
                             } else {
