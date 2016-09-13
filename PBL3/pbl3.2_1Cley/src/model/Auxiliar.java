@@ -7,7 +7,6 @@ package model;
 
 import controller.Controller;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,7 +26,7 @@ public class Auxiliar {
 
     public Auxiliar(Controller controller) {
         this.clientes = new ArrayList<Cliente>();
-        this.controller = controller;
+        this.controller=controller;
     }
 
     public void iniciarConexao(String ip) {
@@ -42,7 +41,7 @@ public class Auxiliar {
             c.enviarMsg(msg);
         }
     }
-
+    
     public void replicarMsg(ArrayList<Object> msg) {
         for (Cliente c : clientes) {
             c.enviarMsg(msg);
@@ -50,18 +49,11 @@ public class Auxiliar {
     }
 
     public void removerCliente(String ip) {
-        System.out.println("Tamanho " + clientes.size());
-        try {
-                 
-            for (Cliente c : clientes) {
-                if (c.getIp().equals(ip)) {
-                    clientes.remove(c);
-                }
+        for (Cliente c : clientes) {
+            if (c.getIp().equals(ip)) {
+                clientes.remove(c);
             }
-        } catch (Exception e) {
-            System.out.println("Tamanho depois " + clientes.size());
         }
-
     }
 
     public void primeiraConexao(String ip) {
@@ -81,5 +73,5 @@ public class Auxiliar {
         }
         clientes.add(client);
     }
-
+    
 }

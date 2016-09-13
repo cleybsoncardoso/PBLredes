@@ -72,8 +72,8 @@ public class Controller {
     }
 
     public void removerIp(String ip) {
-        ips.remove(ip);
-        auxiliar.removerCliente(ip);
+//        ips.remove(ip);
+//        auxiliar.removerCliente(ip);
     }
 
     private boolean verificaIp(String ip) {
