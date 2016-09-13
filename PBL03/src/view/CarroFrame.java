@@ -41,13 +41,6 @@ public class CarroFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(482, 480);
         setResizable(false);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                //Se apertar o x, paramos o loop.
-                loop.stop();
-            }
-        });
         this.controller = controller;
         this.carros = this.controller.getCarros();
     }
