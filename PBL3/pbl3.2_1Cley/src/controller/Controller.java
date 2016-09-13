@@ -8,6 +8,7 @@ package controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -112,7 +113,17 @@ public class Controller {
         carros.add(c);
         counter++;
     }
-
+    public void removerCarro(int id){
+        for(ControllerCarro c : carros){
+            if(c.getId() == id){
+                try{
+                carros.remove(c);
+                }catch(ConcurrentModificationException ex){
+                    removerCarro(id);
+                }
+            }
+        }
+    }
     public ArrayList<ControllerCarro> getCarros() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
         for (int i = 0; i < this.counter; i++) {
