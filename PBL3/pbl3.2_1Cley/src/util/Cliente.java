@@ -59,7 +59,6 @@ public class Cliente implements Runnable {
                     output.writeObject(msg);
                     enviarMsg = false;
                 } catch (IOException ex) {
-                    Inicio.getInstance().mostrar("Carro de cliente " + ip + "se desconectou");
                     controller.Controller.getInstance().removerIp(ip);
                     try {
                         cliente.close();
