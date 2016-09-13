@@ -103,8 +103,13 @@ public class Controller {
     }
 
     public void adicionarCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
+<<<<<<< HEAD:PBL03/src/controller/Controller.java
         ControllerCarro c = new ControllerCarro(id, x, y, direcao, trajeto);
         carros.add(c);
+=======
+        ControllerCarro c1 = new ControllerCarro(id, x, y, direcao, trajeto);
+        carros.add(c1);
+>>>>>>> 23cccb29211f0eed235bc6b6267416d1a7a65c8f:PBL3/pbl3.2_1Cley/src/controller/Controller.java
         counter++;
     }
 
