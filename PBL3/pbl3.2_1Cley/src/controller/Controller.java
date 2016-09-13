@@ -122,6 +122,7 @@ public class Controller {
                 } catch (ConcurrentModificationException ex) {
                     removerCarro(id);
                     System.out.println("carro " + id + " foi removido");
+                    counter--;
                 }
             }
         }
@@ -130,9 +131,7 @@ public class Controller {
     public ArrayList<ControllerCarro> getCarros() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
         for (int i = 0; i < this.counter; i++) {
-            if (aux != null) {
                 aux.add(this.carros.get(i));
-            }
         }
         return aux;
     }
