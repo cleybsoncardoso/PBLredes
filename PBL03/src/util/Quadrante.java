@@ -54,12 +54,12 @@ public class Quadrante implements Serializable{
                 return false;
             }
         } else if (nome.equals("D")) {
-            if (x < 154) {
+            if (x < 144) {
                 return true;
             } else {
                 return false;
             }
-        } else if (x > 308) {
+        } else if (x > 318) {
             return true;
         } else {
             return false;
@@ -98,13 +98,13 @@ public class Quadrante implements Serializable{
                 return false;
             }
         }else if(nome.equals("C")){
-            if (y < 150) {
+            if (y < 140) {
                 return true;
             } else {
                 return false;
             }
         }else{
-            if (y > 306) {
+            if (y > 316) {
                 return true;
             } else {
                 return false;
