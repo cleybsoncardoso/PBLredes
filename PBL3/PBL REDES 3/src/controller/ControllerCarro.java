@@ -163,7 +163,6 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        this.msgMandar();
 
     }
 
@@ -281,7 +280,10 @@ public class ControllerCarro {
             } else if (origem.equals("D") && destino.equals("B")) {
                 andar();
             }
+
         }
+
+        this.msgMandar();
 
     }
 
@@ -304,8 +306,8 @@ public class ControllerCarro {
     public void setTrajeto(ArrayList<Quadrante> trajeto) {
         this.trajeto = trajeto;
     }
-    
-    public int getDirecao(){
+
+    public int getDirecao() {
         return this.direcao;
     }
 
