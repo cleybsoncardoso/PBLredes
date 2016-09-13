@@ -92,7 +92,7 @@ public class TrataCliente implements Runnable {
                     carroAtual.setTrajeto(trajeto);
                     if(!quadranteAtual.getNome().equals(trajeto.get(0).getNome())){
                         Inicio.getInstance().mostrar("Carro "+ id + " saindo da pista " + trajeto.get(0).getNome());
-                        Inicio.getInstance().mostrar("Carro "+ id + " entrandd  na pista " + quadranteAtual.getNome());
+                        Inicio.getInstance().mostrar("Carro "+ id + " entrando  na pista " + quadranteAtual.getNome());
                         
                         quadranteAtual=trajeto.get(0);
                     }
