@@ -33,6 +33,7 @@ public class TrataCliente implements Runnable {
     private String ip; //ip do usuario conectado
     private int id; //ID do respectivo carro
     private int modifier = 0; // variavel utilizada saber se é a primeira conexão de um usuario, para adiciona-lo na tela
+    private String cor;
     private Quadrante quadranteAtual; //Quarda o quadrante do usuario
 
     TrataCliente(Socket cliente) {
@@ -73,17 +74,27 @@ public class TrataCliente implements Runnable {
 
                 if (modifier == 0) {//coloca carro na tela
                     controller.adicionarCarro(id, x, y, direcao, trajeto);
-                    Inicio.getInstance().mostrar("iniciando carro " + id + "na pista " + trajeto.get(0).getNome());
+                    if (id == 1) {
+                        cor = "amarelo";
+                    } else if (id == 2) {
+                        cor = "verde";
+                    } else if (id == 3) {
+                        cor = "preto";
+                    } else {
+                        cor = "vermelho";
+                    }
+
+                    Inicio.getInstance().mostrar("iniciando carro " + cor + "na pista " + trajeto.get(0).getNome());
                     quadranteAtual = trajeto.get(0);
                     modifier = 1;
                 } else {//atualiza os dados do carro
                     ControllerCarro carroAtual = controller.getCarro(this.id);
                     carroAtual.setXY(x, y, direcao);
                     carroAtual.setTrajeto(trajeto);
-                    
+
                     if (!quadranteAtual.getNome().equals(trajeto.get(0).getNome())) {//verifica se o carro ainda está no quadrante para pode exibir a msg
-                        Inicio.getInstance().mostrar("Carro " + id + " saindo da pista " + trajeto.get(0).getNome());
-                        Inicio.getInstance().mostrar("Carro " + id + " entrando  na pista " + quadranteAtual.getNome());
+                        Inicio.getInstance().mostrar("Carro " + cor + " saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro " + cor + " entrando  na pista " + quadranteAtual.getNome());
                         quadranteAtual = trajeto.get(0);
                     }
                     carroAtual.noCruzamento(parado);
@@ -91,7 +102,7 @@ public class TrataCliente implements Runnable {
 
             } catch (IOException ex) {
                 //caso ocorra algum erro de comunição, o carro é retirado da tela
-                Inicio.getInstance().mostrar("Carro " + id + " se desconectou");
+                Inicio.getInstance().mostrar("Carro " + cor + " se desconectou");
                 Controller.getInstance().removerCarro(id);
                 return;
             } catch (ClassNotFoundException ex) {
@@ -101,7 +112,8 @@ public class TrataCliente implements Runnable {
     }
 
     /**
-     * envia a lista de todos os ips de computadores que estão conectados com meu serversocket
+     * envia a lista de todos os ips de computadores que estão conectados com
+     * meu serversocket
      */
     private void enviaIps() {
         try {
@@ -114,7 +126,7 @@ public class TrataCliente implements Runnable {
             }
         } catch (IOException ex) {
             //caso ocorra algum erro de comunição, o carro é retirado da tela
-            Inicio.getInstance().mostrar("Carro " + id + " se desconectou");
+            Inicio.getInstance().mostrar("Carro " + cor + " se desconectou");
             Controller.getInstance().removerCarro(id);
             return;
         } catch (ClassNotFoundException ex) {

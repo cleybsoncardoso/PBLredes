@@ -10,8 +10,6 @@ import controller.ControllerCarro;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,13 +39,6 @@ public class CarroFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(482, 480);
         setResizable(false);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                //Se apertar o x, paramos o loop.
-                loop.stop();
-            }
-        });
         this.controller = controller;
         this.carros = this.controller.getCarros();
     }

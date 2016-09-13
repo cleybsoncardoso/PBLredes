@@ -11,8 +11,8 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 /**
- *
- * @author cleyb
+ * classe que ouve tudo que foi dito no grupo multicast
+ * @author cleybson e lucas
  */
 public class EstouNaRede implements Runnable {
 
