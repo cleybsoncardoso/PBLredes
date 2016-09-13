@@ -113,21 +113,25 @@ public class Controller {
         carros.add(c);
         counter++;
     }
-    public void removerCarro(int id){
-        for(ControllerCarro c : carros){
-            if(c.getId() == id){
-                try{
-                carros.remove(c);
-                }catch(ConcurrentModificationException ex){
+
+    public void removerCarro(int id) {
+        for (ControllerCarro c : carros) {
+            if (c.getId() == id) {
+                try {
+                    carros.remove(c);
+                } catch (ConcurrentModificationException ex) {
                     removerCarro(id);
+                    System.out.println("carro " + id + " foi removido");
+                    counter--;
                 }
             }
         }
     }
+
     public ArrayList<ControllerCarro> getCarros() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
         for (int i = 0; i < this.counter; i++) {
-            aux.add(this.carros.get(i));
+                aux.add(this.carros.get(i));
         }
         return aux;
     }
