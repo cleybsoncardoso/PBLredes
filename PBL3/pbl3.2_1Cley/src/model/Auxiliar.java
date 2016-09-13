@@ -26,11 +26,12 @@ public class Auxiliar {
 
     public Auxiliar(Controller controller) {
         this.clientes = new ArrayList<Cliente>();
-        this.controller=controller;
+        this.controller = controller;
     }
 
     public void iniciarConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
+        System.out.println("Me conectei com " + ip);
         new Thread(client).start();
         client.enviarMsg("segundo");
         clientes.add(client);
@@ -41,7 +42,7 @@ public class Auxiliar {
             c.enviarMsg(msg);
         }
     }
-    
+
     public void replicarMsg(ArrayList<Object> msg) {
         for (Cliente c : clientes) {
             c.enviarMsg(msg);
@@ -58,6 +59,7 @@ public class Auxiliar {
 
     public void primeiraConexao(String ip) {
         Cliente client = new Cliente(8080, ip);
+        System.out.println("Me conectei com " + ip);
         new Thread(client).start();
         client.enviarMsg("primeiro");
         try {
@@ -73,5 +75,5 @@ public class Auxiliar {
         }
         clientes.add(client);
     }
-    
+
 }

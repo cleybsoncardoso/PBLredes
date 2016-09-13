@@ -47,7 +47,11 @@ public class Logica {
                             } else if (carroAtual.taNaVia() == true) {
                                 System.out.println("atual ta na via");
                                 conflito = true;
+<<<<<<< HEAD
                             } 
+=======
+                            }
+>>>>>>> 8b4312b21503b62d441a6dc4c6d669b94b9f5708
                         }
                     }
 
