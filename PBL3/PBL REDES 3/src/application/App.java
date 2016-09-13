@@ -30,7 +30,7 @@ public class App {
             System.out.println("não foi possivel verificar ip");
         }
         Controller controller = Controller.novoController(ip);
-        
+
         Inicio telaInicial = Inicio.novoController(controller);
         //controller.iniciarConexao("192.168.0.4");
         //controller.iniciarConexao("192.168.0.6");
@@ -39,7 +39,7 @@ public class App {
         //controller.iniciarConexao("25.12.22.120");
         Server serverSocket = new Server(8080);
         new Thread(serverSocket).start();
-        
+
         EstouNaRede enr = new EstouNaRede("224.0.0.0", 12347, controller);
         new Thread(enr).start();
 
