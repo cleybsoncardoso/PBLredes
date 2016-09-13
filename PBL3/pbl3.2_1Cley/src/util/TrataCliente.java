@@ -95,7 +95,7 @@ public class TrataCliente implements Runnable {
                         Inicio.getInstance().mostrar("Carro "+ id + " saindo do quadrante " + trajeto.get(0).getNome());
                         quadranteAtual=trajeto.get(0);
                     }
-                    carroAtual.setParado(parado);
+                    carroAtual.setNaVia(parado);
                 }
 
             } catch (IOException ex) {
