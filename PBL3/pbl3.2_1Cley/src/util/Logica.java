@@ -52,7 +52,6 @@ public class Logica {
                                 conflito = true;
                             }
                         }
-
                     }
 
                     return conflito;
