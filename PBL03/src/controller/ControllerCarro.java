@@ -213,13 +213,13 @@ public class ControllerCarro {
 
     public void acao() {
 
-        if (origem.equals("A") && this.y > 297) {
+        if (origem.equals("A") && this.y > 307) {
             andar();
-        } else if (origem.equals("C") && this.y < 161) {
+        } else if (origem.equals("C") && this.y < 151) {
             andar();
-        } else if (origem.equals("B") && this.x > 299) {
+        } else if (origem.equals("B") && this.x > 309) {
             andar();
-        } else if (origem.equals("D") && this.x < 163) {
+        } else if (origem.equals("D") && this.x < 153) {
             andar();
         }
 
