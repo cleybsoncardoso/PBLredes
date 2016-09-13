@@ -8,19 +8,23 @@ package util;
 import java.awt.geom.Rectangle2D;
 
 /**
- *
+ * Classe que possue todos os cados de cada carro
  * @author paiva
  */
 public class Carro {
 
-    private int WIDTH = 15;
-    private int HEIGHT = 20;
-
-    private double x;
-    private double y;
+    private int WIDTH = 15, HEIGHT = 20;
+    //tamanho da altura e largura do carro, que é padrão para todos
+    private double x, y;
 
     private Rectangle2D car;
 
+    /**
+     * Construtor, que além de colocar o x e o y do carro, verifica a direção do carro para mudar a forma do retangulo, para dar a impressão do carro estar indo reto(iniciado em A ou C) ou para os lado (B ou D)
+     * @param x 
+     * @param y
+     * @param direcao 
+     */
     public Carro(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
@@ -32,6 +36,7 @@ public class Carro {
         car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
 
+    //retorna o retangulo do carro
     public Rectangle2D draw() {
         return car;
     }
@@ -55,7 +60,7 @@ public class Carro {
         car.setRect(this.x, this.y, WIDTH, HEIGHT);
     }
 
-    
+    //altera a forma do retangulo, para da a impressão dele estar indo para outra direção
     public void virar() {
         int aux = HEIGHT;
         HEIGHT = WIDTH;

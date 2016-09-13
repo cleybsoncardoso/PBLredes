@@ -37,7 +37,6 @@ public class EstouNaRede implements Runnable {
                 DatagramPacket pkg = new DatagramPacket(rec, rec.length);
                 mcs.receive(pkg);
                 String data = new String(pkg.getData());
-                //System.out.println("Conectando com servidor: " + data);
                 controller.primeiraConexao(data);
             } catch (Exception e) {
                 System.out.println("Erro: " + e.getMessage());

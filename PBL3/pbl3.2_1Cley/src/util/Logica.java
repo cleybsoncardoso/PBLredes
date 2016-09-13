@@ -10,8 +10,8 @@ import controller.ControllerCarro;
 import java.util.ArrayList;
 
 /**
- *
- * @author paiva
+ * Classe responsavel por tratar as logicas relacionadas a imagem, em que traça o trajeto do carro e verifica se tem conflito
+ * @author cleybson e lucas
  */
 public class Logica {
 
@@ -25,9 +25,13 @@ public class Logica {
 
     }
 
+    /**
+     * Classe que verifica se tem ou não conflito
+     * @return 
+     */
     public boolean conflito() {
-        if (controller.getCarros().size() > 1) {
-            for (int l = 0; l < controller.getCarros().size(); l++) {
+        if (controller.getCarros().size() > 1) {//verifica se tem carro conectado
+            for (int l = 0; l < controller.getCarros().size(); l++) {//caso tenha, 
                 ControllerCarro carroAtual = Controller.getInstance().getCarros().get(l);
                 int j = 0;
                 //verifica qual o maior trajeto, para basear se vai ter conflito
@@ -37,15 +41,12 @@ public class Logica {
                     j = meuCarro.getTrajeto().size();
                 }
                 //busca direta, para verificar se vai ter conflito
-                if (carroAtual.getId() != meuCarro.getId()) {
+                if (carroAtual.getId() != meuCarro.getId()) {//verifica se o carro não é o meu
                     conflito = false;
-                    for (int i = 0; i < j; i++) {
-                        System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + " teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
+                    for (int i = 0; i < j; i++){//percorre carro por carro, analisando se o carro ja esta no cruzamento ou se ta na via principal
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                                System.out.println("atual ta saindo");
-                            } else if (carroAtual.taNaVia() == true) {
-                                System.out.println("atual ta na via");
+                            } else if (carroAtual.noCruzamento() == true) {
                                 conflito = true;
                             }
                         }
@@ -54,19 +55,17 @@ public class Logica {
                     return conflito;
 
                 }
-                System.out.println("Rota de tua: ");
-                for (Quadrante q : carroAtual.getTrajeto()) {
-                    System.out.println(q.getNome());
-                }
-                System.out.println("Rota de minha: ");
-                for (Quadrante q : meuCarro.getTrajeto()) {
-                    System.out.println(q.getNome());
-                }
             }
         }
         return false;
     }
 
+    /**
+     * Calcula apartir da origem e do destino, qual o trajeto a ser feito
+     * @param origem
+     * @param destino
+     * @return 
+     */
     public ArrayList<Quadrante> calcularTrajeto(String origem, String destino) {
         ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();
         switch (origem) {

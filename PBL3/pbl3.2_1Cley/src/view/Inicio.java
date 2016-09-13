@@ -5,23 +5,13 @@
  */
 package view;
 
-import application.App;
 import controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Thread.sleep;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,9 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import util.Logica;
-import util.Quadrante;
-import util.Server;
 
 /**
  *
@@ -46,8 +33,8 @@ public class Inicio extends JFrame implements ActionListener {
     private String atual;
     private static Inicio inicio;
     private JPanel panel;
-    
-     public static Inicio novoController(Controller controller) {
+
+    public static Inicio novoController(Controller controller) {
         inicio = new Inicio(controller);
         return inicio;
     }
@@ -77,7 +64,7 @@ public class Inicio extends JFrame implements ActionListener {
         setVisible(true);
 
     }
-    
+
     private void mensagens() {
         setSize(600, 600);
         atual = "";
@@ -90,13 +77,13 @@ public class Inicio extends JFrame implements ActionListener {
         cont.add(scroll, BorderLayout.CENTER);
         setVisible(true);
     }
-    
-    public void mostrar(String msg){
-        atual= atual + "\n" + msg;
-        if(comunicacao!=null){
+
+    public void mostrar(String msg) {
+        atual = atual + "\n" + msg;
+        if (comunicacao != null) {
             comunicacao.setText(atual);
         }
-        
+
     }
 
     @Override

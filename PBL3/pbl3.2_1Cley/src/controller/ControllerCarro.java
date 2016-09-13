@@ -31,7 +31,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean naVia = false;
+    private boolean noCruzamento = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -174,7 +174,7 @@ public class ControllerCarro {
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
-        msg.add(naVia);
+        msg.add(noCruzamento);
         msg.add(trajeto.size());
         for (Quadrante q : trajeto) {
             msg.add(q);
@@ -198,12 +198,12 @@ public class ControllerCarro {
         carro.virar();
     }
 
-    public boolean taNaVia() {
-        return naVia;
+    public boolean noCruzamento() {
+        return noCruzamento;
     }
 
-    public void setNaVia(boolean naVia) {
-        this.naVia = naVia;
+    public void noCruzamento(boolean noCruzamento) {
+        this.noCruzamento = noCruzamento;
     }
 
     public void acao() {
@@ -219,9 +219,9 @@ public class ControllerCarro {
         }
 
         if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
-            naVia = false;
+            noCruzamento = false;
         } else {
-            naVia = true;
+            noCruzamento = true;
         }
 
         if (!logica.conflito()) {

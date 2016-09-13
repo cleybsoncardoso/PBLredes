@@ -7,14 +7,11 @@ package model;
 
 import controller.Controller;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.net.ssl.SSLSocket;
 import util.Cliente;
-import util.Quadrante;
 
 /**
  *
@@ -73,9 +70,7 @@ public class Auxiliar {
                 System.out.println(ipAtual);
                 controller.iniciarConexao(ipAtual);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Auxiliar.class.getName()).log(Level.SEVERE, null, ex);
         }
         clientes.add(client);

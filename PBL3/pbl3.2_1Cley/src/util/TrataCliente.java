@@ -12,30 +12,33 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import view.Inicio;
 
 /**
+ * Classe responsavel para se comunicar com os outros carros através de conexão
+ * tcp
  *
- * @author paiva
+ * @author cleybson e Lucas
  */
 public class TrataCliente implements Runnable {
 
-    private static int id_counter = 1;
+    private static int id_counter = 1; //contador que indica o ID de cada carro, cada carro tem um ID diferente que é utilizado para identidicar o carro
     private Controller controller;
     private Socket cliente;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private Server servidor;
-    private String ip;
-    private int id;
-    private int modifier = 0;
-    private Quadrante quadranteAtual;
+    private Server servidor; //servidor de cada usuario que recebe conexões de outros usuarios
+    private String ip; //ip do usuario conectado
+    private int id; //ID do respectivo carro
+    private int modifier = 0; // variavel utilizada saber se é a primeira conexão de um usuario, para adiciona-lo na tela
+    private Quadrante quadranteAtual; //Quarda o quadrante do usuario
 
     TrataCliente(Socket cliente) {
         this.id = id_counter;
         this.id_counter++;
-        System.out.println(id);
-        this.controller = Controller.getInstance();
+        this.controller = Controller.getInstance();//pega instancia do controler atual
         this.cliente = cliente;
         this.ip = this.cliente.getInetAddress().getHostAddress();
         this.servidor = servidor;
@@ -44,64 +47,50 @@ public class TrataCliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {
-//            controller.removerIp(this.ip);
-            System.out.println("Conexão perdida com " + ip);
         }
     }
 
     @Override
     public void run() {
 
-        try {
-            enviaIps();
-        } catch (IOException ex) {
-            //           controller.removerIp(this.ip);
-            System.out.println("Conexão perdida com " + ip);
-            return;
-        } catch (ClassNotFoundException ex) {
-            return;
-        }
-
+        enviaIps();//envia a lista de ip que esta conectado com ele
         while (true) {
             try {
-//                String msg = (String) input.readObject();
-//                System.out.println(msg);
                 ArrayList<Quadrante> trajeto = new ArrayList<>();
+                //sempre o usuario vai receber os dados do carro:posição do x e y, a direção e se o carro está parado ou andando, para que o usuario saiba e possa representar isso na tela
+                //todas essas informações são recebidas através de um array
                 ArrayList<Object> mensagem = (ArrayList<Object>) input.readObject();
                 float x = (float) mensagem.get(0);
                 float y = (float) mensagem.get(1);
                 int direcao = (int) mensagem.get(2);
                 boolean parado = (boolean) mensagem.get(3);
-
-                //ArrayList<Quadrante> trajeto = (ArrayList<Quadrante>) mensagem.get(3);
+                //o trajeto é enviado quadrante por quadrante, e assim a junção é feita nessa instrução abaixo
                 int tamanhoDoTrajeto = (int) mensagem.get(4);
                 for (int j = 5; j < tamanhoDoTrajeto + 5; j++) {
                     Quadrante q = (Quadrante) mensagem.get(j);
                     trajeto.add(q);
                 }
-                
-                //System.out.println("mensagem recebida");
-                if (modifier == 0) {
+
+                if (modifier == 0) {//coloca carro na tela
                     controller.adicionarCarro(id, x, y, direcao, trajeto);
                     Inicio.getInstance().mostrar("iniciando carro " + id + "na pista " + trajeto.get(0).getNome());
-                    quadranteAtual=trajeto.get(0);
+                    quadranteAtual = trajeto.get(0);
                     modifier = 1;
-                } else {
+                } else {//atualiza os dados do carro
                     ControllerCarro carroAtual = controller.getCarro(this.id);
                     carroAtual.setXY(x, y, direcao);
                     carroAtual.setTrajeto(trajeto);
-                    if(!quadranteAtual.getNome().equals(trajeto.get(0).getNome())){
-                        Inicio.getInstance().mostrar("Carro "+ id + " saindo da pista " + trajeto.get(0).getNome());
-                        Inicio.getInstance().mostrar("Carro "+ id + " entrandd  na pista " + quadranteAtual.getNome());
-                        
-                        quadranteAtual=trajeto.get(0);
+                    
+                    if (!quadranteAtual.getNome().equals(trajeto.get(0).getNome())) {//verifica se o carro ainda está no quadrante para pode exibir a msg
+                        Inicio.getInstance().mostrar("Carro " + id + " saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro " + id + " entrando  na pista " + quadranteAtual.getNome());
+                        quadranteAtual = trajeto.get(0);
                     }
-                    carroAtual.setNaVia(parado);
+                    carroAtual.noCruzamento(parado);
                 }
 
             } catch (IOException ex) {
-//                controller.removerIp(this.ip);
-                System.out.println("Conexão perdida com " + ip);
+                //caso ocorra algum erro de comunição, o carro é retirado da tela
                 Inicio.getInstance().mostrar("Carro " + id + " se desconectou");
                 Controller.getInstance().removerCarro(id);
                 return;
@@ -111,16 +100,27 @@ public class TrataCliente implements Runnable {
         }
     }
 
-    private void enviaIps() throws IOException, ClassNotFoundException {
-        String msg = (String) input.readObject();
-        System.out.println(msg);
-        if (msg.equals("primeiro")) {
-            ArrayList<String> aux = new ArrayList<>();
-            aux.addAll(controller.getIps());
-            aux.remove(this.ip);
-            output.writeObject(aux);
-            System.out.println("saiu");
+    /**
+     * envia a lista de todos os ips de computadores que estão conectados com meu serversocket
+     */
+    private void enviaIps() {
+        try {
+            String msg = (String) input.readObject();
+            if (msg.equals("primeiro")) {
+                ArrayList<String> aux = new ArrayList<>();
+                aux.addAll(controller.getIps());
+                aux.remove(this.ip);
+                output.writeObject(aux);
+            }
+        } catch (IOException ex) {
+            //caso ocorra algum erro de comunição, o carro é retirado da tela
+            Inicio.getInstance().mostrar("Carro " + id + " se desconectou");
+            Controller.getInstance().removerCarro(id);
+            return;
+        } catch (ClassNotFoundException ex) {
+            return;
         }
+
     }
 
 }
