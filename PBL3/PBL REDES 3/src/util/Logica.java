@@ -40,14 +40,16 @@ public class Logica {
                 if (carroAtual.getId() != meuCarro.getId()) {
                     conflito = false;
                     for (int i = 0; i < j; i++) {
+                        System.out.println("atual está parado? " + carroAtual.isParado());
                         System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + " teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
                                 System.out.println("atual ta saindo");
                             } else if (carroAtual.isParado() == true) {
                                 System.out.println("atual ta parado");
-                            } else if (carroAtual.getDirecao() > meuCarro.getDirecao()) {
-                                System.out.println("recebi preferencia");
+                                //                            } else if (carroAtual.getDirecao() > meuCarro.getDirecao()) {
+                                //                                System.out.println("recebi preferencia");
+                                //                            } 
                             } else {
                                 System.out.println("atual ta andando");
                                 conflito = true;
