@@ -17,6 +17,7 @@ public class Logica {
 
     private Controller controller;
     private ControllerCarro meuCarro;
+    private boolean conflito = false;
 
     public Logica(ControllerCarro meuCarro) {
         this.meuCarro = meuCarro;
@@ -37,24 +38,23 @@ public class Logica {
                 }
                 //busca direta, para verificar se vai ter conflito
                 if (carroAtual.getId() != meuCarro.getId()) {
+                    conflito = false;
                     for (int i = 0; i < j; i++) {
                         System.err.println("Comparando Meu: " + meuCarro.getId() + " " + meuCarro.getTrajeto().get(i).getNome() + " teu: " + carroAtual.getId() + " " + carroAtual.getTrajeto().get(i).getNome());
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
-                                meuCarro.setParado(false);
-                                return false;
-                            }
-
-                            if (carroAtual.isParado() == true) {
-                                System.out.println("cley ta parado");
-                                meuCarro.setParado(false);
-                                return false;
+                                System.out.println("atual ta saindo");
+                            } else if (carroAtual.isParado() == true) {
+                                System.out.println("atual ta parado");
+                            } else if (carroAtual.getDirecao() > meuCarro.getDirecao()) {
+                                System.out.println("recebi preferencia");
                             } else {
-                                System.out.println("cley ta andando");
-                                meuCarro.setParado(true);
-                                return true;
+                                System.out.println("atual ta andando");
+                                conflito = true;
                             }
                         }
+                        meuCarro.setParado(conflito);
+                        return conflito;
                     }
 
                     System.out.println("Rota de tua: ");
