@@ -62,7 +62,7 @@ public class App {
         while (true) {
             float t = teclado.nextFloat();   
             float v = teclado.nextFloat();
-            controller.getCarro(0).setXY(t, v, 0);
+            controller.getCarro(0).setXY(t, v, 3);
         }
     }
 }

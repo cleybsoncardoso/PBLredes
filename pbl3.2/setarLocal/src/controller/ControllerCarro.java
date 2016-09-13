@@ -31,7 +31,7 @@ public class ControllerCarro {
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean tonaVia = false;
+    private boolean parado = false;
 
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -49,7 +49,7 @@ public class ControllerCarro {
         this.y = y;
         this.direcao = direcao;
         this.trajeto = trajeto;
-//        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + trajeto.get(0).getNome());
+        Inicio.getInstance().mostrar("Iniciando Carro " + id + " em pista " + trajeto.get(0).getNome());
         this.setup2();
     }
 
@@ -72,33 +72,33 @@ public class ControllerCarro {
                 carro = new Carro(this.x, this.y, direcao);
                 break;
         }
-//        this.origem = trajeto.get(0).getNome();
-//        this.destino = trajeto.get(trajeto.size() - 1).getNome();
+        this.origem = trajeto.get(0).getNome();
+        this.destino = trajeto.get(trajeto.size() - 1).getNome();
     }
 
     private void setup() {
         switch (origem) {
             case "A":
-                this.x = 260;
+                this.x = 257;
                 this.y = alturaTela;
                 this.direcao = 0;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "B":
                 this.x = larguraTela;
-                this.y = 200;
+                this.y = 208;
                 this.direcao = 9;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "C":
-                this.x = larguraTela / 2 - 40;
+                this.x = 210;
                 this.y = 0;
                 this.direcao = 6;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
             case "D":
                 this.x = 0;
-                this.y = 260;
+                this.y = 257;
                 this.direcao = 3;
                 carro = new Carro(this.x, this.y, direcao);
                 break;
@@ -166,14 +166,15 @@ public class ControllerCarro {
         this.msgMandar();
 
     }
-    
-    private void msgMandar(){
-        
+
+    private void msgMandar() {
+
         ArrayList<Object> msg = new ArrayList<Object>();
 
         msg.add(x);
         msg.add(y);
         msg.add(direcao);
+        msg.add(parado);
         msg.add(trajeto.size());
         for (Quadrante q : trajeto) {
             msg.add(q);
@@ -197,26 +198,34 @@ public class ControllerCarro {
         carro.virar();
     }
 
+    public boolean isParado() {
+        return parado;
+    }
+
+    public void setParado(boolean parado) {
+        this.parado = parado;
+    }
+
     public void acao() {
 
-//        if (origem.equals("A") && this.y > 287) {
-//            andar();
-//        } else if (origem.equals("C") && this.y < 169) {
-//            andar();
-//        } else if (origem.equals("B") && this.x > 288) {
-//            andar();
-//        } else if (origem.equals("D") && this.x < 163) {
-//            andar();
-//        } else if (!logica.conflito()||tonaVia) {
-//            tonaVia=true;
+        if (origem.equals("A") && this.y > 297) {
+            andar();
+        } else if (origem.equals("C") && this.y < 161) {
+            andar();
+        } else if (origem.equals("B") && this.x > 299) {
+            andar();
+        } else if (origem.equals("D") && this.x < 163) {
+            andar();
+        }
+//        if (!logica.conflito()) {
 //            if (origem.equals("A") && destino.equals("D")) {
-//                if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
+//                if ((y <= 208) && (direcao == 0)) {
 //                    virarEsquerda();
 //                } else {
 //                    andar();
 //                }
 //            } else if (origem.equals("A") && destino.equals("B")) {
-//                if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
+//                if ((y <= 257) && (direcao == 0)) {
 //                    virarDireita();
 //                } else {
 //                    andar();
@@ -226,13 +235,13 @@ public class ControllerCarro {
 //            }
 //
 //            if (origem.equals("C") && destino.equals("D")) {
-//                if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
+//                if ((y >= 208) && (direcao == 6)) {
 //                    virarDireita();
 //                } else {
 //                    andar();
 //                }
 //            } else if (origem.equals("C") && destino.equals("B")) {
-//                if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
+//                if ((y >= 257) && (direcao == 6)) {
 //                    virarEsquerda();
 //                } else {
 //                    andar();
@@ -242,13 +251,13 @@ public class ControllerCarro {
 //            }
 //
 //            if (origem.equals("B") && destino.equals("C")) {
-//                if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
+//                if ((x <= 257) && (direcao == 9)) {
 //                    virarDireita();
 //                } else {
 //                    andar();
 //                }
 //            } else if (origem.equals("B") && destino.equals("A")) {
-//                if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
+//                if ((x <= 210) && (direcao == 9)) {
 //                    virarEsquerda();
 //                } else {
 //                    andar();
@@ -258,13 +267,13 @@ public class ControllerCarro {
 //            }
 //
 //            if (origem.equals("D") && destino.equals("C")) {
-//                if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
+//                if ((x >= 257) && (direcao == 3)) {
 //                    virarEsquerda();
 //                } else {
 //                    andar();
 //                }
 //            } else if (origem.equals("D") && destino.equals("A")) {
-//                if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
+//                if ((x >= 210) && (direcao == 3)) {
 //                    virarDireita();
 //                } else {
 //                    andar();
@@ -273,7 +282,7 @@ public class ControllerCarro {
 //                andar();
 //            }
 //        }
-//
+
     }
 
     public float getX() {
@@ -287,42 +296,8 @@ public class ControllerCarro {
     public void setXY(float x, float y, int direcao) {
         this.x = x;
         this.y = y;
-        carro.setXY(x, y);
         this.direcao = direcao;
-
-        if (origem.equals("A") && destino.equals("D")) {
-            if ((y <= alturaTela / 2 - 35) && (direcao == 0)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("A") && destino.equals("B")) {
-            if ((y <= alturaTela / 2 + 15) && (direcao == 0)) {
-                virarDireita();
-            }
-        } else if (origem.equals("C") && destino.equals("D")) {
-            if ((y >= alturaTela / 2 - 35) && (direcao == 6)) {
-                virarDireita();
-            }
-        } else if (origem.equals("C") && destino.equals("B")) {
-            if ((y >= alturaTela / 2 + 15) && (direcao == 6)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("B") && destino.equals("C")) {
-            if ((x <= larguraTela / 2 + 18) && (direcao == 9)) {
-                virarDireita();
-            }
-        } else if (origem.equals("B") && destino.equals("A")) {
-            if ((x <= larguraTela / 2 - 35) && (direcao == 9)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("D") && destino.equals("C")) {
-            if ((x >= larguraTela / 2 + 18) && (direcao == 3)) {
-                virarEsquerda();
-            }
-        } else if (origem.equals("D") && destino.equals("A")) {
-            if ((x >= larguraTela / 2 - 35) && (direcao == 3)) {
-                virarDireita();
-            }
-        }
+        carro.setXY(x, y, direcao);
 
     }
 
