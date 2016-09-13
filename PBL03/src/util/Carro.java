@@ -8,7 +8,7 @@ package util;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Classe que possue todos os cados de cada carro
+ * Classe que possue todos os dados de cada carro
  * @author paiva
  */
 public class Carro {

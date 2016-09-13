@@ -15,35 +15,49 @@ import util.Quadrante;
 import view.Inicio;
 
 /**
- *
- * @author paiva
+ * Classe responsavel por controlar as ações dos carros
+ * @author cleybson e lucas
  */
 public class ControllerCarro {
 
-    private float x;
-    private float y;
-    public Carro carro;
+    private float x; //posição x do carro
+    private float y; //posição y do carro
+    public Carro carro; //dados do carro a ser controlado
     private int alturaTela = 480;
     private int larguraTela = 482;
     private int direcao;
-    private float v = 0.3f;
+    private float v = 0.3f; //velocidade do carro
     private ArrayList<Quadrante> trajeto;
-    private int id;
+    private int id; //id do carro a ser controlado
     private String origem;
     private String destino;
     private Logica logica;
-    private boolean noCruzamento = false;
+    private boolean noCruzamento = false; //boolean que verifica se o carro ja entrou no cruzamento
 
+    /**
+     * Construtor do meu carro
+     * @param id
+     * @param origem
+     * @param destino 
+     */
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
         this.origem = origem;
         this.destino = destino;
         this.logica = new Logica(this);
-        this.trajeto = logica.calcularTrajeto(origem, destino);
-        Inicio.getInstance().mostrar("Iniciando Carro " + "azul" + " em pista " + origem);
+        this.trajeto = logica.calcularTrajeto(origem, destino);//gera o trajeto do carro
+        Inicio.getInstance().mostrar("Iniciando Carro " + "azul" + " em pista " + origem); //exibe mensagem
         this.setup();
     }
 
+    /**
+     * contrutor dos outros carros
+     * @param id
+     * @param x
+     * @param y
+     * @param direcao 
+     * @param trajeto 
+     */
     public ControllerCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
         this.id = id;
         this.x = x;
@@ -51,6 +65,7 @@ public class ControllerCarro {
         this.direcao = direcao;
         this.trajeto = trajeto;
         String cor;
+        //verifica qual a cor do carro
         if (this.id == 0) {
             cor = "azul";
         } else if (this.id == 1) {
@@ -70,6 +85,9 @@ public class ControllerCarro {
         return this.id;
     }
 
+    /**
+     * cria o carro que se conecta com seu serversocket
+     */
     private void setup2() {
         switch (direcao) {
             case 0:
@@ -89,6 +107,9 @@ public class ControllerCarro {
         this.destino = trajeto.get(trajeto.size() - 1).getNome();
     }
 
+    /**
+     * cria seu carro
+     */
     private void setup() {
         switch (origem) {
             case "A":
@@ -119,6 +140,10 @@ public class ControllerCarro {
         this.msgMandar();
     }
 
+    /**
+     * coloca a cor do carro
+     * @param g2d 
+     */
     public void desenhar(Graphics2D g2d) {
         if (this.id == 0) {
             g2d.setColor(Color.BLUE);
@@ -144,6 +169,10 @@ public class ControllerCarro {
         return trajeto;
     }
 
+    /**
+     * metodo que faz o carro se movimentar na tela e verifica se o carro ainda esta no quadrante, caso não esteja
+     * ele remove o quadrante do trajeto
+     */
     public void andar() {
         switch (direcao) {
             case 0:
@@ -192,9 +221,12 @@ public class ControllerCarro {
                 break;
         }
         this.msgMandar();
-
+        //manda msg com os dados do seu carrro
     }
 
+    /**
+     * metodo que manda a msg para os outros carros, com o x, y, direção, se está dentro do cruzamento e o trajeto
+     */
     private void msgMandar() {
 
         ArrayList<Object> msg = new ArrayList<Object>();
@@ -204,12 +236,16 @@ public class ControllerCarro {
         msg.add(direcao);
         msg.add(noCruzamento);
         msg.add(trajeto.size());
+        //ele separa o trajeto, mandando quafrante por quadrante
         for (Quadrante q : trajeto) {
             msg.add(q);
         }
         Controller.getInstance().replicarMsg(msg);
     }
 
+    /**
+     * muda a direção do carro
+     */
     public void virarEsquerda() {
         direcao = direcao - 3;
         if (direcao == -3) {
@@ -218,6 +254,9 @@ public class ControllerCarro {
         carro.virar();
     }
 
+    /**
+     * muda a direção do carro
+     */
     public void virarDireita() {
         direcao = direcao + 3;
         if (direcao == 12) {
@@ -234,8 +273,12 @@ public class ControllerCarro {
         this.noCruzamento = noCruzamento;
     }
 
+    /**
+     * método responsavel por escolher a ação a ser feita pelo carro, andar, ficar parado esperando
+     */
     public void acao() {
 
+        //quando o carro estiver na via principal ele vai andar sem parar, ate chegar no beira da pista
         if (origem.equals("A") && this.y > 317) {
             andar();
         } else if (origem.equals("C") && this.y < 139) {
@@ -246,13 +289,15 @@ public class ControllerCarro {
             andar();
         }
 
+        //verifica se o carro esta na via principal ou cruzamento
         if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
             noCruzamento = false;
         } else {
             noCruzamento = true;
         }
 
-        if (!logica.conflito()) {
+        //verifica se tem conflito, uma possivel batida ao entrar no cruzamento
+        if (!logica.conflito()) {//caso não ocorra conflito, o carro anda o sem parar ate o fim do cruzamento
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= 208) && (direcao == 0)) {
                     virarEsquerda();
