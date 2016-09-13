@@ -91,8 +91,9 @@ public class TrataCliente implements Runnable {
                     carroAtual.setXY(x, y, direcao);
                     carroAtual.setTrajeto(trajeto);
                     if(!quadranteAtual.getNome().equals(trajeto.get(0).getNome())){
-                        Inicio.getInstance().mostrar("Carro "+ id + " entrando em quadrante " + quadranteAtual.getNome());
-                        Inicio.getInstance().mostrar("Carro "+ id + " saindo do quadrante " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro "+ id + " saindo da pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro "+ id + " entrandd  na pista " + quadranteAtual.getNome());
+                        
                         quadranteAtual=trajeto.get(0);
                     }
                     carroAtual.setNaVia(parado);
@@ -101,6 +102,8 @@ public class TrataCliente implements Runnable {
             } catch (IOException ex) {
 //                controller.removerIp(this.ip);
                 System.out.println("Conexão perdida com " + ip);
+                Inicio.getInstance().mostrar("Carro " + id + " se desconectou");
+                Controller.getInstance().removerCarro(id);
                 return;
             } catch (ClassNotFoundException ex) {
                 return;

@@ -9,6 +9,7 @@ import controller.Controller;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
@@ -50,10 +51,14 @@ public class Auxiliar {
     }
 
     public void removerCliente(String ip) {
+        try{
         for (Cliente c : clientes) {
             if (c.getIp().equals(ip)) {
                 clientes.remove(c);
             }
+        }
+        }catch(ConcurrentModificationException e){
+            this.removerCliente(ip);
         }
     }
 
