@@ -112,10 +112,6 @@ public class ControllerCarro {
         g2d.fill(carro.getRect());
 
     }
-
-    public String getOrigem() {
-        return origem;
-    }
     
     public Rectangle2D getRect(){
         return this.carro.getRect();
