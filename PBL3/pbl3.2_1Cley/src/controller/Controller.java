@@ -103,8 +103,17 @@ public class Controller {
     }
 
     public void adicionarCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
-        ControllerCarro c = new ControllerCarro(id, x, y, direcao, trajeto);
-        carros.add(c);
+        ControllerCarro c1 = new ControllerCarro(id, x, y, direcao, trajeto);
+        boolean localOcupado = true;
+        while (localOcupado) {
+            localOcupado = false;
+            for (ControllerCarro c2 : carros) {
+                if (c1.getRect().intersects(c2.getRect())) {
+                    localOcupado = true;
+                }
+            }
+        }
+        carros.add(c1);
         counter++;
     }
 

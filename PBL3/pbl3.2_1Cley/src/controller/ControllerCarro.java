@@ -7,6 +7,7 @@ package controller;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import util.Carro;
 import util.Logica;
@@ -108,8 +109,12 @@ public class ControllerCarro {
 
     public void desenhar(Graphics2D g2d) {
         g2d.setColor(Color.RED);
-        g2d.fill(carro.draw());
+        g2d.fill(carro.getRect());
 
+    }
+    
+    public Rectangle2D getRect(){
+        return this.carro.getRect();
     }
 
     public ArrayList<Quadrante> getTrajeto() {
