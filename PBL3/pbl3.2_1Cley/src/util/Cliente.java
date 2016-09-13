@@ -14,19 +14,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author paiva
+ * Classe que se conecta com os serversockets
+ * @author Cleybson e Lucas
  */
 public class Cliente implements Runnable {
 
-    private int porta;
-    private String ip;
+    private int porta;//minha porta
+    private String ip;//meu ip
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Socket cliente;
-    private boolean enviarMsg;
-    private Object msg;
+    private boolean enviarMsg;//boolean para controlar quando chega uma msg nova
+    private Object msg;//msg a ser enviada
 
+    
     public Cliente(int porta, String ip) {
         this.porta = porta;
         this.ip = ip;
@@ -35,7 +36,12 @@ public class Cliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
-            System.out.println("Conexão perdida com host");
+            controller.Controller.getInstance().removerIp(ip);
+            try {
+                cliente.close();
+                return;
+            } catch (IOException ex1) {
+            }
         }
 
     }
@@ -47,14 +53,14 @@ public class Cliente implements Runnable {
     @Override
     public void run() {
         while (true) {
-            try {
+            try {//sleep para dar o tempo de alterar o valor da variavel
                 sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (enviarMsg) {
+            if (enviarMsg) {//verifica se tem msg nova
                 try {
-                    output.writeObject(msg);
+                    output.writeObject(msg);//envia a msg para o serversocket
                     enviarMsg = false;
                 } catch (IOException ex) {
                     controller.Controller.getInstance().removerIp(ip);
@@ -73,6 +79,10 @@ public class Cliente implements Runnable {
         return input;
     }
 
+    /**
+     * Método que altera o valor da variavel e altera o valor da variavel msg, para a msg atual
+     * @param msg 
+     */
     public void enviarMsg(Object msg) {
         this.msg = msg;
         this.enviarMsg = true;
