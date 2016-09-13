@@ -110,6 +110,12 @@ public class ControllerCarro {
     public void desenhar(Graphics2D g2d) {
         if (this.id == 0) {
             g2d.setColor(Color.BLUE);
+        } else if (this.id == 1) {
+            g2d.setColor(Color.YELLOW);
+        } else if (this.id == 2) {
+            g2d.setColor(Color.GREEN);
+        } else if (this.id == 3) {
+            g2d.setColor(Color.BLACK);
         } else {
             g2d.setColor(Color.RED);
         }
