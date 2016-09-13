@@ -229,7 +229,7 @@ public class ControllerCarro {
             noCruzamento = true;
         }
 
-        if (!logica.conflito()) {
+        if (!logica.conflito()||noCruzamento) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= 208) && (direcao == 0)) {
                     virarEsquerda();
