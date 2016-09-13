@@ -52,6 +52,19 @@ public class Logica {
                                 conflito = true;
                             }
                         }
+                        if (carroAtual.getTrajeto().size() > 1) {
+                            if (carroAtual.getTrajeto().get(i + 1).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
+                                if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
+                                    System.out.println("atual ta saindo");
+                                } else if (carroAtual.taNaVia() == true) {
+                                    System.out.println("atual ta na via");
+                                    conflito = true;
+                                } else {
+                                    System.out.println("atual ta andando");
+                                    conflito = true;
+                                }
+                            }
+                        }
 
                     }
 

@@ -220,11 +220,10 @@ public class ControllerCarro {
 
         if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
             naVia = false;
+            andar();
         } else {
             naVia = true;
-        }
-
-        if (!logica.conflito() || naVia) {
+            if (!logica.conflito() || naVia) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= 208) && (direcao == 0)) {
                     virarEsquerda();
@@ -290,6 +289,9 @@ public class ControllerCarro {
             }
         }
 
+        }
+
+        
     }
 
     public float getX() {
