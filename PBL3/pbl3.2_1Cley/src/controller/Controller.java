@@ -5,15 +5,9 @@
  */
 package controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Auxiliar;
 import util.Quadrante;
 
@@ -118,16 +112,12 @@ public class Controller {
         try {
             for (ControllerCarro c : carros) {
                 if (c.getId() == id) {
-
                     carros.remove(c);
-                    System.out.println("carro " + id + " foi removido");
                     counter--;
                 }
             }
         } catch (ConcurrentModificationException ex) {
-            removerCarro(id);
-            System.out.println("carro " + id + " foi removido");
-
+            this.removerCarro(id);
         }
     }
 

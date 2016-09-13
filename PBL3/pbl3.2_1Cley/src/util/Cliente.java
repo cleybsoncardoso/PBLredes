@@ -12,7 +12,6 @@ import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import view.Inicio;
 
 /**
  *
@@ -35,9 +34,8 @@ public class Cliente implements Runnable {
             cliente = new Socket(ip, porta);
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
-            System.out.println("Conexao realizada");
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
-            System.out.println("Servidor esta offline");
+            System.out.println("Conexão perdida com host");
         }
 
     }
@@ -63,7 +61,6 @@ public class Cliente implements Runnable {
                     try {
                         cliente.close();
                         return;
-                        //controller.Controller.getInstance().getCarros()
                     } catch (IOException ex1) {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex1);
                     }
