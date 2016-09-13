@@ -213,7 +213,7 @@ public class ControllerCarro {
 
     public void acao() {
 
-        if (origem.equals("A") && this.y > 319) {
+        if (origem.equals("A") && this.y > 317) {
             andar();
         } else if (origem.equals("C") && this.y < 139) {
             andar();
@@ -229,7 +229,7 @@ public class ControllerCarro {
             noCruzamento = true;
         }
 
-        if (!logica.conflito()||noCruzamento) {
+        if (!logica.conflito()) {
             if (origem.equals("A") && destino.equals("D")) {
                 if ((y <= 208) && (direcao == 0)) {
                     virarEsquerda();
