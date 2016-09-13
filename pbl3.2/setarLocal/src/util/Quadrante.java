@@ -24,7 +24,6 @@ public class Quadrante implements Serializable{
     }
 
     public boolean aindaQuadranteX(double x) {
-        x = x + 13.5;
         if (nome.equals("d")) {
             if (x < 283) {
                 return true;
@@ -64,7 +63,6 @@ public class Quadrante implements Serializable{
     }
 
      public boolean aindaQuadranteY(double y) {
-        y+=13.5;
         if (nome.equals("d")) {
             if (y > 247) {
                 return true;
