@@ -138,13 +138,16 @@ public class Controller {
     }
 
     public ControllerCarro getCarro(int id) {
-
-        for (ControllerCarro c : carros) {
-            if (c.getId() == id) {
-                return c;
+        try {
+            for (ControllerCarro c : carros) {
+                if (c.getId() == id) {
+                    return c;
+                }
             }
+            return null;
+        } catch (Exception e) {
+            this.getCarro(id);
         }
         return null;
     }
-
 }
