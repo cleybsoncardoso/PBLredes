@@ -4,6 +4,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.CarroFrame;
 
+/**
+ * Método que executa numa thread o loop responsável por chamar a movimentaçãoe
+ * e parte lógica da aplicação. Ela executa o frame a cada intervalo de tempo
+ * determinado no contrutor.
+ *
+ * @author paiva
+ */
 public class MainLoop implements Runnable {
 
     private CarroFrame game;
@@ -16,38 +23,28 @@ public class MainLoop implements Runnable {
     private long overSleepTime = 0;
 
     /**
-     * Create a new MainLoop object.
+     * Construtor que recebe o frame e o numero de atualizacoes por segundo que
+     * o usuario deseja.
      *
-     * @param loopSteps The LoopSteps that will be controlled by this loop.
-     * @param ups Number of desired updates per second.
-     * @param maxFrameSkips Maximum number of frame that can be skipped if the
-     * graphical hardware is not fast enough to follow the desired ups.
-     * @param noDelaysPerYield If the hardware is not fast enough to allow a
-     * dellay between two frames, the delay will be enforced in this counter, so
-     * other threads can process their actions.
+     * @param carroFrame frame que o loop controla.
+     * @param ups número desejado de updates por segundo.
+     *
      */
-    public MainLoop(CarroFrame loopSteps, int ups) {
+    public MainLoop(CarroFrame carroFrame, int ups) {
         super();
 
-        if (ups < 1) {
-            throw new IllegalArgumentException("You must display at least one frame per second!");
-        }
-
-        if (ups > 1000) {
-            ups = 1000;
-        }
-
-        this.game = loopSteps;
+        this.game = carroFrame;
         this.desiredUpdateTime = 1000000000L / ups;
 
     }
 
     /**
-     * Sleep the given amount of time. Since the sleep() method of the thread
-     * class is not precise, the overSleepTime will be calculated.
+     * Método que dorme a thread por determinado tempo em nanosegundos.
+     * Necessário para igualizar o tempo do loop de todos os usuários, levando
+     * em conta o tempo de processamento.
      *
-     * @param nanos Number of nanoseconds to sleep.
-     * @throws InterruptedException If the thread was interrupted
+     * @param nanos
+     * @throws InterruptedException
      */
     private void sleep(long nanos) throws InterruptedException {
         long beforeSleep = System.nanoTime();
@@ -55,33 +52,29 @@ public class MainLoop implements Runnable {
         overSleepTime = System.nanoTime() - beforeSleep - nanos;
     }
 
-
     /**
-     * Calculates the sleep time based in the calculation the previous loop. To
-     * achieve this time, the frame display time will be subtracted by the time
-     * elapsed in the last computation (afterTime - beforeTime). Then, if in the
-     * previous loop there was an oversleep time, this will also be subtracted,
-     * so the system can compensate this overtime.
+     * Método que calcula o tempo gasto para processamento e subtrai do tempo
+     * total definido para o loop. Padronizando o tempo de cada volta.
      */
     private long calculateSleepTime() {
         return desiredUpdateTime - (afterTime - beforeTime);
     }
 
     /**
-     * Runs the main loop. This method is not thread safe and should not be
-     * called more than once.
+     * Executa o a classe main loop, gravando o tempo antes e depois do
+     * processamento. Cada volta do loop gasta aproximadamente o mesmo tempo.
      */
     @Override
     public void run() {
         game.setup();
         while (true) {
-            beforeTime = System.nanoTime();
+            beforeTime = System.nanoTime();//grava o tempo antes de processar logicas
 
-            // Updates, renders and paint the screen
+            //Executa a logica e desenha os carros no carroFrame
             game.processLogics();
             game.paintScreen();
 
-            afterTime = System.nanoTime();
+            afterTime = System.nanoTime();//guarda o tempo após o processamento.
 
             long sleepTime = calculateSleepTime();
 
