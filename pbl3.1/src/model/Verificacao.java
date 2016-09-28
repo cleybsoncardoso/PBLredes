@@ -5,7 +5,11 @@
  */
 package model;
 
+import controller.Controller;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
+import util.TrataCliente;
 
 /**
  *
@@ -13,11 +17,32 @@ import java.util.HashMap;
  */
 public class Verificacao implements Runnable {
 
-    private HashMap carros;
-    
+    private HashMap carrosOnline;
+    private TrataCliente trataCliente;
+
+    public Verificacao(TrataCliente aThis) {
+        trataCliente = aThis;
+        carrosOnline = new HashMap();
+
+    }
+
+    public void atualiza(String chave) {
+        Date time = new Date();
+        carrosOnline.put(chave, time.getTime());
+    }
+
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (true) {
+            Set<String> chaves = carrosOnline.keySet();
+            for (String chave : chaves) {
+                Date timeAtual = new Date();
+                long ultimaAtualizacao = (long) carrosOnline.get(chave);
+                if(timeAtual.getTime()-ultimaAtualizacao>3000){
+                    carrosOnline.remove(chave);
+                }
+            }
+        }
     }
-    
+
 }

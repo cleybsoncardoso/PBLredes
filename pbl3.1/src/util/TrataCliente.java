@@ -37,6 +37,8 @@ public class TrataCliente implements Runnable {
         this.controller = Controller.getInstance();//pega instancia do controler atual
         this.quadranteAtual = new Quadrante("");
         ips = new ArrayList<String>();
+        verifica = new Verificacao(this);
+        new Thread (verifica).start();
 
     }
 
@@ -65,6 +67,7 @@ public class TrataCliente implements Runnable {
             tokenIp.nextToken();
             String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
             
+            
             if(ips.contains(mensagem[0])){
                 ControllerCarro carroAtual = controller.getCarro(chaveHach);
                 carroAtual.setXY(x, y, direcao);
@@ -77,10 +80,16 @@ public class TrataCliente implements Runnable {
                 }
                 carroAtual.noCruzamento(parado);
             }else{
+                ips.add(mensagem[0]);
                 controller.adicionarCarro(chaveHach, x, y, direcao, trajeto);
                 Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
                 quadranteAtual = trajeto.get(0);
             }
         }
     }
+
+    public ArrayList<String> getIps() {
+        return ips;
+    }
+    
 }
