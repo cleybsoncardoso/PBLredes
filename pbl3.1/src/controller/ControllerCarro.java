@@ -75,8 +75,6 @@ public class ControllerCarro {
     public void setMeuCarro(boolean meuCarro) {
         this.meuCarro = meuCarro;
     }
-    
-    
 
     /**
      * cria o carro que se conecta com seu serversocket
@@ -203,8 +201,6 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        this.msgMandar();
-        //manda msg com os dados do seu carrro
     }
 
     /**
@@ -353,6 +349,8 @@ public class ControllerCarro {
             }
         }
 
+        this.msgMandar();
+        //manda msg com os dados do seu carrro
     }
 
     public float getX() {
