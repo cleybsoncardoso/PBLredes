@@ -11,6 +11,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import model.Multicast;
 import util.TrataCliente;
 import view.Inicio;
 
@@ -24,6 +25,7 @@ public class App {
 
         Controller controller = Controller.novoController();
         Inicio telaInicial = Inicio.novoController(controller); 
+        Multicast.novaInstancia();
         new Thread(new TrataCliente()).start();
 
         }

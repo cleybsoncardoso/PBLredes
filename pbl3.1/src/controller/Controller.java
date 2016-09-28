@@ -44,9 +44,6 @@ public class Controller {
         auxiliar.replicarMsg(msg);
     }
 
-    public void replicarMsg(ArrayList<Object> msg) {
-        auxiliar.replicarMsg(msg);
-    }
 
     public void adicionarCarro(int id, String origem, String destino) {
         ControllerCarro c = new ControllerCarro(id, origem, destino);

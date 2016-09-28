@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import util.Cliente;
 
 /**
  * classe que auxilia o controller
@@ -19,60 +18,20 @@ import util.Cliente;
  */
 public class Auxiliar {
 
-    private ArrayList<Cliente> clientes;//lista de todos os carros conectados
     private Controller controller;
 
     public Auxiliar(Controller controller) {
-        this.clientes = new ArrayList<Cliente>();
         this.controller = controller;
     }
 
-    /**
-     * conecta com o carro do usuario com o com o serversocket
-     * @param ip ip do server socket
-     */
-    public void iniciarConexao(String ip) {
-        Cliente client = new Cliente(8080, ip);
-        System.out.println("Me conectei com " + ip);
-        new Thread(client).start();
-        client.enviarMsg("segundo");
-        clientes.add(client);
-    }
 
-    /**
-     * manda msg para todos os carros conectados
-     * @param msg string
-     */
-    public void replicarMsg(String msg) {
-        for (Cliente c : clientes) {
-            c.enviarMsg(msg);
-        }
-    }
 
     /**
      * manda msg para todos os carros conectados
      * @param msg objeto
      */
-    public void replicarMsg(ArrayList<Object> msg) {
-        for (Cliente c : clientes) {
-            c.enviarMsg(msg);
-        }
-    }
-
-    /**
-     * Remove socket do carro apartir do ip
-     * @param ip 
-     */
-    public void removerCliente(String ip) {
-        try{
-        for (Cliente c : clientes) {
-            if (c.getIp().equals(ip)) {
-                clientes.remove(c);
-            }
-        }
-        }catch(ConcurrentModificationException e){
-            this.removerCliente(ip);
-        }
+    public void replicarMsg(String msg) {
+        Multicast.getInstancia().enviarMensagem(msg);
     }
 
 
