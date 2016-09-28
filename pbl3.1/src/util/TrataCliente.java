@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Multicast;
+import model.Verificacao;
 import view.Inicio;
 
 /**
@@ -25,22 +26,17 @@ import view.Inicio;
  */
 public class TrataCliente implements Runnable {
 
-    private static int id_counter = 1; //contador que indica o ID de cada carro, cada carro tem um ID diferente que é utilizado para identidicar o carro
     private Controller controller;
-    private Socket cliente;
-    private String ip; //ip do usuario conectado
-    private int id; //ID do respectivo carro
     private int modifier = 0; // variavel utilizada saber se é a primeira conexão de um usuario, para adiciona-lo na tela
     private String cor;
     private Quadrante quadranteAtual; //Quarda o quadrante do usuario
+    private Verificacao verifica;
+    private ArrayList<String> ips;
 
     public void TrataCliente() {
-        this.id = id_counter;
-        this.id_counter++;
         this.controller = Controller.getInstance();//pega instancia do controler atual
-        this.cliente = cliente;
-        this.ip = this.cliente.getInetAddress().getHostAddress();
         this.quadranteAtual = new Quadrante("");
+        ips = new ArrayList<String>();
 
     }
 
@@ -53,6 +49,9 @@ public class TrataCliente implements Runnable {
             //todas essas informações são recebidas através de um array
 
             String[] mensagem = Multicast.getInstancia().receberMensagem().split(";");
+            if(ips.contains(mensagem[0])){
+                
+            }
             float x = Float.parseFloat(mensagem[1]);
             float y = Float.parseFloat(mensagem[2]);
             int direcao = Integer.parseInt(mensagem[3]);
@@ -65,16 +64,6 @@ public class TrataCliente implements Runnable {
 
             if (modifier == 0) {//coloca carro na tela
                 controller.adicionarCarro(id, x, y, direcao, trajeto);
-                if (id == 1) {
-                    cor = "amarelo";
-                } else if (id == 2) {
-                    cor = "verde";
-                } else if (id == 3) {
-                    cor = "preto";
-                } else {
-                    cor = "vermelho";
-                }
-
                 Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
                 quadranteAtual = trajeto.get(0);
                 modifier = 1;
