@@ -33,7 +33,7 @@ public class TrataCliente implements Runnable {
     private Verificacao verifica;
     private ArrayList<String> chavesips;
 
-    public void TrataCliente() {
+    public TrataCliente() {
         this.controller = Controller.getInstance();//pega instancia do controler atual
         this.quadranteAtual = new Quadrante("");
         chavesips = new ArrayList<String>();
