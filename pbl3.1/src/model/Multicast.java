@@ -59,7 +59,7 @@ public class Multicast {
         return null;
     }
 
-    public void enviarmensagem(String msg) {
+    public void enviarMensagem(String msg) {
         String msgCompleta = meuIp + ";" + msg;
         try {
             byte[] b = msgCompleta.getBytes();

@@ -36,12 +36,7 @@ public class Cliente implements Runnable {
             output = new ObjectOutputStream(cliente.getOutputStream());
             input = new ObjectInputStream(cliente.getInputStream());
         } catch (IOException ex) {//Caso ocorra um erro na comunicação
-            controller.Controller.getInstance().removerIp(ip);
-            try {
-                cliente.close();
-                return;
-            } catch (IOException ex1) {
-            }
+           
         }
 
     }
@@ -63,13 +58,6 @@ public class Cliente implements Runnable {
                     output.writeObject(msg);//envia a msg para o serversocket
                     enviarMsg = false;
                 } catch (IOException ex) {
-                    controller.Controller.getInstance().removerIp(ip);
-                    try {
-                        cliente.close();
-                        return;
-                    } catch (IOException ex1) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex1);
-                    }
                 }
             }
         }

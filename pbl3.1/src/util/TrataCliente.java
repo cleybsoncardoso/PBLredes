@@ -29,7 +29,6 @@ public class TrataCliente implements Runnable {
     private Socket cliente;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private Server servidor; //servidor de cada usuario que recebe conexões de outros usuarios
     private String ip; //ip do usuario conectado
     private int id; //ID do respectivo carro
     private int modifier = 0; // variavel utilizada saber se é a primeira conexão de um usuario, para adiciona-lo na tela
@@ -42,7 +41,6 @@ public class TrataCliente implements Runnable {
         this.controller = Controller.getInstance();//pega instancia do controler atual
         this.cliente = cliente;
         this.ip = this.cliente.getInetAddress().getHostAddress();
-        this.servidor = servidor;
         this.quadranteAtual = new Quadrante("");
         try {
             output = new ObjectOutputStream(cliente.getOutputStream());
@@ -53,8 +51,6 @@ public class TrataCliente implements Runnable {
 
     @Override
     public void run() {
-
-        enviaIps();//envia a lista de ip que esta conectado com ele
         while (true) {
             try {
                 ArrayList<Quadrante> trajeto = new ArrayList<>();
@@ -115,24 +111,6 @@ public class TrataCliente implements Runnable {
      * envia a lista de todos os ips de computadores que estão conectados com
      * meu serversocket
      */
-    private void enviaIps() {
-        try {
-            String msg = (String) input.readObject();
-            if (msg.equals("primeiro")) {
-                ArrayList<String> aux = new ArrayList<>();
-                aux.addAll(controller.getIps());
-                aux.remove(this.ip);
-                output.writeObject(aux);
-            }
-        } catch (IOException ex) {
-            //caso ocorra algum erro de comunição, o carro é retirado da tela
-            Inicio.getInstance().mostrar("Carro " + cor + " se desconectou");
-            Controller.getInstance().removerCarro(id);
-            return;
-        } catch (ClassNotFoundException ex) {
-            return;
-        }
-
-    }
+   
 
 }

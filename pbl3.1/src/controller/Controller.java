@@ -19,23 +19,19 @@ public class Controller {
 
     private static Controller controller;
     private Auxiliar auxiliar;
-    private ArrayList<String> ips;
     private ArrayList<ControllerCarro> carros;
     private int counter;
-    private String meuIp;
     private AtomicBoolean value;
 
-    public Controller(String meuIp) {
+    public Controller() {
         auxiliar = new Auxiliar(this);
-        ips = new ArrayList<>();
         carros = new ArrayList<>();
         counter = 0;
-        this.meuIp = meuIp;
         value = new AtomicBoolean();
     }
 
-    public static Controller novoController(String ip) {
-        controller = new Controller(ip);
+    public static Controller novoController() {
+        controller = new Controller();
         return controller;
     }
 
@@ -43,50 +39,6 @@ public class Controller {
         return controller;
     }
 
-    public void primeiraConexao(String ip) {
-        while (!value.get()) {
-            value.set(true);
-            if (verificaIp(ip)) {
-                ips.add(ip);
-                auxiliar.primeiraConexao(ip);
-            }
-        }
-        value.set(false);
-    }
-
-    public void iniciarConexao(String ip) {
-        while (!value.get()) {
-            value.set(true);
-            if (verificaIp(ip)) {
-                ips.add(ip);
-                auxiliar.iniciarConexao(ip);
-            }
-        }
-        value.set(false);
-
-    }
-
-    public void removerIp(String ip) {
-        ips.remove(ip);
-        auxiliar.removerCliente(ip);
-    }
-
-    private boolean verificaIp(String ip) {
-        if (ip.trim().equals(meuIp.trim())) {
-            return false;
-        } else {
-            for (String ipAtual : ips) {
-                if (ipAtual.equals(ip)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public ArrayList<String> getIps() {
-        return this.ips;
-    }
 
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);

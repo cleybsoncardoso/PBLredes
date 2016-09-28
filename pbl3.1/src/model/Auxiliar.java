@@ -75,25 +75,5 @@ public class Auxiliar {
         }
     }
 
-    /**
-     * metodo que pede uma lista de todos os ip que estão conectados na rede
-     * @param ip 
-     */
-    public void primeiraConexao(String ip) {
-        Cliente client = new Cliente(8080, ip);
-        System.out.println("Me conectei com " + ip);
-        new Thread(client).start();
-        client.enviarMsg("primeiro");
-        try {
-            ArrayList<String> ips = (ArrayList<String>) client.getInput().readObject();
-            for (String ipAtual : ips) {
-                System.out.println(ipAtual);
-                controller.iniciarConexao(ipAtual);
-            }
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Conexão perdida com o usuario");
-        }
-        clientes.add(client);//adiciona o usuario que passou a lista na lista de usuarios conectados
-    }
 
 }
