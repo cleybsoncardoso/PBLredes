@@ -64,6 +64,7 @@ public class ControllerCarro {
         this.y = y;
         this.direcao = direcao;
         this.trajeto = trajeto;
+        this.meuCarro = false;
         Inicio.getInstance().mostrar("Iniciando Carro em pista " + trajeto.get(0).getNome());
         this.setup2();
     }

@@ -41,7 +41,7 @@ public class Logica {
                     j = meuCarro.getTrajeto().size();
                 }
                 //busca direta, para verificar se vai ter conflito
-                if (carroAtual!=meuCarro) {//verifica se o carro não é o meu
+                if (carroAtual.isMeuCarro()) {//verifica se o carro não é o meu
                     conflito = false;
                     for (int i = 0; i < j; i++){//percorre carro por carro, analisando se o carro ja esta no cruzamento ou se ta na via principal
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
