@@ -79,6 +79,7 @@ public class Controller {
 
     public ArrayList<ControllerCarro> getCarros() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
+        aux.add(meuCarro);
         Set<String> chaves = carros.keySet();
         for (String chave : chaves) {
             if (chave != null) {

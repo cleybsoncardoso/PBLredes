@@ -32,7 +32,7 @@ public class Logica {
     public boolean conflito() {
         if (controller.getCarros().size() > 1) {//verifica se tem carro conectado
             for (int l = 0; l < controller.getCarros().size(); l++) {//caso tenha, 
-                ControllerCarro carroAtual = Controller.getInstance().getCarros().get(l);
+                ControllerCarro carroAtual = controller.getCarros().get(l);
                 int j = 0;
                 //verifica qual o maior trajeto, para basear se vai ter conflito
                 if (meuCarro.getTrajeto().size() > carroAtual.getTrajeto().size()) {

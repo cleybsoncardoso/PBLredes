@@ -94,7 +94,6 @@ public class CarroFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
         g.drawImage(background, 0, 0, null);
-        controller.getMeuCarro().desenhar((Graphics2D) g);
         for (ControllerCarro carro : carros) {
             if (carro != null) {
                 carro.desenhar((Graphics2D) g);
