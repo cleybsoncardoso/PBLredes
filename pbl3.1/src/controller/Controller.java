@@ -83,7 +83,6 @@ public class Controller {
         for (String chave : chaves) {
             if (chave != null) {
                 aux.add(carros.get(chave));
-                System.out.println(chave + carros.get(chave));
             }
         }
         return aux;
