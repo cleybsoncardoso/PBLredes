@@ -16,6 +16,7 @@ import view.Inicio;
 
 /**
  * Classe responsavel por controlar as ações dos carros
+ *
  * @author cleybson e lucas
  */
 public class ControllerCarro {
@@ -36,9 +37,10 @@ public class ControllerCarro {
 
     /**
      * Construtor do meu carro
+     *
      * @param id
      * @param origem
-     * @param destino 
+     * @param destino
      */
     public ControllerCarro(int id, String origem, String destino) {
         this.id = id;
@@ -52,11 +54,12 @@ public class ControllerCarro {
 
     /**
      * contrutor dos outros carros
+     *
      * @param id
      * @param x
      * @param y
-     * @param direcao 
-     * @param trajeto 
+     * @param direcao
+     * @param trajeto
      */
     public ControllerCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
         this.id = id;
@@ -142,7 +145,8 @@ public class ControllerCarro {
 
     /**
      * coloca a cor do carro
-     * @param g2d 
+     *
+     * @param g2d
      */
     public void desenhar(Graphics2D g2d) {
         if (this.id == 0) {
@@ -170,8 +174,8 @@ public class ControllerCarro {
     }
 
     /**
-     * metodo que faz o carro se movimentar na tela e verifica se o carro ainda esta no quadrante, caso não esteja
-     * ele remove o quadrante do trajeto
+     * metodo que faz o carro se movimentar na tela e verifica se o carro ainda
+     * esta no quadrante, caso não esteja ele remove o quadrante do trajeto
      */
     public void andar() {
         switch (direcao) {
@@ -225,22 +229,28 @@ public class ControllerCarro {
     }
 
     /**
-     * metodo que manda a msg para os outros carros, com o x, y, direção, se está dentro do cruzamento e o trajeto
+     * metodo que manda a msg para os outros carros, com o x, y, direção, se
+     * está dentro do cruzamento e o trajeto
      */
     private void msgMandar() {
 
-        ArrayList<Object> msg = new ArrayList<Object>();
-
-        msg.add(x);
-        msg.add(y);
-        msg.add(direcao);
-        msg.add(noCruzamento);
-        msg.add(trajeto.size());
+        String msgAEnviar = "";
+        msgAEnviar += x;
+        msgAEnviar += ";";
+        msgAEnviar += y;
+        msgAEnviar += ";";
+        msgAEnviar += direcao;
+        msgAEnviar += ";";
+        msgAEnviar += noCruzamento;
+        msgAEnviar += ";";
+        msgAEnviar += trajeto.size();
+        msgAEnviar += ";";
         //ele separa o trajeto, mandando quafrante por quadrante
         for (Quadrante q : trajeto) {
-            msg.add(q);
+            msgAEnviar += q.getNome();
+            msgAEnviar += ";";
         }
-        Controller.getInstance().replicarMsg(msg);
+        Controller.getInstance().replicarMsg(msgAEnviar);
     }
 
     /**
@@ -274,7 +284,8 @@ public class ControllerCarro {
     }
 
     /**
-     * método responsavel por escolher a ação a ser feita pelo carro, andar, ficar parado esperando
+     * método responsavel por escolher a ação a ser feita pelo carro, andar,
+     * ficar parado esperando
      */
     public void acao() {
 
