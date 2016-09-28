@@ -6,6 +6,7 @@
 package model;
 
 import controller.Controller;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
@@ -37,18 +38,18 @@ public class Verificacao implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Verificacao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Set<String> chaves = carrosOnline.keySet();
-            for (String chave : chaves) {
-                Date timeAtual = new Date();
-                long ultimaAtualizacao = (long) carrosOnline.get(chave);
-                System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
+                Set<String> chaves = carrosOnline.keySet();
+                for (String chave : chaves) {
+                    Date timeAtual = new Date();
+                    long ultimaAtualizacao = (long) carrosOnline.get(chave);
+                    System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
 //                if (timeAtual.getTime() - ultimaAtualizacao > 3000) {
 //                    carrosOnline.remove(chave);
 //                }
+
+                }
+
+            } catch (ConcurrentModificationException e) {
 
             }
         }
