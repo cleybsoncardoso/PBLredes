@@ -7,6 +7,8 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import model.Auxiliar;
 import util.Quadrante;
@@ -19,13 +21,14 @@ public class Controller {
 
     private static Controller controller;
     private Auxiliar auxiliar;
-    private ArrayList<ControllerCarro> carros;
+    private HashMap<String, ControllerCarro> carros;
     private int counter;
     private AtomicBoolean value;
+    private ControllerCarro meuCarro;
 
     public Controller() {
         auxiliar = new Auxiliar(this);
-        carros = new ArrayList<>();
+        carros = new HashMap<>();
         counter = 0;
         value = new AtomicBoolean();
     }
@@ -39,64 +42,63 @@ public class Controller {
         return controller;
     }
 
-
     public void replicarMsg(String msg) {
         auxiliar.replicarMsg(msg);
     }
 
+    public void adicionarCarro(String origem, String destino) {
+        ControllerCarro carro = new ControllerCarro(origem, destino);
+        meuCarro = carro;
+        //carros.put(key, carro);
+       // counter++;
+    }
 
-    public void adicionarCarro(int id, String origem, String destino) {
-        ControllerCarro c = new ControllerCarro(id, origem, destino);
-        carros.add(c);
+    public void adicionarCarro(String key, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
+        ControllerCarro carro = new ControllerCarro(x, y, direcao, trajeto);
+        carros.put(key, carro);
         counter++;
     }
 
-    public void adicionarCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
-        ControllerCarro c = new ControllerCarro(id, x, y, direcao, trajeto);
-        carros.add(c);
-        counter++;
-    }
+    public void removerCarro(String key) {
 
-    public void removerCarro(int id) {
         try {
-            for (ControllerCarro c : carros) {
-                if (c.getId() == id) {
-                    carros.remove(c);
-                    counter--;
-                }
-            }
+            carros.remove(key);
+            counter--;
         } catch (ConcurrentModificationException ex) {
-            this.removerCarro(id);
+            this.removerCarro(key);
         }
     }
+//
+//    public ArrayList<ControllerCarro> getCarros() {
+//        ArrayList<ControllerCarro> aux = new ArrayList<>();
+//        for (int i = 0; i < this.counter; i++) {
+//            aux.add(this.carros.get(i));
+//        }
+//        return aux;
+//    }
 
     public ArrayList<ControllerCarro> getCarros() {
         ArrayList<ControllerCarro> aux = new ArrayList<>();
-        for (int i = 0; i < this.counter; i++) {
-            aux.add(this.carros.get(i));
-        }
-        return aux;
-    }
-
-    public ArrayList<ControllerCarro> getCarros1() {
-        ArrayList<ControllerCarro> aux = new ArrayList<>();
-        for (int i = 1; i < this.counter; i++) {
-            aux.add(this.carros.get(i));
-        }
-        return aux;
-    }
-
-    public ControllerCarro getCarro(int id) {
-        try {
-            for (ControllerCarro c : carros) {
-                if (c.getId() == id) {
-                    return c;
-                }
+        Set<String> chaves = carros.keySet();
+        for (String chave : chaves) {
+            if (chave != null) {
+                aux.add(carros.get(chave));
+                System.out.println(chave + carros.get(chave));
             }
-            return null;
+        }
+        return aux;
+    }
+
+    public ControllerCarro getCarro(String key) {
+        try {
+            return carros.get(key);
         } catch (Exception e) {
-            this.getCarro(id);
+            this.getCarro(key);
         }
         return null;
+    }
+    
+    public ControllerCarro getMeuCarro(){
+        return meuCarro;
     }
 }

@@ -23,10 +23,10 @@ public class App {
 
     public static void main(String[] args) {
 
-     Controller controller = Controller.novoController();
-     Inicio telaInicial = Inicio.novoController(controller);
-     Multicast.novaInstancia();
-     new Thread(new TrataCliente()).start();
-        
+        Controller controller = Controller.novoController();
+        Inicio telaInicial = Inicio.novoController(controller);
+        Multicast.novaInstancia();
+        new Thread(new TrataCliente()).start();
+
     }
 }

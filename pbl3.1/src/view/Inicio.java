@@ -119,7 +119,7 @@ public class Inicio extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(rootPane, "coloque destino diferente da origem");
         } else {
             this.mensagens();
-            controller.adicionarCarro(0, olist.getSelectedItem().toString(), dlist.getSelectedItem().toString());//primeiro cliente
+            controller.adicionarCarro(olist.getSelectedItem().toString(), dlist.getSelectedItem().toString());//primeiro cliente
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
