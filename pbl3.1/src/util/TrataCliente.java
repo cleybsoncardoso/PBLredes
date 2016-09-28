@@ -74,7 +74,6 @@ public class TrataCliente implements Runnable {
                 tokenIp.nextToken();
                 tokenIp.nextToken();
                 String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
-                chavesips.add(chaveHach);
                 if (chavesips.contains(chaveHach)) {
                     ControllerCarro carroAtual = controller.getCarro(chaveHach);
                     carroAtual.setXY(x, y, direcao);
