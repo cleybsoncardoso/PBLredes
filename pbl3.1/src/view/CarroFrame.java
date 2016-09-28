@@ -30,7 +30,7 @@ import util.MainLoop;
  * @see MainLoop
  */
 public class CarroFrame extends JFrame {
-
+    
     private MainLoop loop = new MainLoop(this, 60); //variável que guarda o loop da movimentação.
     private ArrayList<ControllerCarro> carros; //array contendo os carros presentes na via.
     private Controller controller;
@@ -86,15 +86,15 @@ public class CarroFrame extends JFrame {
      */
     public void processLogics() {
         this.carros = this.controller.getCarros();
-        if (controller.getCarro(0) != null) {
-            controller.getCarro(0).acao();
+        if (controller.getMeuCarro() != null) {
+            controller.getMeuCarro().acao();
         }
     }
-
+    
     @Override
     public void paint(Graphics g) {
         g.drawImage(background, 0, 0, null);
-
+        controller.getMeuCarro().desenhar((Graphics2D) g);
         for (ControllerCarro carro : carros) {
             if (carro != null) {
                 carro.desenhar((Graphics2D) g);

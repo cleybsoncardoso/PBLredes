@@ -29,25 +29,24 @@ public class ControllerCarro {
     private int direcao;
     private float v = 0.3f; //velocidade do carro
     private ArrayList<Quadrante> trajeto;
-    private int id; //id do carro a ser controlado
     private String origem;
     private String destino;
     private Logica logica;
     private boolean noCruzamento = false; //boolean que verifica se o carro ja entrou no cruzamento
+    private boolean meuCarro;
 
     /**
      * Construtor do meu carro
      *
-     * @param id
      * @param origem
      * @param destino
      */
-    public ControllerCarro(int id, String origem, String destino) {
-        this.id = id;
+    public ControllerCarro(String origem, String destino) {
         this.origem = origem;
         this.destino = destino;
         this.logica = new Logica(this);
         this.trajeto = logica.calcularTrajeto(origem, destino);//gera o trajeto do carro
+        this.meuCarro = true;
         Inicio.getInstance().mostrar("Iniciando Carro " + "azul" + " em pista " + origem); //exibe mensagem
         this.setup();
     }
@@ -55,38 +54,29 @@ public class ControllerCarro {
     /**
      * contrutor dos outros carros
      *
-     * @param id
      * @param x
      * @param y
      * @param direcao
      * @param trajeto
      */
-    public ControllerCarro(int id, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
-        this.id = id;
+    public ControllerCarro(float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
         this.x = x;
         this.y = y;
         this.direcao = direcao;
         this.trajeto = trajeto;
-        String cor;
-        //verifica qual a cor do carro
-        if (this.id == 0) {
-            cor = "azul";
-        } else if (this.id == 1) {
-            cor = "amarelo";
-        } else if (this.id == 2) {
-            cor = "verde";
-        } else if (this.id == 3) {
-            cor = "preto";
-        } else {
-            cor = "vermelho";
-        }
-        Inicio.getInstance().mostrar("Iniciando Carro " + cor + " em pista " + trajeto.get(0).getNome());
+        Inicio.getInstance().mostrar("Iniciando Carro em pista " + trajeto.get(0).getNome());
         this.setup2();
     }
 
-    public int getId() {
-        return this.id;
+    public boolean isMeuCarro() {
+        return meuCarro;
     }
+
+    public void setMeuCarro(boolean meuCarro) {
+        this.meuCarro = meuCarro;
+    }
+    
+    
 
     /**
      * cria o carro que se conecta com seu serversocket
@@ -149,18 +139,7 @@ public class ControllerCarro {
      * @param g2d
      */
     public void desenhar(Graphics2D g2d) {
-        if (this.id == 0) {
-            g2d.setColor(Color.BLUE);
-        } else if (this.id == 1) {
-            g2d.setColor(Color.YELLOW);
-        } else if (this.id == 2) {
-            g2d.setColor(Color.GREEN);
-        } else if (this.id == 3) {
-            g2d.setColor(Color.BLACK);
-        } else {
-            g2d.setColor(Color.RED);
-        }
-
+        g2d.setColor(Color.RED);
         g2d.fill(carro.getRect());
 
     }
