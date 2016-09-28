@@ -11,6 +11,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import util.TrataCliente;
 import view.Inicio;
 
 /**
@@ -22,7 +23,8 @@ public class App {
     public static void main(String[] args) {
 
         Controller controller = Controller.novoController();
-        Inicio telaInicial = Inicio.novoController(controller);   
+        Inicio telaInicial = Inicio.novoController(controller); 
+        new Thread(new TrataCliente()).start();
 
         }
     }
