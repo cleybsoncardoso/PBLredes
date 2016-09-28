@@ -5,10 +5,19 @@
  */
 package model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author cleyse
  */
-public class Verificacao {
+public class Verificacao implements Runnable {
+
+    private HashMap carros;
+    
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

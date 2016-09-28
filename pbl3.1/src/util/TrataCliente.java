@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Multicast;
@@ -27,8 +28,7 @@ import view.Inicio;
 public class TrataCliente implements Runnable {
 
     private Controller controller;
-    private int modifier = 0; // variavel utilizada saber se é a primeira conexão de um usuario, para adiciona-lo na tela
-    private String cor;
+     private String cor;
     private Quadrante quadranteAtual; //Quarda o quadrante do usuario
     private Verificacao verifica;
     private ArrayList<String> ips;
@@ -49,9 +49,7 @@ public class TrataCliente implements Runnable {
             //todas essas informações são recebidas através de um array
 
             String[] mensagem = Multicast.getInstancia().receberMensagem().split(";");
-            if(ips.contains(mensagem[0])){
-                
-            }
+            
             float x = Float.parseFloat(mensagem[1]);
             float y = Float.parseFloat(mensagem[2]);
             int direcao = Integer.parseInt(mensagem[3]);
@@ -61,14 +59,14 @@ public class TrataCliente implements Runnable {
             for (int j = 6; j < tamanhoDoTrajeto + 6; j++) {
                 trajeto.add(new Quadrante(mensagem[j]));
             }
-
-            if (modifier == 0) {//coloca carro na tela
-                controller.adicionarCarro(id, x, y, direcao, trajeto);
-                Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
-                quadranteAtual = trajeto.get(0);
-                modifier = 1;
-            } else {//atualiza os dados do carro
-                ControllerCarro carroAtual = controller.getCarro(this.id);
+            
+            StringTokenizer tokenIp = new StringTokenizer(mensagem[0], ".");
+            tokenIp.nextToken();
+            tokenIp.nextToken();
+            String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
+            
+            if(ips.contains(mensagem[0])){
+                ControllerCarro carroAtual = controller.getCarro(chaveHach);
                 carroAtual.setXY(x, y, direcao);
                 carroAtual.setTrajeto(trajeto);
 
@@ -78,8 +76,11 @@ public class TrataCliente implements Runnable {
                     quadranteAtual = trajeto.get(0);
                 }
                 carroAtual.noCruzamento(parado);
+            }else{
+                controller.adicionarCarro(chaveHach, x, y, direcao, trajeto);
+                Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
+                quadranteAtual = trajeto.get(0);
             }
-
         }
     }
 }
