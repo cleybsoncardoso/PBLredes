@@ -202,6 +202,11 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
+        
+        
+        this.msgMandar();
+        //manda msg com os dados do seu carrro
+        
     }
 
     /**
@@ -350,8 +355,6 @@ public class ControllerCarro {
             }
         }
 
-        this.msgMandar();
-        //manda msg com os dados do seu carrro
     }
 
     public float getX() {
