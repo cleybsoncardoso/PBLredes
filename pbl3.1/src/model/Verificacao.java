@@ -45,9 +45,10 @@ public class Verificacao implements Runnable {
             for (String chave : chaves) {
                 Date timeAtual = new Date();
                 long ultimaAtualizacao = (long) carrosOnline.get(chave);
-                if (timeAtual.getTime() - ultimaAtualizacao > 3000) {
-                    carrosOnline.remove(chave);
-                }
+                System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
+//                if (timeAtual.getTime() - ultimaAtualizacao > 3000) {
+//                    carrosOnline.remove(chave);
+//                }
 
             }
         }
