@@ -59,23 +59,25 @@ public class TrataCliente implements Runnable {
 
             String[] mensagem = Multicast.getInstancia().receberMensagem().split(";");
             if (!meuIp.equals(mensagem[0])) {
-                float x = Float.parseFloat(mensagem[1]);
-                float y = Float.parseFloat(mensagem[2]);
-                int direcao = Integer.parseInt(mensagem[3]);
-                boolean parado = Boolean.parseBoolean(mensagem[4]);
+                String chaveHash = mensagem[1];
+                float x = Float.parseFloat(mensagem[2]);
+                float y = Float.parseFloat(mensagem[3]);
+                int direcao = Integer.parseInt(mensagem[4]);
+                boolean parado = Boolean.parseBoolean(mensagem[5]);
                 //o trajeto é enviado quadrante por quadrante, e assim a junção é feita nessa instrução abaixo
-                int tamanhoDoTrajeto = Integer.parseInt(mensagem[5]);
-                for (int j = 6; j < tamanhoDoTrajeto + 6; j++) {
+                int tamanhoDoTrajeto = Integer.parseInt(mensagem[6]);
+                for (int j = 6; j < tamanhoDoTrajeto + 7; j++) {
                     trajeto.add(new Quadrante(mensagem[j]));
                 }
 
-                StringTokenizer tokenIp = new StringTokenizer(mensagem[0], ".");
-                tokenIp.nextToken();
-                tokenIp.nextToken();
-                String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
-                verifica.atualiza(chaveHach);
-                if (chavesips.contains(chaveHach)) {
-                    ControllerCarro carroAtual = controller.getCarro(chaveHach);
+//                StringTokenizer tokenIp = new StringTokenizer(mensagem[0], ".");
+//                tokenIp.nextToken();
+//                tokenIp.nextToken();
+//                String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
+
+                verifica.atualiza(chaveHash);
+                if (chavesips.contains(chaveHash)) {
+                    ControllerCarro carroAtual = controller.getCarro(chaveHash);
                     carroAtual.setXY(x, y, direcao);
                     carroAtual.setTrajeto(trajeto);
 
@@ -86,8 +88,8 @@ public class TrataCliente implements Runnable {
                     }
                     carroAtual.noCruzamento(parado);
                 } else {
-                    chavesips.add(chaveHach);
-                    controller.adicionarCarro(chaveHach, x, y, direcao, trajeto);
+                    chavesips.add(chaveHash);
+                    controller.adicionarCarro(chaveHash, x, y, direcao, trajeto);
                     Inicio.getInstance().mostrar("iniciando carro " + mensagem[0] + " na pista " + trajeto.get(0).getNome());
                     quadranteAtual = trajeto.get(0);
                 }

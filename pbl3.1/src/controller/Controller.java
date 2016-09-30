@@ -22,6 +22,7 @@ public class Controller {
     private static Controller controller;
     private Auxiliar auxiliar;
     private HashMap<String, ControllerCarro> carros;
+    private ArrayList<ControllerCarro> carrosList;
     private int counter;
     private AtomicBoolean value;
     private ControllerCarro meuCarro;
@@ -31,6 +32,7 @@ public class Controller {
         carros = new HashMap<>();
         counter = 0;
         value = new AtomicBoolean();
+        carrosList = new ArrayList<>();
     }
 
     public static Controller novoController() {
@@ -49,20 +51,22 @@ public class Controller {
     public void adicionarCarro(String origem, String destino) {
         ControllerCarro carro = new ControllerCarro(origem, destino);
         meuCarro = carro;
+        carrosList.add(meuCarro);
         //carros.put(key, carro);
-       // counter++;
+        counter++;
     }
 
     public void adicionarCarro(String key, float x, float y, int direcao, ArrayList<Quadrante> trajeto) {
         ControllerCarro carro = new ControllerCarro(x, y, direcao, trajeto);
         carros.put(key, carro);
+        carrosList.add(carro);
         counter++;
     }
 
     public void removerCarro(String key) {
 
         try {
-            carros.remove(key);
+            carrosList.remove(carros.remove(key));
             counter--;
         } catch (ConcurrentModificationException ex) {
             this.removerCarro(key);
@@ -78,15 +82,20 @@ public class Controller {
 //    }
 
     public ArrayList<ControllerCarro> getCarros() {
-        ArrayList<ControllerCarro> aux = new ArrayList<>();
-        aux.add(meuCarro);
-        Set<String> chaves = carros.keySet();
-        for (String chave : chaves) {
-            if (chave != null) {
-                aux.add(carros.get(chave));
-            }
-        }
-        return aux;
+//        ArrayList<ControllerCarro> aux = new ArrayList<>();
+//        aux.add(meuCarro);
+//        Set<String> chaves = carros.keySet();
+//        for (String chave : chaves) {
+//            if (chave != null) {
+//                aux.add(carros.get(chave));
+//            }
+//        }
+//        return aux;
+          ArrayList<ControllerCarro> aux = new ArrayList<>();
+          for(int i = 0; i < this.counter; i++){
+              aux.add(this.carrosList.get(i));
+          }
+          return aux;
     }
 
     public ControllerCarro getCarro(String key) {
@@ -97,8 +106,8 @@ public class Controller {
         }
         return null;
     }
-    
-    public ControllerCarro getMeuCarro(){
+
+    public ControllerCarro getMeuCarro() {
         return meuCarro;
     }
 }

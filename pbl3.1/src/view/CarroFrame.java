@@ -30,7 +30,7 @@ import util.MainLoop;
  * @see MainLoop
  */
 public class CarroFrame extends JFrame {
-    
+
     private MainLoop loop = new MainLoop(this, 60); //variável que guarda o loop da movimentação.
     private ArrayList<ControllerCarro> carros; //array contendo os carros presentes na via.
     private Controller controller;
@@ -45,9 +45,9 @@ public class CarroFrame extends JFrame {
      */
     public CarroFrame() {
         super("Cruzamento");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(482, 480);
-        setResizable(false);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(482, 480);
+        this.setResizable(false);
         this.controller = Controller.getInstance();
         this.carros = this.controller.getCarros();
     }
@@ -73,7 +73,7 @@ public class CarroFrame extends JFrame {
         try {
             this.background = ImageIO.read(new File("background.png"));
         } catch (IOException ex) {
-            Logger.getLogger(CarroFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("\nImagem de fundo não encontrada\n");
         }
         repaint();
     }
@@ -90,7 +90,7 @@ public class CarroFrame extends JFrame {
             controller.getMeuCarro().acao();
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         g.drawImage(background, 0, 0, null);

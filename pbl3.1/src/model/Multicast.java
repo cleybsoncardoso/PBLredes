@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,12 +23,14 @@ public class Multicast {
     private static Multicast multicast;
     private String grupo, meuIp;
     private int porta;
+    private String myKey;
 
     public Multicast() {
         try {
             grupo = "224.0.0.0";
             porta = 12345;
             meuIp = InetAddress.getLocalHost().getHostAddress();
+            myKey = this.geraKey();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Multicast.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,6 +44,14 @@ public class Multicast {
 
     public static Multicast getInstancia() {
         return multicast;
+    }
+
+    private String geraKey() {
+        StringTokenizer tokenIp = new StringTokenizer(meuIp, ".");
+        tokenIp.nextToken();
+        tokenIp.nextToken();
+        String chaveHash = tokenIp.nextToken() + tokenIp.nextToken();
+        return chaveHash;
     }
 
     public String receberMensagem() {
@@ -60,7 +71,7 @@ public class Multicast {
     }
 
     public void enviarMensagem(String msg) {
-        String msgCompleta = meuIp + ";" + msg;
+        String msgCompleta = meuIp + ";" + myKey + ";" + msg;
         try {
             byte[] b = msgCompleta.getBytes();
             InetAddress addr = InetAddress.getByName(grupo);
