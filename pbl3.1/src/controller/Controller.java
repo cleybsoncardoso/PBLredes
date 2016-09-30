@@ -82,20 +82,20 @@ public class Controller {
 //    }
 
     public ArrayList<ControllerCarro> getCarros() {
-        ArrayList<ControllerCarro> aux = new ArrayList<>();
-        aux.add(meuCarro);
-        Set<String> chaves = carros.keySet();
-        for (String chave : chaves) {
-            if (chave != null) {
-                aux.add(carros.get(chave));
-            }
-        }
-        return aux;
 //        ArrayList<ControllerCarro> aux = new ArrayList<>();
-//        for (int i = 0; i < this.counter; i++) {
-//            aux.add(this.carrosList.get(i));
+//        aux.add(meuCarro);
+//        Set<String> chaves = carros.keySet();
+//        for (String chave : chaves) {
+//            if (chave != null) {
+//                aux.add(carros.get(chave));
+//            }
 //        }
 //        return aux;
+        ArrayList<ControllerCarro> aux = new ArrayList<>();
+        for (int i = 0; i < this.counter; i++) {
+            aux.add(this.carrosList.get(i));
+        }
+        return aux;
     }
 
     public ControllerCarro getCarro(String key) {

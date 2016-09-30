@@ -54,7 +54,6 @@ public class Logica {
                             }
                         }
                     }
-                    System.out.println("Conflito: " + conflito);
                     return conflito;
 
                 }

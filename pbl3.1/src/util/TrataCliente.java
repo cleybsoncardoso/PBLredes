@@ -53,7 +53,6 @@ public class TrataCliente implements Runnable {
             //todas essas informações são recebidas através de um array
 
             String[] mensagem = Multicast.getInstancia().receberMensagem().split(";");
-            System.out.println(mensagem.toString());
             if (!meuIp.equals(mensagem[0])) {
                 String chaveHash = mensagem[1];
                 float x = Float.parseFloat(mensagem[2]);
