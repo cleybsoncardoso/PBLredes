@@ -30,7 +30,6 @@ import view.Inicio;
 public class TrataCliente implements Runnable {
 
     private Controller controller;
-    private String cor;
     private Quadrante quadranteAtual; //Quarda o quadrante do usuario
     private Verificacao verifica;
     private ArrayList<String> chavesips;
@@ -81,15 +80,15 @@ public class TrataCliente implements Runnable {
                     carroAtual.setTrajeto(trajeto);
 
                     if (!quadranteAtual.getNome().equals(trajeto.get(0).getNome())) {//verifica se o carro ainda está no quadrante para pode exibir a msg
-                        Inicio.getInstance().mostrar("Carro " + cor + " saindo da pista " + quadranteAtual.getNome());
-                        Inicio.getInstance().mostrar("Carro " + cor + " entrando  na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Carro " + mensagem[0] + " saindo da pista " + quadranteAtual.getNome());
+                        Inicio.getInstance().mostrar("Carro " + mensagem[0] + " entrando  na pista " + trajeto.get(0).getNome());
                         quadranteAtual = trajeto.get(0);
                     }
                     carroAtual.noCruzamento(parado);
                 } else {
                     chavesips.add(chaveHach);
                     controller.adicionarCarro(chaveHach, x, y, direcao, trajeto);
-                    Inicio.getInstance().mostrar("iniciando carro " + cor + " na pista " + trajeto.get(0).getNome());
+                    Inicio.getInstance().mostrar("iniciando carro " + mensagem[0] + " na pista " + trajeto.get(0).getNome());
                     quadranteAtual = trajeto.get(0);
                 }
             }
