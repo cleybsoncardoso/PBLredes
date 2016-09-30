@@ -298,12 +298,12 @@ public class ControllerCarro {
             return false;
         }
 
-//        //verifica se o carro esta na via principal ou cruzamento
-//        if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
-//            noCruzamento = false;
-//        } else {
-//            noCruzamento = true;
-//        }
+        //verifica se o carro esta na via principal ou cruzamento
+        if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
+            noCruzamento = false;
+        } else {
+            noCruzamento = true;
+        }
         //verifica se tem conflito, uma possivel batida ao entrar no cruzamento
         if (!logica.conflito()) {//caso não ocorra conflito, o carro anda o sem parar ate o fim do cruzamento
             if (origem.equals("A") && destino.equals("D")) {

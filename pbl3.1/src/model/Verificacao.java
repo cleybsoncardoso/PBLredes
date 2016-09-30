@@ -44,7 +44,7 @@ public class Verificacao implements Runnable {
                     for (String chave : chaves) {
                         Date timeAtual = new Date();
                         long ultimaAtualizacao = (long) carrosOnline.get(chave);
-                        System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
+                        //System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
                         if (timeAtual.getTime() - ultimaAtualizacao > 5000) {
                             System.out.println("Tempo de comunicação excedido");
                             carrosOnline.remove(chave);
