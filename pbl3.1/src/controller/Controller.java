@@ -8,7 +8,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import model.Auxiliar;
 import util.Quadrante;
@@ -91,11 +90,11 @@ public class Controller {
 //            }
 //        }
 //        return aux;
-          ArrayList<ControllerCarro> aux = new ArrayList<>();
-          for(int i = 0; i < this.counter; i++){
-              aux.add(this.carrosList.get(i));
-          }
-          return aux;
+        ArrayList<ControllerCarro> aux = new ArrayList<>();
+        for (int i = 0; i < this.counter; i++) {
+            aux.add(this.carrosList.get(i));
+        }
+        return aux;
     }
 
     public ControllerCarro getCarro(String key) {

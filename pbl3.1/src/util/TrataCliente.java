@@ -7,15 +7,9 @@ package util;
 
 import controller.Controller;
 import controller.ControllerCarro;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Multicast;
@@ -60,7 +54,6 @@ public class TrataCliente implements Runnable {
 
             String[] mensagem = Multicast.getInstancia().receberMensagem().split(";");
             if (!meuIp.equals(mensagem[0])) {
-                System.out.println(Arrays.toString(mensagem));
                 String chaveHash = mensagem[1];
                 float x = Float.parseFloat(mensagem[2]);
                 float y = Float.parseFloat(mensagem[3]);
@@ -76,7 +69,6 @@ public class TrataCliente implements Runnable {
 //                tokenIp.nextToken();
 //                tokenIp.nextToken();
 //                String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
-
                 verifica.atualiza(chaveHash);
                 if (chavesips.contains(chaveHash)) {
                     ControllerCarro carroAtual = controller.getCarro(chaveHash);

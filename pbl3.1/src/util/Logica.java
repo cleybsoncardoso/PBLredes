@@ -10,7 +10,9 @@ import controller.ControllerCarro;
 import java.util.ArrayList;
 
 /**
- * Classe responsavel por tratar as logicas relacionadas a imagem, em que traça o trajeto do carro e verifica se tem conflito
+ * Classe responsavel por tratar as logicas relacionadas a imagem, em que traça
+ * o trajeto do carro e verifica se tem conflito
+ *
  * @author cleybson e lucas
  */
 public class Logica {
@@ -27,7 +29,8 @@ public class Logica {
 
     /**
      * Classe que verifica se tem ou não conflito
-     * @return 
+     *
+     * @return
      */
     public boolean conflito() {
         if (controller.getCarros().size() > 1) {//verifica se tem carro conectado
@@ -43,7 +46,7 @@ public class Logica {
                 //busca direta, para verificar se vai ter conflito
                 if (!carroAtual.isMeuCarro()) {//verifica se o carro não é o meu
                     conflito = false;
-                    for (int i = 0; i < j; i++){//percorre carro por carro, analisando se o carro ja esta no cruzamento ou se ta na via principal
+                    for (int i = 0; i < j; i++) {//percorre carro por carro, analisando se o carro ja esta no cruzamento ou se ta na via principal
                         if (carroAtual.getTrajeto().get(i).getNome().equals(meuCarro.getTrajeto().get(i).getNome())) {
                             if (carroAtual.getTrajeto().get(0).getNome().equals("A") || carroAtual.getTrajeto().get(0).getNome().equals("B") || carroAtual.getTrajeto().get(0).getNome().equals("C") || carroAtual.getTrajeto().get(0).getNome().equals("D")) {
                             } else if (carroAtual.noCruzamento() == true) {
@@ -62,9 +65,10 @@ public class Logica {
 
     /**
      * Calcula apartir da origem e do destino, qual o trajeto a ser feito
+     *
      * @param origem
      * @param destino
-     * @return 
+     * @return
      */
     public ArrayList<Quadrante> calcularTrajeto(String origem, String destino) {
         ArrayList<Quadrante> trajeto = new ArrayList<Quadrante>();

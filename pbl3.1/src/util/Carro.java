@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * Classe que possue todos os dados de cada carro
+ *
  * @author paiva
  */
 public class Carro {
@@ -20,10 +21,13 @@ public class Carro {
     private Rectangle2D car;
 
     /**
-     * Construtor, que além de colocar o x e o y do carro, verifica a direção do carro para mudar a forma do retangulo, para dar a impressão do carro estar indo reto(iniciado em A ou C) ou para os lado (B ou D)
-     * @param x 
+     * Construtor, que além de colocar o x e o y do carro, verifica a direção do
+     * carro para mudar a forma do retangulo, para dar a impressão do carro
+     * estar indo reto(iniciado em A ou C) ou para os lado (B ou D)
+     *
+     * @param x
      * @param y
-     * @param direcao 
+     * @param direcao
      */
     public Carro(float x, float y, int direcao) {
         this.x = x;
@@ -35,7 +39,7 @@ public class Carro {
         }
         car = new Rectangle2D.Float(x, y, WIDTH, HEIGHT);
     }
-    
+
     //retorna o retangulo do carro
     public Rectangle2D getRect() {
         return car;
@@ -53,7 +57,7 @@ public class Carro {
         if (direcao == 3 || direcao == 9) {
             HEIGHT = 15;
             WIDTH = 20;
-        }else{
+        } else {
             HEIGHT = 20;
             WIDTH = 15;
         }

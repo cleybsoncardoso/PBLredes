@@ -10,8 +10,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.TrataCliente;
 
 /**
@@ -46,7 +44,7 @@ public class Verificacao implements Runnable {
                     for (String chave : chaves) {
                         Date timeAtual = new Date();
                         long ultimaAtualizacao = (long) carrosOnline.get(chave);
-                        //System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
+                        System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
                         if (timeAtual.getTime() - ultimaAtualizacao > 5000) {
                             System.out.println("Tempo de comunicação excedido");
                             carrosOnline.remove(chave);

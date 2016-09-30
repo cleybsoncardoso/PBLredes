@@ -13,8 +13,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -84,11 +82,12 @@ public class CarroFrame extends JFrame {
      *
      * @see ControllerCarro
      */
-    public void processLogics() {
+    public boolean processLogics() {
         this.carros = this.controller.getCarros();
         if (controller.getMeuCarro() != null) {
-            controller.getMeuCarro().acao();
+            return controller.getMeuCarro().acao();
         }
+        return true;
     }
 
     @Override

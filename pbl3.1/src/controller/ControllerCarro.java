@@ -202,11 +202,10 @@ public class ControllerCarro {
                 carro.setXY(x, y);
                 break;
         }
-        
-        
+
         this.msgMandar();
         //manda msg com os dados do seu carrro
-        
+
     }
 
     /**
@@ -266,28 +265,45 @@ public class ControllerCarro {
 
     /**
      * método responsavel por escolher a ação a ser feita pelo carro, andar,
-     * ficar parado esperando
+     * ficar parado esperando e retorna false quando sai da tela.
+     *
+     * @return
      */
-    public void acao() {
+    public boolean acao() {
 
         //quando o carro estiver na via principal ele vai andar sem parar, ate chegar no beira da pista
         if (origem.equals("A") && this.y > 317) {
             andar();
+            return true;
         } else if (origem.equals("C") && this.y < 139) {
             andar();
+            return true;
         } else if (origem.equals("B") && this.x > 318) {
             andar();
+            return true;
         } else if (origem.equals("D") && this.x < 143) {
             andar();
+            return true;
+        } else if (destino.equals("D") && this.x < 0) {
+            System.out.println("acabou o programa");
+            return false;
+        } else if (destino.equals("B") && this.x > 480) {
+            System.out.println("acabou o programa");
+            return false;
+        } else if (destino.equals("A") && this.y > 480) {
+            System.out.println("acabou o programa");
+            return false;
+        } else if (destino.equals("C") && this.y < 0) {
+            System.out.println("acabou o programa");
+            return false;
         }
 
-        //verifica se o carro esta na via principal ou cruzamento
-        if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
-            noCruzamento = false;
-        } else {
-            noCruzamento = true;
-        }
-
+//        //verifica se o carro esta na via principal ou cruzamento
+//        if (trajeto.get(0).getNome().equals("A") || trajeto.get(0).getNome().equals("B") || trajeto.get(0).getNome().equals("C") || trajeto.get(0).getNome().equals("D")) {
+//            noCruzamento = false;
+//        } else {
+//            noCruzamento = true;
+//        }
         //verifica se tem conflito, uma possivel batida ao entrar no cruzamento
         if (!logica.conflito()) {//caso não ocorra conflito, o carro anda o sem parar ate o fim do cruzamento
             if (origem.equals("A") && destino.equals("D")) {
@@ -354,6 +370,8 @@ public class ControllerCarro {
                 andar();
             }
         }
+
+        return true;
 
     }
 

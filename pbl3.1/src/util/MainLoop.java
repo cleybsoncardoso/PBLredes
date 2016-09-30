@@ -67,11 +67,15 @@ public class MainLoop implements Runnable {
     @Override
     public void run() {
         game.setup();
+        boolean loop = true;
         while (true) {
-            beforeTime = System.nanoTime();//grava o tempo antes de processar logicas
 
-            //Executa a logica e desenha os carros no carroFrame
-            game.processLogics();
+            beforeTime = System.nanoTime();//grava o tempo antes de processar logicas
+            if (loop) {
+                //Executa a logica do carro principal enquanto o carro está na tela
+                loop = game.processLogics();
+            }
+            //desenha os carros no carroFrame
             game.paintScreen();
 
             afterTime = System.nanoTime();//guarda o tempo após o processamento.
@@ -86,5 +90,6 @@ public class MainLoop implements Runnable {
                 }
             }
         }
+        //System.out.println("Saiu da pista");
     }
 }
