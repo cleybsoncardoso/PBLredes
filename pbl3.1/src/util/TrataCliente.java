@@ -65,11 +65,6 @@ public class TrataCliente implements Runnable {
                 for (int j = 6; j < tamanhoDoTrajeto + 7; j++) {
                     trajeto.add(new Quadrante(mensagem[j]));
                 }
-
-//                StringTokenizer tokenIp = new StringTokenizer(mensagem[0], ".");
-//                tokenIp.nextToken();
-//                tokenIp.nextToken();
-//                String chaveHach = tokenIp.nextToken() + tokenIp.nextToken();
                 verifica.atualiza(chaveHash);
                 if (chavesips.contains(chaveHash)) {
                     ControllerCarro carroAtual = controller.getCarro(chaveHash);
