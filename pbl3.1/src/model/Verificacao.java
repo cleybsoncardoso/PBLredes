@@ -6,11 +6,14 @@
 package model;
 
 import controller.Controller;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.TrataCliente;
 
 /**
@@ -22,11 +25,18 @@ public class Verificacao implements Runnable {
     private HashMap carrosOnline;
     private TrataCliente trataCliente;
     private Controller controller;
+    private String meuIP;
 
     public Verificacao(TrataCliente trataCliente) {
         this.trataCliente = trataCliente;
         carrosOnline = new HashMap();
         controller = Controller.getInstance();
+        try {
+            this.meuIP = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(meuIP);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Verificacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -54,8 +64,16 @@ public class Verificacao implements Runnable {
                         }
                     }
                 }
+
+                if (!meuIP.equals(InetAddress.getLocalHost().getHostAddress())) {
+                    System.out.println("Conexão perdida, o sistema não pode ser utilizado");
+                    System.exit(0);
+                }
+
             } catch (ConcurrentModificationException e) {
 
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(Verificacao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

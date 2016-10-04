@@ -27,7 +27,7 @@ public class ControllerCarro {
     private int alturaTela = 480;
     private int larguraTela = 482;
     private int direcao;
-    private float v = 1f; //velocidade do carro
+    private float v = 0.3f; //velocidade do carro
     private ArrayList<Quadrante> trajeto;
     private String origem;
     private String destino;
