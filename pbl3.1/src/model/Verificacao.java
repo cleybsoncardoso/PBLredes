@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Classe que verifica o timeout dos carros
  */
 package model;
 
@@ -19,10 +17,11 @@ import util.TrataCliente;
  */
 public class Verificacao implements Runnable {
 
-    private HashMap carrosOnline;
+    private HashMap carrosOnline; //hashmap que armazena o ultimo momento da mensagem de cada carro
     private TrataCliente trataCliente;
     private Controller controller;
 
+    
     public Verificacao(TrataCliente trataCliente) {
         this.trataCliente = trataCliente;
         carrosOnline = new HashMap();
@@ -30,6 +29,10 @@ public class Verificacao implements Runnable {
 
     }
 
+    /**
+     * Atualiza o ultimo momento da mensagem do carro com a determinada chave
+     * @param chave 
+     */
     public void atualiza(String chave) {
         Date time = new Date();
         carrosOnline.put(chave, time.getTime());
@@ -38,14 +41,13 @@ public class Verificacao implements Runnable {
     @Override
     public void run() {
         while (true) {
-
             try {
                 Set<String> chaves = carrosOnline.keySet();
                 Date timeAtual = new Date();
                 if (chaves.size() > 0) {
                     for (String chave : chaves) {
                         long ultimaAtualizacao = (long) carrosOnline.get(chave);
-                        //System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
+                        //verifica se o tempo ja é maior do que o determinado
                         if (timeAtual.getTime() - ultimaAtualizacao > 5000) {
                             System.out.println("Tempo de comunicação excedido");
                             carrosOnline.remove(chave);

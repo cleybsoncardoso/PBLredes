@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Controller geral, que faz conexão da view com o model
  */
 package controller;
 
@@ -15,13 +13,13 @@ import util.Quadrante;
 
 /**
  *
- * @author paiva
+ * @author cleybson e paiva
  */
 public class Controller {
 
-    private static Controller controller;
+    private static Controller controller; 
     private Auxiliar auxiliar;
-    private HashMap<String, ControllerCarro> carros;
+    private HashMap<String, ControllerCarro> carros; 
     private ArrayList<ControllerCarro> carrosList;
     private int counter;
     private AtomicBoolean value;
@@ -74,7 +72,6 @@ public class Controller {
         ControllerCarro carro = new ControllerCarro(origem, destino);
         meuCarro = carro;
         carrosList.add(meuCarro);
-        //carros.put(key, carro);
         counter++;
     }
 
@@ -123,14 +120,7 @@ public class Controller {
             this.removerCarro(carro);
         }
     }
-//
-//    public ArrayList<ControllerCarro> getCarros() {
-//        ArrayList<ControllerCarro> aux = new ArrayList<>();
-//        for (int i = 0; i < this.counter; i++) {
-//            aux.add(this.carros.get(i));
-//        }
-//        return aux;
-//    }
+
 
     /**
      * Método que retorna um ArrayList contendo todos os carros. Os carros são
@@ -139,15 +129,6 @@ public class Controller {
      * @return
      */
     public ArrayList<ControllerCarro> getCarros() {
-//        ArrayList<ControllerCarro> aux = new ArrayList<>();
-//        aux.add(meuCarro);
-//        Set<String> chaves = carros.keySet();
-//        for (String chave : chaves) {
-//            if (chave != null) {
-//                aux.add(carros.get(chave));
-//            }
-//        }
-//        return aux;
         ArrayList<ControllerCarro> aux = new ArrayList<>();
         for (int i = 0; i < this.counter; i++) {
             aux.add(this.carrosList.get(i));

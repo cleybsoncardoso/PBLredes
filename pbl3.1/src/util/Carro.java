@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * Classe que possue todos os dados de cada carro
  *
- * @author paiva
+ * @author paiva e cleybson
  */
 public class Carro {
 

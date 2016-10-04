@@ -18,10 +18,10 @@ public class App {
 
     public static void main(String[] args) {
 
-        Controller controller = Controller.novoController();
-        Inicio telaInicial = Inicio.novoController(controller);
-        Multicast.novaInstancia();
-        new Thread(new TrataCliente()).start();
+        Controller controller = Controller.novoController(); //cria uma instancia do controller
+        Inicio telaInicial = Inicio.novoController(controller); //inicia frame
+        Multicast.novaInstancia(); //inicia a instancia do multicast
+        new Thread(new TrataCliente()).start(); //cria tread do tratacliente
 
     }
 }
