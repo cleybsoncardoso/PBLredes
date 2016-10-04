@@ -27,7 +27,7 @@ public class ControllerCarro {
     private int alturaTela = 480;
     private int larguraTela = 482;
     private int direcao;
-    private float v = 0.3f; //velocidade do carro
+    private float v = 1f; //velocidade do carro
     private ArrayList<Quadrante> trajeto;
     private String origem;
     private String destino;
@@ -184,7 +184,7 @@ public class ControllerCarro {
                     if (trajeto.size() > 1) {
                         Inicio.getInstance().mostrar("Meu carro saindo da pista " + trajeto.get(0).getNome());
                         trajeto.remove(0);
-                        Inicio.getInstance().mostrar("Meu carro azul entrando na pista " + trajeto.get(0).getNome());
+                        Inicio.getInstance().mostrar("Meu carro entrando na pista " + trajeto.get(0).getNome());
                     }
                 }
                 y = y + v;

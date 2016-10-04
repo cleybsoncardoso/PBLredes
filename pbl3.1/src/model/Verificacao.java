@@ -9,6 +9,7 @@ import controller.Controller;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Set;
 import util.TrataCliente;
 
@@ -22,8 +23,8 @@ public class Verificacao implements Runnable {
     private TrataCliente trataCliente;
     private Controller controller;
 
-    public Verificacao(TrataCliente aThis) {
-        trataCliente = aThis;
+    public Verificacao(TrataCliente trataCliente) {
+        this.trataCliente = trataCliente;
         carrosOnline = new HashMap();
         controller = Controller.getInstance();
 
@@ -37,12 +38,12 @@ public class Verificacao implements Runnable {
     @Override
     public void run() {
         while (true) {
-            try {
 
+            try {
                 Set<String> chaves = carrosOnline.keySet();
+                Date timeAtual = new Date();
                 if (chaves.size() > 0) {
                     for (String chave : chaves) {
-                        Date timeAtual = new Date();
                         long ultimaAtualizacao = (long) carrosOnline.get(chave);
                         //System.out.println("tempo: " + (timeAtual.getTime() - ultimaAtualizacao));
                         if (timeAtual.getTime() - ultimaAtualizacao > 5000) {
@@ -51,10 +52,8 @@ public class Verificacao implements Runnable {
                             controller.removerCarro(chave);
                             trataCliente.getChavesips().remove(chave);
                         }
-
                     }
                 }
-
             } catch (ConcurrentModificationException e) {
 
             }
