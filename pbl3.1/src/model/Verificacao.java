@@ -32,7 +32,6 @@ public class Verificacao implements Runnable {
         controller = Controller.getInstance();
         try {
             this.meuIP = InetAddress.getLocalHost().getHostAddress();
-            System.out.println(meuIP);
         } catch (UnknownHostException ex) {
             Logger.getLogger(Verificacao.class.getName()).log(Level.SEVERE, null, ex);
         }
