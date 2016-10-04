@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -23,6 +24,7 @@ public class Multicast {
     private String grupo, meuIp;
     private int porta;
     private String myKey;
+    private MulticastSocket mcs;
 
     public Multicast() {
         try {
@@ -30,7 +32,12 @@ public class Multicast {
             porta = 12345;//porta do grupo
             meuIp = InetAddress.getLocalHost().getHostAddress(); //pega o seu ip que esta conectado a rede
             myKey = this.geraKey();//minha chave
+            mcs = new MulticastSocket(porta);
+            InetAddress grp = InetAddress.getByName(grupo);
+            mcs.joinGroup(grp);
         } catch (UnknownHostException ex) {
+            Logger.getLogger(Multicast.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(Multicast.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -71,9 +78,6 @@ public class Multicast {
      */
     public String receberMensagem() {
         try {
-            MulticastSocket mcs = new MulticastSocket(porta);
-            InetAddress grp = InetAddress.getByName(grupo);
-            mcs.joinGroup(grp);
             byte rec[] = new byte[256];
             DatagramPacket pkg = new DatagramPacket(rec, rec.length);
             mcs.receive(pkg);
