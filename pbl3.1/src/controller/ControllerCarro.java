@@ -201,7 +201,7 @@ public class ControllerCarro {
                 break;
         }
 
-        this.msgMandar();
+        //this.msgMandar();
         //manda msg com os dados do seu carrro
 
     }
@@ -268,7 +268,7 @@ public class ControllerCarro {
      * @return
      */
     public boolean acao() {
-
+        this.msgMandar();
         //quando o carro estiver na via principal ele vai andar sem parar, ate chegar no beira da pista
         if (origem.equals("A") && this.y > 317) {
             andar();
