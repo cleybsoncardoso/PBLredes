@@ -25,7 +25,7 @@ public class DutoDocsCliente {
     public static void main(String[] args) {
         System.out.println("Iniciando servidor");
         try {
-            Controller controller = new Controller("127.0.0.1");
+            Controller controller = new Controller("192.168.0.8");
             Tela tela = new Tela(controller);
             tela.setVisible(true);
         } catch (NotBoundException ex) {
