@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.AtualizacaoPeriodica;
 import Controller.Controller;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -24,6 +25,7 @@ public class Texto extends javax.swing.JFrame {
 
     private Controller controller;
     private String nome;
+    private AtualizacaoPeriodica ap;
 
     /**
      * Creates new form Texto
@@ -34,6 +36,8 @@ public class Texto extends javax.swing.JFrame {
         this.controller = controller;
         initComponents();
         jTextArea1.setText(controller.abrirArquivo(nome));
+        this.ap = new AtualizacaoPeriodica(System.currentTimeMillis(), this);
+        new Thread (ap).start();
     }
 
     /**
@@ -97,11 +101,9 @@ public class Texto extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jTextArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyReleased
+        ap.atualiza(System.currentTimeMillis());
         controller.escreveArquivo(nome, jTextArea1.getText());
-        NavigationFilter am;
-        int c = jTextArea1.getCaretPosition();
-        jTextArea1.setText(controller.abrirArquivo(nome));
-        jTextArea1.setCaretPosition(c);
+        this.atualizarTextArea();
         
     }//GEN-LAST:event_jTextArea1KeyReleased
 
@@ -116,4 +118,10 @@ public class Texto extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizarTextArea() {
+        int c = jTextArea1.getCaretPosition();
+        jTextArea1.setText(controller.abrirArquivo(nome));
+        jTextArea1.setCaretPosition(c);
+    }
 }
