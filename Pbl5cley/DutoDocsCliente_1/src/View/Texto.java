@@ -34,13 +34,13 @@ public class Texto extends javax.swing.JFrame {
      * Creates new form Texto
      */
     public Texto(String nome, Controller controller) {
-        this.nome=nome;
+        this.nome = nome;
         setTitle(nome);
         this.controller = controller;
         initComponents();
         jTextArea1.setText(controller.abrirArquivo(nome));
         this.ap = new AtualizacaoPeriodica(System.currentTimeMillis(), this);
-        new Thread (ap).start();
+        new Thread(ap).start();
     }
 
     /**
@@ -108,11 +108,13 @@ public class Texto extends javax.swing.JFrame {
         char tecla = evt.getKeyChar();
         int a = tecla;
         System.out.println(a);
-        if(a!=65535){
-        System.out.println(tecla + " " + jTextArea1.getCaretPosition());
-        ap.atualiza(System.currentTimeMillis());
-        controller.escreveArquivo(nome, tecla,jTextArea1.getCaretPosition());
-        this.atualizarTextArea();
+        if (a != 65535) {
+            int c = jTextArea1.getCaretPosition();
+            System.out.println(tecla + " " + c);
+            ap.atualiza(System.currentTimeMillis());
+            controller.escreveArquivo(nome, tecla, c-1);
+            //this.atualizarTextArea();
+            jTextArea1.setCaretPosition(c);
         }
     }//GEN-LAST:event_jTextArea1KeyReleased
 
@@ -129,17 +131,17 @@ public class Texto extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void atualizarTextArea() {
-        try{
+        try {
             try {
                 sleep(2);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Texto.class.getName()).log(Level.SEVERE, null, ex);
             }
-        int c = jTextArea1.getCaretPosition();
-        jTextArea1.setText(controller.refresh(nome));
-        jTextArea1.setCaretPosition(c);
-        }catch (IllegalArgumentException e){
-            
+            int c = jTextArea1.getCaretPosition();
+            jTextArea1.setText(controller.refresh(nome));
+            jTextArea1.setCaretPosition(c);
+        } catch (IllegalArgumentException e) {
+
         }
     }
 }

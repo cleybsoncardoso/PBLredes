@@ -173,25 +173,35 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     }
 
     private void atualiza(String nome, char conteudo, int carent) throws RemoteException {
+        System.out.println("carent :" + carent);
         File fnome = new File(nome);
         for (Documento atual : documentos) {
             if (atual.getNome().equals(nome)) {
-                try {
-                    String antes = "";
-                    String todo = atual.getConteudo();
-                    antes = todo.substring(0, carent-1);
-                    System.out.println(antes);
-                    antes += conteudo;
-                    System.out.println(antes);
-                    antes += todo.substring(carent-1);
-                    System.out.println(antes);
-                    atual.setConteudo(antes);
-                } catch (StringIndexOutOfBoundsException ex) {
-                    String antes = atual.getConteudo();
-                    antes += conteudo;
-                    atual.setConteudo(antes);
-
+                String todo = atual.getConteudo();
+                if (carent <= 0) {
+                    atual.setConteudo(conteudo + todo);
+                } else if (carent >= todo.length()) {
+                    atual.setConteudo(todo + conteudo);
+                } else {
+                    String aux = todo.substring(carent - 1);
+                    atual.setConteudo(todo.replaceFirst(aux, conteudo + aux));
                 }
+//                try {
+//                    String antes = "";
+//                    String todo = atual.getConteudo();
+//                    antes = todo.substring(0, carent-1);
+//                    System.out.println(antes);
+//                    antes += conteudo;
+//                    System.out.println(antes);
+//                    antes += todo.substring(carent-1);
+//                    System.out.println(antes);
+//                    atual.setConteudo(antes);
+//                } catch (StringIndexOutOfBoundsException ex) {
+//                    String antes = atual.getConteudo();
+//                    antes += conteudo;
+//                    atual.setConteudo(antes);
+//
+//                }
             }
         }
 
@@ -243,7 +253,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     public void run() {
         while (true) {
             try {
-                sleep(0,1);
+                sleep(0, 1);
                 if (!fila.isEmpty()) {
                     System.out.println("modificou1");
                     Modificacao atual = fila.poll();
@@ -266,7 +276,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         ArrayList<Documento> documentosAtual = documentos;
         for (Documento atual : documentosAtual) {
             if (atual.getNome().equals(nomeArquivo)) {
-                System.out.println("entrou");
+                //System.out.println("entrou");
                 return atual.getConteudo();
             }
         }
