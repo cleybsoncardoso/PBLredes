@@ -24,7 +24,7 @@ public class ManipulaArquivo {
         FileWriter arquivo;
 
         try {
-            arquivo = new FileWriter(new File("repositorio/" + nome + ".txt"));
+            arquivo = new FileWriter(new File("repositorio/" + nome));
             arquivo.close();
             System.out.println("Criado arquivo " + nome);
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class ManipulaArquivo {
         FileReader fr;
 
         try {
-            fr = new FileReader("repositorio/" + nome + ".txt");
+            fr = new FileReader("repositorio/" + nome);
             //construtor que recebe o objeto do tipo FileReader
             BufferedReader br = new BufferedReader(fr);
             //equanto houver mais linhas
@@ -49,7 +49,7 @@ public class ManipulaArquivo {
                 //lê a proxima linha
                 String linha = br.readLine();
                 
-                texto += linha;
+                texto += linha + "\n";
             }
             br.close();
             fr.close();
@@ -62,7 +62,21 @@ public class ManipulaArquivo {
         }
         
         return texto;
+    }
+    
+    public void editarArquivo(String nome, String text){
+        FileWriter arquivo;
 
+        try {
+            arquivo = new FileWriter(new File("repositorio/" + nome));
+            arquivo.write(text);
+            arquivo.close();
+            System.out.println("Criado arquivo " + nome);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
