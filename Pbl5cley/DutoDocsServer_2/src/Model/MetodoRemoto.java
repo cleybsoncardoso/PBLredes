@@ -129,10 +129,10 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
             stream = new FileInputStream(fnome);
             InputStreamReader reader = new InputStreamReader(stream);
             BufferedReader br = new BufferedReader(reader);
-            String linha = br.readLine();
-            while (linha != null) {
-                arquivo += linha + "\n";
-                linha = br.readLine();
+            String texto = br.readLine();
+            while (texto != null) {
+                arquivo += texto + "\n";
+                texto = br.readLine();
             }
             br.close();
             reader.close();
@@ -172,50 +172,53 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         }
     }
 
-    private void atualiza(String nome, char conteudo, int carent) throws RemoteException {
-        System.out.println("carent :" + carent);
-        File fnome = new File(nome);
+    /**
+     * Atualiza uma remoção.
+     *
+     * @param nome
+     * @param position
+     */
+    private void atualiza(String nome, int position) {
         for (Documento atual : documentos) {
             if (atual.getNome().equals(nome)) {
-                String todo = atual.getConteudo();
-                if (carent <= 0) {
-                    atual.setConteudo(conteudo + todo);
-                } else if (carent >= todo.length()) {
-                    atual.setConteudo(todo + conteudo);
+                System.out.println("removendo posicao: " + position);
+                StringBuilder texto = new StringBuilder(atual.getConteudo());
+                texto.deleteCharAt(position);
+                atual.setConteudo(texto.toString());
+                System.out.println("\ntexto atual:\n" + atual.getConteudo());
+            }
+        }
+    }
+
+    /**
+     * Atualiza uma adição.
+     *
+     * @param nome
+     * @param conteudo
+     * @param position
+     */
+    private void atualiza(String nome, char conteudo, int position) {
+        File fnome = new File(nome);
+
+        for (Documento atual : documentos) {
+            if (atual.getNome().equals(nome)) {
+                System.out.println("caractere: " + conteudo + " caret: " + position);
+                if (position <= 0) {
+                    atual.setConteudo(conteudo + atual.getConteudo());
+                    System.out.println("no inicio");
+                } else if (position >= atual.length()) {
+                    atual.setConteudo(atual.getConteudo() + conteudo);
+                    System.out.println("no final");
                 } else {
-                    String aux = todo.substring(carent - 1);
-                    atual.setConteudo(todo.replaceFirst(aux, conteudo + aux));
+                    StringBuilder t = new StringBuilder(atual.getConteudo());
+                    t.insert(position, conteudo);
+                    atual.setConteudo(t.toString());
+                    System.out.println("no meio");
                 }
-//                try {
-//                    String antes = "";
-//                    String todo = atual.getConteudo();
-//                    antes = todo.substring(0, carent-1);
-//                    System.out.println(antes);
-//                    antes += conteudo;
-//                    System.out.println(antes);
-//                    antes += todo.substring(carent-1);
-//                    System.out.println(antes);
-//                    atual.setConteudo(antes);
-//                } catch (StringIndexOutOfBoundsException ex) {
-//                    String antes = atual.getConteudo();
-//                    antes += conteudo;
-//                    atual.setConteudo(antes);
-//
-//                }
+                System.out.println("\ntexto atual:\n" + atual.getConteudo());
             }
         }
 
-//        try {
-//            FileWriter fileW = new FileWriter(fnome);//arquivo para escrita
-//            BufferedWriter buffW = new BufferedWriter(fileW);
-//            buffW.write(conteudo);
-//            buffW.close();
-//            fileW.close();
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     @Override
@@ -246,30 +249,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
 
     @Override
     public void modifica(String nome, char conteudo, int carent) throws RemoteException {
-        fila.add(new Modificacao(nome, conteudo, carent));
-        System.out.println(conteudo);
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                sleep(0, 1);
-                if (!fila.isEmpty()) {
-                    //System.out.println("modificou1");
-                    Modificacao atual = fila.poll();
-                    while (atual != null) {
-                        //System.out.println("modificou");
-                        this.atualiza(atual.getNome(), atual.getConteudo(), atual.getCarent());
-                        atual = fila.poll();
-                    }
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (RemoteException ex) {
-                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        fila.add(new Adicao(nome, conteudo, carent));
     }
 
     @Override
@@ -282,4 +262,34 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         }
         return null;
     }
+
+    @Override
+    public void del(String nome, int pos) throws RemoteException {
+        fila.add(new Remocao(nome, pos));
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                sleep(0, 1);
+                if (!fila.isEmpty()) {
+                    Modificacao atual = fila.poll();
+                    if (atual instanceof Adicao) {
+                        Adicao add = (Adicao) atual;
+                        this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
+                        System.out.println("é uma adicao");
+                    } else {
+                        Remocao del = (Remocao) atual;
+                        this.atualiza(del.getNome(), del.getPosition());
+                        System.out.println("é uma remocao");
+                    }
+                    //atual = fila.poll();
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

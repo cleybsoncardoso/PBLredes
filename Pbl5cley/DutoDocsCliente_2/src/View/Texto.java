@@ -5,20 +5,7 @@
  */
 package View;
 
-import Model.AtualizacaoPeriodica;
 import Controller.Controller;
-import java.awt.Cursor;
-import java.awt.Point;
-import static java.lang.Thread.sleep;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.accessibility.AccessibleContext;
-import javax.swing.JFrame;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.text.Caret;
-import javax.swing.text.NavigationFilter;
 
 /**
  *
@@ -28,7 +15,8 @@ public class Texto extends javax.swing.JFrame {
 
     private Controller controller;
     private String nome;
-    private AtualizacaoPeriodica ap;
+    private int position;
+    //private AtualizacaoPeriodica ap;
 
     /**
      * Creates new form Texto
@@ -39,8 +27,8 @@ public class Texto extends javax.swing.JFrame {
         this.controller = controller;
         initComponents();
         jTextArea1.setText(controller.abrirArquivo(nome));
-        this.ap = new AtualizacaoPeriodica(System.currentTimeMillis(), this);
-        new Thread(ap).start();
+        //this.ap = new AtualizacaoPeriodica(System.currentTimeMillis(), this);
+        //new Thread(ap).start();
     }
 
     /**
@@ -63,6 +51,9 @@ public class Texto extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea1KeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextArea1KeyReleased(evt);
             }
@@ -103,22 +94,46 @@ public class Texto extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jTextArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyReleased
-
+    private void jTextArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyPressed
+        // TODO add your handling code here:
+        //this.ap.atualiza(); //atualizar o tempo do loop
         char tecla = evt.getKeyChar();
-        int a = tecla;
-        System.out.println(a);
-        if (a != 65535) {
-            int c = jTextArea1.getCaretPosition();
-            System.out.println(tecla + " " + c);
-            ap.atualiza(System.currentTimeMillis());
-            controller.escreveArquivo(nome, tecla, c-1);
-            //this.atualizarTextArea();
-            jTextArea1.setText(controller.refresh(nome));
-            System.out.println("atualizou");
-            jTextArea1.setCaretPosition(c);
+        int code = evt.getKeyCode(); //pega o valor inteiro da tecla pressionada
+        if (code == 0 || code == 32 || code == 10 || code > 43) {
+            this.position = jTextArea1.getCaretPosition();
+            controller.escreveArquivo(nome, tecla, this.position);
+            System.out.println("tecla valida: " + code);
+        } else if (code == 8) {
+            this.position = jTextArea1.getCaretPosition();
+            if (this.position - 1 >= 0) {
+                controller.del(nome, jTextArea1.getCaretPosition() - 1);
+            }
+        }
+    }//GEN-LAST:event_jTextArea1KeyPressed
+
+    private void jTextArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyReleased
+        // TODO add your handling code here:
+        char tecla = evt.getKeyChar();
+        int code = evt.getKeyCode();
+        if (code == 0 || code == 32 || code == 10 || code > 43) {
+            jTextArea1.setText(controller.refresh(this.nome));
+            jTextArea1.setCaretPosition(this.position + 1);
+        } else if (code == 8) {
+            if (this.position > 0) {
+                this.position = this.position - 1;
+            }
+            jTextArea1.setCaretPosition(this.position);
+        } else {
+            this.position = jTextArea1.getCaretPosition();
         }
     }//GEN-LAST:event_jTextArea1KeyReleased
+
+    public void atualizarTextArea() {
+        //int position = jTextArea1.getCaretPosition();
+        jTextArea1.setText(controller.refresh(nome));
+        System.out.println("atualizou");
+        //jTextArea1.setCaretPosition(position);
+    }
 
     /**
      * @param args the command line arguments
@@ -132,18 +147,4 @@ public class Texto extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
-    public void atualizarTextArea() {
-        try {
-            try {
-                sleep(2);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Texto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            int c = jTextArea1.getCaretPosition();
-            jTextArea1.setText(controller.refresh(nome));
-            jTextArea1.setCaretPosition(c);
-        } catch (IllegalArgumentException e) {
-
-        }
-    }
 }
