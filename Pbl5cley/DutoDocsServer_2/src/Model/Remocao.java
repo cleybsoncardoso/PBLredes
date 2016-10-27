@@ -11,15 +11,21 @@ package Model;
  */
 public class Remocao extends Modificacao {
 
-    private int position;
+    private int inicio;
+    private int fim;
 
-    public Remocao(String nome, int position) {
+    public Remocao(String nome, int inicio, int fim) {
         super(nome);
-        this.position = position;
+        this.inicio = this.inicio;
+        this.fim = this.fim;
     }
 
-    public int getPosition() {
-        return position;
+    public int getFim() {
+        return fim;
+    }
+
+    public int getInicio() {
+        return inicio;
     }
 
 }

@@ -80,10 +80,14 @@ public class NovoJFrame extends javax.swing.JFrame {
     private void jTextArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyPressed
         // TODO add your handling code here:
         int key = evt.getKeyCode();
-        System.out.println(" code: " + key);
-        if (key == 0 || key == 32 || key == 10 || key > 44) {
+        //System.out.println(" code: " + key);
+
+        if (key == 8 || key == 127) {
+            System.out.println("inicio: " + jTextArea1.getSelectionStart() + " fim: " + jTextArea1.getSelectionEnd());
+        } else if (key == 0 || key == 32 || key == 10 || key > 44) {
             System.out.println("tecla: " + evt.getKeyChar() + " code: " + key);
         }
+
     }//GEN-LAST:event_jTextArea1KeyPressed
 
     /**

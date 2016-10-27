@@ -99,15 +99,16 @@ public class Texto extends javax.swing.JFrame {
         //this.ap.atualiza(); //atualizar o tempo do loop
         char tecla = evt.getKeyChar();
         int code = evt.getKeyCode(); //pega o valor inteiro da tecla pressionada
-        if (code == 0 || code == 32 || code == 10 || code > 43) {
+
+        if (code == 8) {
+            this.position = jTextArea1.getCaretPosition();
+            if (this.position - 1 >= 0) {
+                controller.del(nome, jTextArea1.getSelectionStart(), jTextArea1.getSelectionEnd());
+            }
+        } else if (code == 0 || code == 32 || code == 10 || code > 43) {
             this.position = jTextArea1.getCaretPosition();
             controller.escreveArquivo(nome, tecla, this.position);
             System.out.println("tecla valida: " + code);
-        } else if (code == 8) {
-            this.position = jTextArea1.getCaretPosition();
-            if (this.position - 1 >= 0) {
-                controller.del(nome, jTextArea1.getCaretPosition() - 1);
-            }
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
 
