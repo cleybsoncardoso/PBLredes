@@ -29,21 +29,22 @@ import java.util.logging.Logger;
  *
  * @author cleyb
  */
-public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, Runnable {
+public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
 
     private ArrayList<Usuario> users;
     private ArrayList<Usuario> logados;
     private HashMap<String, Documento> documentos;
-    private HashMap<String, Modificacao> requisicoes;
+    private HashMap<String, LinkedList<Modificacao>> requisicoes;//key: nometitulo - value: fila de modificacao
     private ArrayList<Quantidade> documentosAbertos;
     private Queue<Modificacao> fila;
 
     public MetodoRemoto() throws RemoteException {
         super();
-        documentos = new HashMap<String, Documento>();
-        documentosAbertos = new ArrayList<Quantidade>();
-        fila = new LinkedList<Modificacao>();
+        documentos = new HashMap<>();
+        documentosAbertos = new ArrayList<>();
+        fila = new LinkedList<>();
         logados = new ArrayList<>();
+        requisicoes = new HashMap<>();
         users = this.leituraLogin();
     }
 
@@ -124,8 +125,8 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     }
 
     @Override
-    public String abrirArquivo(String nomeArquivo) throws RemoteException {
-        String arquivo = "";
+    public String abrirArquivo(String nomeArquivo, String nome) throws RemoteException {
+        String conteudo = "";
         try {
             File fnome = new File(nomeArquivo);
             FileInputStream stream;
@@ -134,7 +135,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
             BufferedReader br = new BufferedReader(reader);
             String texto = br.readLine();
             while (texto != null) {
-                arquivo += texto + "\n";
+                conteudo += texto + "\n";
                 texto = br.readLine();
             }
             br.close();
@@ -153,10 +154,13 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
             }
         }
         if (!existe) {
-            documentos.put(nomeArquivo, new Documento(nomeArquivo, arquivo));
+            documentos.put(nomeArquivo, new Documento(nomeArquivo, conteudo));
             documentosAbertos.add(new Quantidade(nomeArquivo));
         }
-        return arquivo;
+        System.out.println("usuario " + nome + " abriu arquivo: " + nomeArquivo);
+        requisicoes.put(nome + nomeArquivo, new LinkedList<>());
+
+        return conteudo;
 
     }
 
@@ -266,10 +270,14 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
 
     @Override
     public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException {
+        System.out.println("usuario " + user + " adicionou: " + conteudo);
         //fila.add(new Adicao(nome, conteudo, carent));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
-                requisicoes.put(user, new Adicao(nome, conteudo, carent));
+                LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
+                if (lista != null) {
+                    lista.add(new Adicao(nome, conteudo, carent));
+                }
             }
         }
     }
@@ -279,7 +287,10 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         //fila.add(new Remocao(nome, pos));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
-                requisicoes.put(user, new Remocao(nome, pos));
+                LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
+                if (lista != null) {
+                    lista.add(new Remocao(nome, pos));
+                }
             }
         }
     }
@@ -289,42 +300,45 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         //fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
-                requisicoes.put(user, new RemocaoSelecao(nome, posBegin, posEnd));
-            }
-        }
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                sleep(0, 1);
-                if (!fila.isEmpty()) {
-                    Modificacao atual = fila.poll();
-                    if (atual instanceof Adicao) {
-                        Adicao add = (Adicao) atual;
-                        this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
-                        System.out.println("é uma adicao");
-                    } else if (atual instanceof Remocao) {
-                        Remocao del = (Remocao) atual;
-                        this.atualiza(del.getNome(), del.getPosition());
-                        System.out.println("é uma remocao");
-                    } else {
-                        RemocaoSelecao del = (RemocaoSelecao) atual;
-                        this.atualiza(del.getNome(), del.getPosBegin(), del.getPosEnd());
-                        System.out.println("é uma remocao de seleção");
-                    }
-                    //atual = fila.poll();
+                LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
+                if (lista != null) {
+                    lista.add(new RemocaoSelecao(nome, posBegin, posEnd));
                 }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
+//    @Override
+//    public void run() {
+//        while (true) {
+//            try {
+//                sleep(0, 1);
+//                if (!fila.isEmpty()) {
+//                    Modificacao atual = fila.poll();
+//                    if (atual instanceof Adicao) {
+//                        Adicao add = (Adicao) atual;
+//                        this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
+//                        System.out.println("é uma adicao");
+//                    } else if (atual instanceof Remocao) {
+//                        Remocao del = (Remocao) atual;
+//                        this.atualiza(del.getNome(), del.getPosition());
+//                        System.out.println("é uma remocao");
+//                    } else {
+//                        RemocaoSelecao del = (RemocaoSelecao) atual;
+//                        this.atualiza(del.getNome(), del.getPosBegin(), del.getPosEnd());
+//                        System.out.println("é uma remocao de seleção");
+//                    }
+//                    //atual = fila.poll();
+//                }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
     @Override
-    public Modificacao requisicao(String nomeTitulo) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Modificacao requisicao(String nome, String nomeTitulo) throws RemoteException {
+        System.out.println("usuario " + nome + " pediu uma requisicao");
+        return requisicoes.get(nome + nomeTitulo).poll();
     }
 
 }
