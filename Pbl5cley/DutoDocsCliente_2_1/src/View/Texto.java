@@ -198,10 +198,23 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     texto.deleteCharAt(del.getPosition());
                     int carent = jTextArea1.getCaretPosition();
                     jTextArea1.setText(texto.toString());
-                    jTextArea1.setCaretPosition(carent - 1);
+                    if (carent == 0 || carent > texto.length()) {
+                        jTextArea1.setCaretPosition(0);
+                    }else{
+                        jTextArea1.setCaretPosition(carent - 1);
+                    }
 
                 } else {
                     RemocaoSelecao del = (RemocaoSelecao) operacoes;
+                    StringBuilder texto = new StringBuilder(jTextArea1.getText());
+                    texto.delete(del.getPosBegin(),del.getPosEnd());
+                    int carent = jTextArea1.getCaretPosition();
+                    jTextArea1.setText(texto.toString());
+                    if (carent == 0 || carent > texto.length()) {
+                        jTextArea1.setCaretPosition(0);
+                    }else{
+                        jTextArea1.setCaretPosition(carent - 1);
+                    }
                 }
             }
         }
