@@ -311,4 +311,9 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         }
     }
 
+    @Override
+    public Modificacao requisicao(String nomeTitulo) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
