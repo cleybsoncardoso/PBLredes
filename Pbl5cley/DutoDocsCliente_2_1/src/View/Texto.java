@@ -132,20 +132,13 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         char tecla = evt.getKeyChar();
         int code = evt.getKeyCode();
         if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
-            jTextArea1.setText(controller.refresh(this.nome));
-            jTextArea1.setCaretPosition(this.position + 1 - selecao);
+            this.position = jTextArea1.getCaretPosition();
         } else if (code == 8) {
             System.out.println("teste: " + jTextArea1.getSelectedText());
-            if (this.position > 0) {
-                this.position = this.position - 1 - selecao;
-            }
-            jTextArea1.setCaretPosition(this.position);
+            this.position = jTextArea1.getCaretPosition();
+            //jTextArea1.setCaretPosition(this.position);
         } else if (code == 127) {
-            System.out.println("teste: " + jTextArea1.getSelectedText());
-            if (this.position > 0) {
-                this.position = this.position - selecao;
-            }
-            jTextArea1.setCaretPosition(this.position);
+            this.position = jTextArea1.getCaretPosition();
         } else {
             this.position = jTextArea1.getCaretPosition();
         }
@@ -153,7 +146,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
 
     public void atualizarTextArea() {
         //int position = jTextArea1.getCaretPosition();
-        jTextArea1.setText(controller.refresh(nome));
+        //jTextArea1.setText(controller.refresh(nome));
         System.out.println("atualizou");
         //jTextArea1.setCaretPosition(position);
     }
@@ -202,19 +195,19 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     jTextArea1.setText(texto.toString());
                     if (carent == 0 || carent > texto.length()) {
                         jTextArea1.setCaretPosition(0);
-                    }else{
+                    } else {
                         jTextArea1.setCaretPosition(carent - 1);
                     }
 
                 } else {
                     RemocaoSelecao del = (RemocaoSelecao) operacoes;
                     StringBuilder texto = new StringBuilder(jTextArea1.getText());
-                    texto.delete(del.getPosBegin(),del.getPosEnd());
+                    texto.delete(del.getPosBegin(), del.getPosEnd());
                     int carent = jTextArea1.getCaretPosition();
                     jTextArea1.setText(texto.toString());
                     if (carent == 0 || carent > texto.length()) {
                         jTextArea1.setCaretPosition(0);
-                    }else{
+                    } else {
                         jTextArea1.setCaretPosition(carent - 1);
                     }
                 }

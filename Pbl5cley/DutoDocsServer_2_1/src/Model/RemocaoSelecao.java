@@ -5,18 +5,20 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author paiva
  */
-public class RemocaoSelecao extends Modificacao {
+public class RemocaoSelecao extends Modificacao implements Serializable {
 
     private int posBegin, posEnd;
 
     RemocaoSelecao(String nome, int posBegin, int posEnd) {
         super(nome);
-        this.posBegin=posBegin;
-        this.posEnd=posEnd;
+        this.posBegin = posBegin;
+        this.posEnd = posEnd;
     }
 
     public int getPosBegin() {
@@ -26,7 +28,5 @@ public class RemocaoSelecao extends Modificacao {
     public int getPosEnd() {
         return posEnd;
     }
-    
-    
 
 }

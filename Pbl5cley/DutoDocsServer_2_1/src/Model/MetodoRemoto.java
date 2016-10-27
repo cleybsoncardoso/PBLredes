@@ -50,6 +50,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
 
     @Override
     public Boolean logar(String nome, String senha) throws RemoteException {
+        System.out.println(nome + " tentou se conectar");
         for (Usuario user : users) {
             if (user.getNome().equals(nome) && user.getSenha().equals(senha)) {
                 logados.add(user);
