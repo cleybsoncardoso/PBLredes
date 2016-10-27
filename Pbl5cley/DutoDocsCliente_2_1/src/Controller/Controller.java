@@ -73,7 +73,7 @@ public class Controller {
     public String abrirArquivo(String nome) {
         this.titulo = nome;
         try {
-            return metodos.abrirArquivo(nome);
+            return metodos.abrirArquivo(nome, this.nome);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }

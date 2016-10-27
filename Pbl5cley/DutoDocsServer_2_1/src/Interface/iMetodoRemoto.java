@@ -22,7 +22,7 @@ public interface iMetodoRemoto extends Remote {
 
     public void criarArquivo(String nome) throws RemoteException;
 
-    public String abrirArquivo(String nomeArquivo) throws RemoteException;
+    public String abrirArquivo(String nomeArquivo, String nome) throws RemoteException;
 
     public String refresh(String nomeArquivo) throws RemoteException;
 
