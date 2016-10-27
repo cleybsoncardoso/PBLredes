@@ -18,10 +18,13 @@ import java.util.logging.Logger;
 public class Controller {
 
     private iMetodoRemoto metodos;
+    private String nome, titulo;
 
     public Controller(String ip) throws NotBoundException, MalformedURLException, RemoteException {
         try {
             metodos = (iMetodoRemoto) Naming.lookup("//" + ip + ":3322/metodos");
+            this.nome = null;
+            this.titulo = null;
         } catch (ConnectException e) {
             System.err.println("Falha na conexao");
         }
@@ -29,7 +32,10 @@ public class Controller {
 
     public Boolean login(String nome, String senha) {
         try {
-            return metodos.logar(nome, senha);
+            if(metodos.logar(nome, senha)){
+                this.nome=nome;
+                return true;
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,8 +59,18 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public String[] requisicao(String nomeTitulo){
+        try {
+            return metodos.requisicao(nomeTitulo);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public String abrirArquivo(String nome) {
+        this.titulo = nome;
         try {
             return metodos.abrirArquivo(nome);
         } catch (RemoteException ex) {
@@ -71,6 +87,14 @@ public class Controller {
         }
     }
 
+    public String getNome() {
+        return nome;
+    }
+    
+    public String getTitulo() {
+        return titulo;
+    }
+    
     public String refresh(String nome) {
         try {
             return metodos.refresh(nome);

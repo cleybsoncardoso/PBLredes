@@ -32,5 +32,7 @@ public interface iMetodoRemoto extends Remote {
     public void del(String nome, int pos) throws RemoteException;
     
     public void del(String nome, int posBegin, int posEnd) throws RemoteException;
+    
+    public String[] requisicao(String nomeTitulo) throws RemoteException;
 
 }
