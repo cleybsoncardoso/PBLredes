@@ -80,9 +80,9 @@ public class Controller {
         return null;
     }
 
-    public void del(String nome, int pos) {
+    public void del(String nome, int inicio, int fim) {
         try {
-            metodos.del(nome, pos);
+            metodos.del(nome, inicio, fim);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }

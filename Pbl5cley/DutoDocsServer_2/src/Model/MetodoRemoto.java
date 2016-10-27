@@ -178,12 +178,13 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
      * @param nome
      * @param position
      */
-    private void atualiza(String nome, int position) {
+    private void atualiza(String nome, int position, int tamanho) {
         for (Documento atual : documentos) {
             if (atual.getNome().equals(nome)) {
                 System.out.println("removendo posicao: " + position);
                 StringBuilder texto = new StringBuilder(atual.getConteudo());
                 texto.deleteCharAt(position);
+                texto.delete(tamanho, tamanho);
                 atual.setConteudo(texto.toString());
                 System.out.println("\ntexto atual:\n" + atual.getConteudo());
             }
@@ -264,8 +265,8 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     }
 
     @Override
-    public void del(String nome, int pos) throws RemoteException {
-        fila.add(new Remocao(nome, pos));
+    public void del(String nome, int posicao, int tamanho) throws RemoteException {
+        fila.add(new Remocao(nome, posicao, tamanho));
     }
 
     @Override
@@ -281,7 +282,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
                         System.out.println("é uma adicao");
                     } else {
                         Remocao del = (Remocao) atual;
-                        this.atualiza(del.getNome(), del.getPosition());
+                        this.atualiza(del.getNome(), del.getPosition(), del.getTamanho());
                         System.out.println("é uma remocao");
                     }
                     //atual = fila.poll();

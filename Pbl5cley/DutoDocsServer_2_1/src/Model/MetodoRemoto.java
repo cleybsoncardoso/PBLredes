@@ -21,6 +21,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -33,13 +34,14 @@ import java.util.logging.Logger;
 public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, Runnable {
 
     private ArrayList<Usuario> users;
-    private ArrayList<Documento> documentos;
+    private HashMap<String, Documento> documentos;
+    private HashMap<String, Modificacao> requisicoes;
     private ArrayList<Quantidade> documentosAbertos;
     private Queue<Modificacao> fila;
 
     public MetodoRemoto() throws RemoteException {
         super();
-        documentos = new ArrayList<Documento>();
+        documentos = new HashMap<String, Documento>();
         documentosAbertos = new ArrayList<Quantidade>();
         fila = new LinkedList<Modificacao>();
         users = this.leituraLogin();
@@ -150,7 +152,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
             }
         }
         if (!existe) {
-            documentos.add(new Documento(nomeArquivo, arquivo));
+            documentos.put(nomeArquivo, new Documento(nomeArquivo, arquivo));
             documentosAbertos.add(new Quantidade(nomeArquivo));
         }
         return arquivo;
@@ -179,35 +181,32 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
      * @param position
      */
     private void atualiza(String nome, int position) {
-        for (Documento atual : documentos) {
-            if (atual.getNome().equals(nome)) {
-                System.out.println("removendo posicao: " + position);
-                StringBuilder texto = new StringBuilder(atual.getConteudo());
-                texto.deleteCharAt(position);
-                atual.setConteudo(texto.toString());
-                System.out.println("\ntexto atual:\n" + atual.getConteudo());
-            }
+        Documento atual = documentos.get(nome);
+        if (atual.getNome().equals(nome)) {
+            System.out.println("removendo posicao: " + position);
+            StringBuilder texto = new StringBuilder(atual.getConteudo());
+            texto.deleteCharAt(position);
+            atual.setConteudo(texto.toString());
+            System.out.println("\ntexto atual:\n" + atual.getConteudo());
         }
     }
-    
-      /**
+
+    /**
      * Atualiza uma remoção por seleção.
      *
      * @param nome
      * @param position
      */
     private void atualiza(String nome, int posBegin, int posEnd) {
-        for (Documento atual : documentos) {
-            if (atual.getNome().equals(nome)) {
-                System.out.println("removendo da posicao: " + posBegin + " atéa posição: "+ posEnd);
-                StringBuilder texto = new StringBuilder(atual.getConteudo());
-                texto.delete(posBegin, posEnd);
-                atual.setConteudo(texto.toString());
-                System.out.println("\ntexto atual:\n" + atual.getConteudo());
-            }
+        Documento atual = documentos.get(nome);
+        if (atual.getNome().equals(nome)) {
+            System.out.println("removendo da posicao: " + posBegin + " atéa posição: " + posEnd);
+            StringBuilder texto = new StringBuilder(atual.getConteudo());
+            texto.delete(posBegin, posEnd);
+            atual.setConteudo(texto.toString());
+            System.out.println("\ntexto atual:\n" + atual.getConteudo());
         }
     }
-    
 
     /**
      * Atualiza uma adição.
@@ -218,26 +217,23 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
      */
     private void atualiza(String nome, char conteudo, int position) {
         File fnome = new File(nome);
-
-        for (Documento atual : documentos) {
-            if (atual.getNome().equals(nome)) {
-                System.out.println("caractere: " + conteudo + " caret: " + position);
-                if (position <= 0) {
-                    atual.setConteudo(conteudo + atual.getConteudo());
-                    System.out.println("no inicio");
-                } else if (position >= atual.length()) {
-                    atual.setConteudo(atual.getConteudo() + conteudo);
-                    System.out.println("no final");
-                } else {
-                    StringBuilder t = new StringBuilder(atual.getConteudo());
-                    t.insert(position, conteudo);
-                    atual.setConteudo(t.toString());
-                    System.out.println("no meio");
-                }
-                System.out.println("\ntexto atual:\n" + atual.getConteudo());
+        Documento atual = documentos.get(nome);
+        if (atual.getNome().equals(nome)) {
+            System.out.println("caractere: " + conteudo + " caret: " + position);
+            if (position <= 0) {
+                atual.setConteudo(conteudo + atual.getConteudo());
+                System.out.println("no inicio");
+            } else if (position >= atual.length()) {
+                atual.setConteudo(atual.getConteudo() + conteudo);
+                System.out.println("no final");
+            } else {
+                StringBuilder t = new StringBuilder(atual.getConteudo());
+                t.insert(position, conteudo);
+                atual.setConteudo(t.toString());
+                System.out.println("no meio");
             }
+            System.out.println("\ntexto atual:\n" + atual.getConteudo());
         }
-
     }
 
     @Override
@@ -255,14 +251,10 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         if (remover != null) {
             documentosAbertos.remove(remover);
             this.atualiza(nome, conteudo);
-            Documento remove = null;
-            for (Documento fechar : documentos) {
-                if (nome.equals(fechar.getNome())) {
-                    remove = fechar;
-                    break;
-                }
+            Documento atual = documentos.get(nome);
+            if (atual != null) {
+                documentos.remove(nome);
             }
-            documentos.remove(remove);
         }
     }
 
@@ -273,21 +265,15 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
 
     @Override
     public String refresh(String nomeArquivo) throws RemoteException {
-        ArrayList<Documento> documentosAtual = documentos;
-        for (Documento atual : documentosAtual) {
-            if (atual.getNome().equals(nomeArquivo)) {
-                return atual.getConteudo();
-            }
-        }
-        return null;
+        return documentos.get(nomeArquivo).getConteudo();
     }
 
     @Override
     public void del(String nome, int pos) throws RemoteException {
         fila.add(new Remocao(nome, pos));
     }
-    
-        @Override
+
+    @Override
     public void del(String nome, int posBegin, int posEnd) throws RemoteException {
         fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
     }
@@ -303,13 +289,13 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
                         Adicao add = (Adicao) atual;
                         this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
                         System.out.println("é uma adicao");
-                    } else if(atual instanceof Remocao){
+                    } else if (atual instanceof Remocao) {
                         Remocao del = (Remocao) atual;
                         this.atualiza(del.getNome(), del.getPosition());
                         System.out.println("é uma remocao");
-                    } else{
+                    } else {
                         RemocaoSelecao del = (RemocaoSelecao) atual;
-                        this.atualiza(del.getNome(), del.getPosBegin(),del.getPosEnd());
+                        this.atualiza(del.getNome(), del.getPosBegin(), del.getPosEnd());
                         System.out.println("é uma remocao de seleção");
                     }
                     //atual = fila.poll();

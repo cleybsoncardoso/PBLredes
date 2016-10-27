@@ -100,7 +100,7 @@ public class Texto extends javax.swing.JFrame {
         selecao = 0;
         char tecla = evt.getKeyChar();
         int code = evt.getKeyCode(); //pega o valor inteiro da tecla pressionada
-        if (code == 0 || code == 32 || code == 10 || code > 43) {
+        if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
             this.position = jTextArea1.getCaretPosition();
             controller.escreveArquivo(nome, tecla, this.position);
             System.out.println("tecla valida: " + code);
@@ -114,6 +114,11 @@ public class Texto extends javax.swing.JFrame {
             if (this.position - 1 >= 0) {
                 controller.del(nome, jTextArea1.getCaretPosition() - 1);
             }
+        } else if (code == 127) {
+            this.position = jTextArea1.getCaretPosition();
+            if (this.position < jTextArea1.getText().length()) {
+                controller.del(nome, jTextArea1.getCaretPosition());
+            }
         }
     }//GEN-LAST:event_jTextArea1KeyPressed
 
@@ -121,13 +126,19 @@ public class Texto extends javax.swing.JFrame {
         // TODO add your handling code here:
         char tecla = evt.getKeyChar();
         int code = evt.getKeyCode();
-        if (code == 0 || code == 32 || code == 10 || code > 43) {
+        if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
             jTextArea1.setText(controller.refresh(this.nome));
             jTextArea1.setCaretPosition(this.position + 1 - selecao);
         } else if (code == 8) {
             System.out.println("teste: " + jTextArea1.getSelectedText());
             if (this.position > 0) {
                 this.position = this.position - 1 - selecao;
+            }
+            jTextArea1.setCaretPosition(this.position);
+        } else if (code == 127) {
+            System.out.println("teste: " + jTextArea1.getSelectedText());
+            if (this.position > 0) {
+                this.position = this.position - selecao;
             }
             jTextArea1.setCaretPosition(this.position);
         } else {
