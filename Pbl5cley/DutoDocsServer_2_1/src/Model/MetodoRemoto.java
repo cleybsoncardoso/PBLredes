@@ -259,22 +259,27 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     }
 
     @Override
-    public void modifica(String nome, char conteudo, int carent) throws RemoteException {
-        fila.add(new Adicao(nome, conteudo, carent));
-    }
-
-    @Override
     public String refresh(String nomeArquivo) throws RemoteException {
         return documentos.get(nomeArquivo).getConteudo();
     }
 
     @Override
-    public void del(String nome, int pos) throws RemoteException {
+    public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException {
+        //fila.add(new Adicao(nome, conteudo, carent));
+        for (Usuario usuario : users) {
+            if (!usuario.getNome().equals(user)) {
+                requisicoes.put(user, new Adicao(nome, conteudo, carent));
+            }
+        }
+    }
+
+    @Override
+    public void del(String user, String nome, int pos) throws RemoteException {
         fila.add(new Remocao(nome, pos));
     }
 
     @Override
-    public void del(String nome, int posBegin, int posEnd) throws RemoteException {
+    public void del(String user, String nome, int posBegin, int posEnd) throws RemoteException {
         fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
     }
 
