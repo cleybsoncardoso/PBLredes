@@ -34,5 +34,5 @@ public interface iMetodoRemoto extends Remote {
 
     public void del(String user, String nome, int posBegin, int posEnd) throws RemoteException;
 
-    public Modificacao requisicao(String nomeTitulo) throws RemoteException;
+    public Modificacao requisicao(String nome, String titulo) throws RemoteException;
 }

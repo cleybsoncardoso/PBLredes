@@ -10,6 +10,7 @@ import Model.Adicao;
 import Model.Modificacao;
 import Model.Remocao;
 import Model.RemocaoSelecao;
+import java.io.File;
 
 /**
  *
@@ -173,9 +174,23 @@ public class Texto extends javax.swing.JFrame implements Runnable {
     public void run() {
 
         while (controller.getTitulo() != null) {
-            Modificacao operacoes = controller.requisicao(controller.getNome() + controller.getTitulo());
+            Modificacao operacoes = controller.requisicao();
             if (operacoes instanceof Adicao) {
                 Adicao add = (Adicao) operacoes;
+                if (add.getPosition() >= jTextArea1.getCaretPosition()) {
+                    StringBuilder t = new StringBuilder(jTextArea1.getText());
+                    t.insert(add.getPosition(), add.getConteudo());
+                    int carent = jTextArea1.getCaretPosition();
+                    jTextArea1.setText(t.toString());
+                    jTextArea1.setCaretPosition(carent);
+                } else {
+                    StringBuilder t = new StringBuilder(jTextArea1.getText());
+                    t.insert(add.getPosition(), add.getConteudo());
+                    int carent = jTextArea1.getCaretPosition();
+                    jTextArea1.setText(t.toString());
+                    jTextArea1.setCaretPosition(carent+1);
+                }
+
             } else if (operacoes instanceof Remocao) {
                 Remocao del = (Remocao) operacoes;
             } else {

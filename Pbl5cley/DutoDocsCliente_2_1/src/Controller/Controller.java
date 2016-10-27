@@ -61,9 +61,9 @@ public class Controller {
         }
     }
     
-    public Modificacao requisicao(String nomeTitulo){
+    public Modificacao requisicao(){
         try {
-            return metodos.requisicao(nomeTitulo);
+            return metodos.requisicao(this.nome, this.titulo);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
