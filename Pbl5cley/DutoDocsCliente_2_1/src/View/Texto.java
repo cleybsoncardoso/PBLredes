@@ -6,12 +6,16 @@
 package View;
 
 import Controller.Controller;
+import Model.Adicao;
+import Model.Modificacao;
+import Model.Remocao;
+import Model.RemocaoSelecao;
 
 /**
  *
  * @author cleyb
  */
-public class Texto extends javax.swing.JFrame {
+public class Texto extends javax.swing.JFrame implements Runnable {
 
     private Controller controller;
     private String nome;
@@ -164,5 +168,21 @@ public class Texto extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+
+        while (controller.getTitulo() != null) {
+            Modificacao operacoes = controller.requisicao(controller.getNome() + controller.getTitulo());
+            if (operacoes instanceof Adicao) {
+                Adicao add = (Adicao) operacoes;
+            } else if (operacoes instanceof Remocao) {
+                Remocao del = (Remocao) operacoes;
+            } else {
+                RemocaoSelecao del = (RemocaoSelecao) operacoes;
+            }
+
+        }
+    }
 
 }

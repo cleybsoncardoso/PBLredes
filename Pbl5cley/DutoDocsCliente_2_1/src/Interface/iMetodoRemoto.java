@@ -5,6 +5,7 @@
  */
 package Interface;
 
+import Model.Modificacao;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -32,5 +33,7 @@ public interface iMetodoRemoto extends Remote {
     public void del(String nome, int pos) throws RemoteException;
     
     public void del(String nome, int posBegin, int posEnd) throws RemoteException;
+    
+    public Modificacao requisicao(String nomeTitulo) throws RemoteException;
 
 }

@@ -5,21 +5,19 @@
  */
 package Model;
 
+import Controller.Controller;
+
 /**
  *
  * @author cleyb
  */
-public class Modificacao {
-    
-    private String nome;
-    
-    public Modificacao(String nome) {
-        this.nome = nome;
-    }
+public class Atualizacao{
 
-    public String getNome() {
-        return nome;
-    }
+    private Controller controller;
 
+    public Atualizacao(Controller controller) {
+        this.controller = controller;
+    }
    
+    
 }
