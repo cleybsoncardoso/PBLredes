@@ -82,7 +82,7 @@ public class Controller {
 
     public void escreveArquivo(String nome, char conteudo, int carent) {
         try {
-            metodos.modifica(nome, conteudo, carent);
+            metodos.modifica(this.nome, nome, conteudo, carent);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,7 +107,7 @@ public class Controller {
 
     public void del(String nome, int pos) {
         try {
-            metodos.del(nome, pos);
+            metodos.del(this.nome, nome, pos);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,7 +115,7 @@ public class Controller {
 
     public void del(String nome, int selectionStart, int selectionEnd) {
         try {
-            metodos.del( nome,selectionStart, selectionEnd);
+            metodos.del(this.nome, nome,selectionStart, selectionEnd);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
