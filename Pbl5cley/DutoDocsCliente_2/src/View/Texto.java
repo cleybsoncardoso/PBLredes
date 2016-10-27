@@ -125,6 +125,8 @@ public class Texto extends javax.swing.JFrame {
             jTextArea1.setCaretPosition(this.position);
         } else {
             this.position = jTextArea1.getCaretPosition();
+            jTextArea1.setText(controller.refresh(this.nome));
+            jTextArea1.setCaretPosition(this.position);
         }
     }//GEN-LAST:event_jTextArea1KeyReleased
 
