@@ -36,7 +36,6 @@ public class Controller {
         
         try {
             metodos = new MetodoRemoto();
-            new Thread(metodos).start();
             System.setProperty("java.rmi.server.hostname", ip);
             Registry r = LocateRegistry.createRegistry(3322);
             Naming.rebind("//" + ip + ":3322/metodos", metodos);
