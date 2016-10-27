@@ -6,6 +6,7 @@
 package Controller;
 
 import Interface.iMetodoRemoto;
+import Model.Modificacao;
 import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
@@ -60,7 +61,7 @@ public class Controller {
         }
     }
     
-    public String[] requisicao(String nomeTitulo){
+    public Modificacao requisicao(String nomeTitulo){
         try {
             return metodos.requisicao(nomeTitulo);
         } catch (RemoteException ex) {

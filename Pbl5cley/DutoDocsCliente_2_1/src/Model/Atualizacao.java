@@ -11,26 +11,13 @@ import Controller.Controller;
  *
  * @author cleyb
  */
-public class Atualizacao implements Runnable {
+public class Atualizacao{
 
     private Controller controller;
 
     public Atualizacao(Controller controller) {
         this.controller = controller;
     }
-    
-    
-    
-    @Override
-    public void run() {
-        
-        while(controller.getTitulo()!=null){
-            String[] operacoes = controller.requisicao(controller.getNome()+controller.getTitulo());
-            switch (operacoes[0]){
-                case "incrementa":
-                    
-            }
-        }
-    }
+   
     
 }
