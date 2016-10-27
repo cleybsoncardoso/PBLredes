@@ -12,12 +12,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.Thread.sleep;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -34,6 +32,7 @@ import java.util.logging.Logger;
 public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, Runnable {
 
     private ArrayList<Usuario> users;
+    private ArrayList<Usuario> logados;
     private HashMap<String, Documento> documentos;
     private HashMap<String, Modificacao> requisicoes;
     private ArrayList<Quantidade> documentosAbertos;
@@ -44,6 +43,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         documentos = new HashMap<String, Documento>();
         documentosAbertos = new ArrayList<Quantidade>();
         fila = new LinkedList<Modificacao>();
+        logados = new ArrayList<>();
         users = this.leituraLogin();
     }
 
@@ -51,6 +51,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     public Boolean logar(String nome, String senha) throws RemoteException {
         for (Usuario user : users) {
             if (user.getNome().equals(nome) && user.getSenha().equals(senha)) {
+                logados.add(user);
                 return true;
             }
         }
@@ -266,7 +267,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
     @Override
     public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException {
         //fila.add(new Adicao(nome, conteudo, carent));
-        for (Usuario usuario : users) {
+        for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
                 requisicoes.put(user, new Adicao(nome, conteudo, carent));
             }
@@ -275,12 +276,22 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
 
     @Override
     public void del(String user, String nome, int pos) throws RemoteException {
-        fila.add(new Remocao(nome, pos));
+        //fila.add(new Remocao(nome, pos));
+        for (Usuario usuario : logados) {
+            if (!usuario.getNome().equals(user)) {
+                requisicoes.put(user, new Remocao(nome, pos));
+            }
+        }
     }
 
     @Override
     public void del(String user, String nome, int posBegin, int posEnd) throws RemoteException {
-        fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
+        //fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
+        for (Usuario usuario : logados) {
+            if (!usuario.getNome().equals(user)) {
+                requisicoes.put(user, new RemocaoSelecao(nome, posBegin, posEnd));
+            }
+        }
     }
 
     @Override
