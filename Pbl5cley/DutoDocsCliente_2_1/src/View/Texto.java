@@ -172,10 +172,12 @@ public class Texto extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
-
+        System.out.println("Abrindo arquivo");
+        int i = 1;
         while (controller.getTitulo() != null) {
             Modificacao operacoes = controller.requisicao();
             if (operacoes != null) {
+                System.out.println("requivisao " + i);
                 if (operacoes instanceof Adicao) {
                     Adicao add = (Adicao) operacoes;
                     if (add.getPosition() >= jTextArea1.getCaretPosition()) {
