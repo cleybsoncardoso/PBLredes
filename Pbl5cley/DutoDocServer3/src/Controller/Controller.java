@@ -30,12 +30,12 @@ import java.util.logging.Logger;
 public class Controller {
 
     private MetodoRemoto metodos;
- 
 
     public Controller(String ip) {
-        
+
         try {
             metodos = new MetodoRemoto();
+            new Thread(metodos).start();
             System.setProperty("java.rmi.server.hostname", ip);
             Registry r = LocateRegistry.createRegistry(3322);
             Naming.rebind("//" + ip + ":3322/metodos", metodos);
@@ -45,7 +45,5 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-  
 
 }

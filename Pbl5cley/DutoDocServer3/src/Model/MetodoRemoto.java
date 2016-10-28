@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  *
  * @author cleyb
  */
-public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
+public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, Runnable {
 
     private ArrayList<Usuario> users;
     private ArrayList<Usuario> logados;
@@ -259,7 +259,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
     @Override
     public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException {
         System.out.println("usuario " + user + " adicionou: " + conteudo);
-        //fila.add(new Adicao(nome, conteudo, carent));
+        fila.add(new Adicao(nome, conteudo, carent));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
                 LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
@@ -272,7 +272,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
 
     @Override
     public void del(String user, String nome, int pos) throws RemoteException {
-        //fila.add(new Remocao(nome, pos));
+        fila.add(new Remocao(nome, pos));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
                 LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
@@ -285,7 +285,7 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
 
     @Override
     public void del(String user, String nome, int posBegin, int posEnd) throws RemoteException {
-        //fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
+        fila.add(new RemocaoSelecao(nome, posBegin, posEnd));
         for (Usuario usuario : logados) {
             if (!usuario.getNome().equals(user)) {
                 LinkedList<Modificacao> lista = requisicoes.get(usuario.getNome() + nome);//add(new Adicao(nome, conteudo, carent));
@@ -296,33 +296,33 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
         }
     }
 
-//    @Override
-//    public void run() {
-//        while (true) {
-//            try {
-//                sleep(0, 1);
-//                if (!fila.isEmpty()) {
-//                    Modificacao atual = fila.poll();
-//                    if (atual instanceof Adicao) {
-//                        Adicao add = (Adicao) atual;
-//                        this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
-//                        System.out.println("é uma adicao");
-//                    } else if (atual instanceof Remocao) {
-//                        Remocao del = (Remocao) atual;
-//                        this.atualiza(del.getNome(), del.getPosition());
-//                        System.out.println("é uma remocao");
-//                    } else {
-//                        RemocaoSelecao del = (RemocaoSelecao) atual;
-//                        this.atualiza(del.getNome(), del.getPosBegin(), del.getPosEnd());
-//                        System.out.println("é uma remocao de seleção");
-//                    }
-//                    //atual = fila.poll();
-//                }
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                sleep(0, 1);
+                if (!fila.isEmpty()) {
+                    Modificacao atual = fila.poll();
+                    if (atual instanceof Adicao) {
+                        Adicao add = (Adicao) atual;
+                        this.atualiza(add.getNome(), add.getConteudo(), add.getPosition());
+                        System.out.println("é uma adicao");
+                    } else if (atual instanceof Remocao) {
+                        Remocao del = (Remocao) atual;
+                        this.atualiza(del.getNome(), del.getPosition());
+                        System.out.println("é uma remocao");
+                    } else {
+                        RemocaoSelecao del = (RemocaoSelecao) atual;
+                        this.atualiza(del.getNome(), del.getPosBegin(), del.getPosEnd());
+                        System.out.println("é uma remocao de seleção");
+                    }
+                    //atual = fila.poll();
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     @Override
     public Modificacao requisicao(String nome, String nomeTitulo) throws RemoteException {
         System.out.println("usuario " + nome + " pediu uma requisicao");
