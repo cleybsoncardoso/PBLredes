@@ -17,7 +17,9 @@ public class DutoDocsServer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         Controller controller = new Controller("192.168.25.83");
+
     }
     
 }

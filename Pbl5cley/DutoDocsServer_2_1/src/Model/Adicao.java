@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author paiva
  */
-public class Adicao extends Modificacao {
+public class Adicao extends Modificacao implements Serializable {
 
     private char conteudo;
     private int position;
