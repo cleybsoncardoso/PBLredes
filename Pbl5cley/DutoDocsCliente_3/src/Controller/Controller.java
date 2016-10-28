@@ -62,10 +62,13 @@ public class Controller {
     }
 
     public Modificacao requisicao() {
-        try {
-            return metodos.requisicao(this.nome, this.titulo);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        if (titulo != null) {
+            try {
+                System.out.println("nome: " + nome+ "titulo" + titulo);
+                return metodos.requisicao(this.nome, this.titulo);
+            } catch (RemoteException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
@@ -124,6 +127,7 @@ public class Controller {
     public void fechar() {
         try {
             metodos.fechar(nome, titulo);
+            titulo=null;
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
