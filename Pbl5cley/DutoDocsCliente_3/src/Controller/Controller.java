@@ -33,8 +33,8 @@ public class Controller {
 
     public Boolean login(String nome, String senha) {
         try {
-            if(metodos.logar(nome, senha)){
-                this.nome=nome;
+            if (metodos.logar(nome, senha)) {
+                this.nome = nome;
                 return true;
             }
         } catch (RemoteException ex) {
@@ -60,8 +60,8 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public Modificacao requisicao(){
+
+    public Modificacao requisicao() {
         try {
             return metodos.requisicao(this.nome, this.titulo);
         } catch (RemoteException ex) {
@@ -91,11 +91,11 @@ public class Controller {
     public String getNome() {
         return nome;
     }
-    
+
     public String getTitulo() {
         return titulo;
     }
-    
+
     public String refresh(String nome) {
         try {
             return metodos.refresh(nome);
@@ -115,7 +115,15 @@ public class Controller {
 
     public void del(String nome, int selectionStart, int selectionEnd) {
         try {
-            metodos.del(this.nome, nome,selectionStart, selectionEnd);
+            metodos.del(this.nome, nome, selectionStart, selectionEnd);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void fechar() {
+        try {
+            metodos.fechar(nome, titulo);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }

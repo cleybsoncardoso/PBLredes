@@ -18,7 +18,7 @@ public class DutoDocServer3 {
      */
     public static void main(String[] args) {
 
-        Controller controller = new Controller("192.168.0.4");
+        Controller controller = new Controller("192.168.0.141");
 
     }
 

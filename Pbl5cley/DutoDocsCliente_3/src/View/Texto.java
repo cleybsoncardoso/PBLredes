@@ -95,6 +95,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        controller.fechar();
         new EscolherArquivo(controller).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jToggleButton1ActionPerformed

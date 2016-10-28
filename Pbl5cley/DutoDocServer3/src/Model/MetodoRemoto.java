@@ -127,45 +127,42 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
 
     @Override
     public String abrirArquivo(String nomeArquivo, String nome) throws RemoteException {
-        String conteudo = "";
-        try {
-            File fnome = new File(nomeArquivo);
-            FileInputStream stream;
-            stream = new FileInputStream(fnome);
-            InputStreamReader reader = new InputStreamReader(stream);
-            BufferedReader br = new BufferedReader(reader);
-            String texto = br.readLine();
-            while (texto != null) {
-                conteudo += texto + "\n";
-                texto = br.readLine();
-            }
-            br.close();
-            reader.close();
-            stream.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Boolean existe = false;
-        for (Quantidade qnt : documentosAbertos) {
-            if (qnt.getNome().equals(nomeArquivo)) {
-                qnt.increment();
-                existe = true;
-            }
-        }
-        if (!existe) {
-            documentos.put(nomeArquivo, new Documento(nomeArquivo, conteudo));
-            documentosAbertos.add(new Quantidade(nomeArquivo));
-        }
-        System.out.println("usuario " + nome + " abriu arquivo: " + nomeArquivo);
-        requisicoes.put(nome + nomeArquivo, new LinkedList<>());
 
-        return conteudo;
+        Documento documento = documentos.get(nomeArquivo);
+        requisicoes.put(nome + nomeArquivo, new LinkedList<>());
+        if (documento != null) {
+            documento.increment();
+            return documento.getConteudo();
+        } else {
+            String conteudo = "";
+            try {
+                File fnome = new File(nomeArquivo);
+                FileInputStream stream;
+                stream = new FileInputStream(fnome);
+                InputStreamReader reader = new InputStreamReader(stream);
+                BufferedReader br = new BufferedReader(reader);
+                String texto = br.readLine();
+                while (texto != null) {
+                    conteudo += texto + "\n";
+                    texto = br.readLine();
+                }
+                br.close();
+                reader.close();
+                stream.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            } catch (IOException ex) {
+                Logger.getLogger(MetodoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+            documentos.put(nomeArquivo, new Documento(nomeArquivo, conteudo));
+            return conteudo;
+        }
 
     }
 
-    private void atualiza(String nome, String conteudo) throws RemoteException {
+    private void gravarArquivo(String nome, String conteudo) throws RemoteException {
         File fnome = new File(nome);
         try {
             FileWriter fileW = new FileWriter(fnome);//arquivo para escrita
@@ -243,23 +240,13 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto {
     }
 
     @Override
-    public void fecha(String nome, String conteudo) throws RemoteException {
-        Quantidade remover = null;
-        for (Quantidade qtn : documentosAbertos) {
-            if (qtn.getNome().equals(nome)) {
-                qtn.decrement();
-                if (qtn.getCont() == 0) {
-                    remover = qtn;
-                }
-                break;
-            }
-        }
-        if (remover != null) {
-            documentosAbertos.remove(remover);
-            this.atualiza(nome, conteudo);
-            Documento atual = documentos.get(nome);
-            if (atual != null) {
-                documentos.remove(nome);
+    public void fechar(String user, String titulo) throws RemoteException {
+        Documento documento = documentos.get(titulo);
+        if (documento != null) {
+            requisicoes.remove(user + titulo);
+            if (documento.decrement() == 0) {
+                documentos.remove(titulo);
+                gravarArquivo(titulo, documento.getConteudo());
             }
         }
     }

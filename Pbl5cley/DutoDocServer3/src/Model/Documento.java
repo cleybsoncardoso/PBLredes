@@ -12,14 +12,15 @@ package Model;
 public class Documento {
 
     private String nome, conteudo;
-    
-    
+    private int abertos;
+
     public Documento(String nome, String conteudo) {
         this.nome = nome;
         this.conteudo = conteudo;
+        this.abertos = 1;
     }
-    
-    public int length(){
+
+    public int length() {
         return conteudo.length();
     }
 
@@ -33,6 +34,18 @@ public class Documento {
 
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
+    }
+
+    public int getAbertos() {
+        return abertos;
+    }
+
+    public void increment() {
+        abertos++;
+    }
+
+    public int decrement() {
+        return abertos--;
     }
 
 }
