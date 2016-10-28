@@ -323,10 +323,15 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
             }
         }
     }
+
     @Override
     public Modificacao requisicao(String nome, String nomeTitulo) throws RemoteException {
         System.out.println("usuario " + nome + " pediu uma requisicao");
-        return requisicoes.get(nome + nomeTitulo).poll();
+        LinkedList<Modificacao> modificacao = requisicoes.get(nome + nomeTitulo);
+        if (modificacao != null) {
+            return modificacao.poll();
+        } else {
+            return null;
+        }
     }
-
 }
