@@ -45,7 +45,7 @@ public class Documento {
     }
 
     public int decrement() {
-        return abertos--;
+        return --abertos;
     }
 
 }

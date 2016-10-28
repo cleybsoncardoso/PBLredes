@@ -244,10 +244,12 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         Documento documento = documentos.get(titulo);
         if (documento != null) {
             requisicoes.remove(user + titulo);
-            if (documento.decrement() == 0) {
+            int valor = documento.decrement();
+            System.out.println("numero de usuarios" + valor);
+            if (valor == 0) {
                 documentos.remove(titulo);
-                gravarArquivo(titulo, documento.getConteudo());
             }
+            gravarArquivo(titulo, documento.getConteudo());
         }
     }
 
