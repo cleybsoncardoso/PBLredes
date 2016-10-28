@@ -176,7 +176,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     Adicao add = (Adicao) operacoes;
                     if (add.getPosition() >= jTextArea1.getCaretPosition()) {
                         StringBuilder t = new StringBuilder(jTextArea1.getText());
-                        t.insert(add.getPosition(), add.getConteudo());
+                        t.append(add.getConteudo());
                         int carent = jTextArea1.getCaretPosition();
                         jTextArea1.setText(t.toString());
                         jTextArea1.setCaretPosition(carent);
@@ -195,7 +195,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     int carent = jTextArea1.getCaretPosition();
                     jTextArea1.setText(texto.toString());
                     if (carent == 0 || carent > texto.length()) {
-                        jTextArea1.setCaretPosition(jTextArea1.getText().length()-1);
+                        jTextArea1.setCaretPosition(jTextArea1.getText().length());
                     } else {
                         jTextArea1.setCaretPosition(carent - 1);
                     }
@@ -207,7 +207,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     int carent = jTextArea1.getCaretPosition();
                     jTextArea1.setText(texto.toString());
                     if (carent == 0 || carent > texto.length()) {
-                        jTextArea1.setCaretPosition(0);
+                        jTextArea1.setCaretPosition(jTextArea1.getText().length());
                     } else {
                         jTextArea1.setCaretPosition(carent - 1);
                     }
