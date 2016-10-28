@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 a:a
 b:b
+=======
+teste:123
+teste2:123
+teste3:123
+a:a
+>>>>>>> cdda211b247f157bed8a4bfd6ea2cbe3ea0bbfcb
