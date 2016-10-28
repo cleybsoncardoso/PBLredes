@@ -213,6 +213,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
+        System.out.println("Fechou thread");
     }
 
 }
