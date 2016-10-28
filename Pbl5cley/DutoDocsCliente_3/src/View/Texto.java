@@ -52,6 +52,11 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -145,6 +150,11 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_jTextArea1KeyReleased
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Volte sempre, Saindo");
+        controller.fechar();
+    }//GEN-LAST:event_formWindowClosing
+
     public void atualizarTextArea() {
         //int position = jTextArea1.getCaretPosition();
         //jTextArea1.setText(controller.refresh(nome));
@@ -197,7 +207,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     if (carent == 0 || carent > texto.length()) {
                         jTextArea1.setCaretPosition(jTextArea1.getText().length());
                     } else {
-                        jTextArea1.setCaretPosition(carent - 1);
+                        jTextArea1.setCaretPosition(carent);
                     }
 
                 } else {
@@ -209,7 +219,7 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                     if (carent == 0 || carent > texto.length()) {
                         jTextArea1.setCaretPosition(jTextArea1.getText().length());
                     } else {
-                        jTextArea1.setCaretPosition(carent - 1);
+                        jTextArea1.setCaretPosition(carent);
                     }
                 }
             }
