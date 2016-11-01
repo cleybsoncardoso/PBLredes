@@ -15,6 +15,12 @@ public class RemocaoSelecao extends Modificacao implements Serializable {
 
     private int posBegin, posEnd;
 
+    /**
+     * 
+     * @param nome nome do arquivo
+     * @param posBegin primeiro caracter a ser apagado
+     * @param posEnd ultimo caracter a ser apagado
+     */
     RemocaoSelecao(String nome, int posBegin, int posEnd) {
         super(nome);
         this.posBegin=posBegin;

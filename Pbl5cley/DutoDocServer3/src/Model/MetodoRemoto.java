@@ -253,10 +253,6 @@ public class MetodoRemoto extends UnicastRemoteObject implements iMetodoRemoto, 
         }
     }
 
-    @Override
-    public String refresh(String nomeArquivo) throws RemoteException {
-        return documentos.get(nomeArquivo).getConteudo();
-    }
 
     @Override
     public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException {

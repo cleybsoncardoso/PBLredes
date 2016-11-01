@@ -15,7 +15,7 @@ public class Adicao extends Modificacao implements Serializable {
 
     private char conteudo;
     private int position;
-    private long chegada;
+
 
     public Adicao(String nome, char conteudo, int position) {
         super(nome);
@@ -31,7 +31,4 @@ public class Adicao extends Modificacao implements Serializable {
         return position;
     }
 
-    public long getChegada() {
-        return chegada;
-    }
 }

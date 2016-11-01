@@ -11,6 +11,7 @@ import Model.Modificacao;
 import Model.Remocao;
 import Model.RemocaoSelecao;
 import java.io.File;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,9 +20,8 @@ import java.io.File;
 public class Texto extends javax.swing.JFrame implements Runnable {
 
     private Controller controller;
-    private String nome;
-    private int position, selecao;
-    //private AtualizacaoPeriodica ap;
+    private String nome; //nome do arquivo
+    private int position;//posição do carent
 
     /**
      * Creates new form Texto
@@ -32,8 +32,8 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         this.controller = controller;
         initComponents();
         jTextArea1.setText(controller.abrirArquivo(nome));
-        //this.ap = new AtualizacaoPeriodica(System.currentTimeMillis(), this);
-        //new Thread(ap).start();
+        jTextArea1.setLineWrap(true);
+        
     }
 
     /**
@@ -99,48 +99,60 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo que fecha o arquivo
+     *
+     * @param evt
+     */
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         controller.fechar();
         new EscolherArquivo(controller).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    /**
+     * Metodo para quando pressionar uma tecla ao digitar
+     *
+     * @param evt
+     */
     private void jTextArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyPressed
-        // TODO add your handling code here:
-        //this.ap.atualiza(); //atualizar o tempo do loop
-        selecao = 0;
-        char tecla = evt.getKeyChar();
+
+        char tecla = evt.getKeyChar();//verifica o a tecla
         int code = evt.getKeyCode(); //pega o valor inteiro da tecla pressionada
-        if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
-            this.position = jTextArea1.getCaretPosition();
-            controller.escreveArquivo(nome, tecla, this.position);
-            System.out.println("tecla valida: " + code);
-        }
+
+        //verifica se tem texto selecionado
         String textoSelecionado = jTextArea1.getSelectedText();
         if (textoSelecionado != null) {
             controller.del(nome, jTextArea1.getSelectionStart(), jTextArea1.getSelectionEnd());
-            selecao = jTextArea1.getSelectionEnd() - jTextArea1.getSelectionStart();
-        } else if (code == 8) {
+        } else if (code == 8) {//verifica se a tecla digitada foi o blackspace
             this.position = jTextArea1.getCaretPosition();
             if (this.position - 1 >= 0) {
                 controller.del(nome, jTextArea1.getCaretPosition() - 1);
             }
-        } else if (code == 127) {
+        } else if (code == 127) {//verifica se foi a tecla delete
             this.position = jTextArea1.getCaretPosition();
             if (this.position < jTextArea1.getText().length()) {
                 controller.del(nome, jTextArea1.getCaretPosition());
             }
         }
+        if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
+            this.position = jTextArea1.getCaretPosition(); //atualiza a posição do carent
+            controller.escreveArquivo(nome, tecla, this.position);  //avisa ao servidor que uma tecla foi digitada 
+                                                                    //e manda ele atualizar isso no texto que esta na memoria
+        }
     }//GEN-LAST:event_jTextArea1KeyPressed
 
+    /**
+     * evento ao liberar tecla
+     * @param evt 
+     */
     private void jTextArea1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyReleased
         // TODO add your handling code here:
         char tecla = evt.getKeyChar();
-        int code = evt.getKeyCode();
+        int code = evt.getKeyCode();//atualiza a posição do carent
         if ((code == 0 || code == 32 || code == 10 || code > 43) && code != 127) {
             this.position = jTextArea1.getCaretPosition();
         } else if (code == 8) {
-            System.out.println("teste: " + jTextArea1.getSelectedText());
             this.position = jTextArea1.getCaretPosition();
             //jTextArea1.setCaretPosition(this.position);
         } else if (code == 127) {
@@ -150,17 +162,14 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_jTextArea1KeyReleased
 
+    /**
+     * fechar programa
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         System.out.println("Volte sempre, Saindo");
         controller.fechar();
     }//GEN-LAST:event_formWindowClosing
-
-    public void atualizarTextArea() {
-        //int position = jTextArea1.getCaretPosition();
-        //jTextArea1.setText(controller.refresh(nome));
-        System.out.println("atualizou");
-        //jTextArea1.setCaretPosition(position);
-    }
 
     /**
      * @param args the command line arguments
@@ -174,6 +183,9 @@ public class Texto extends javax.swing.JFrame implements Runnable {
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * thread que atualiza o texto 
+     */
     @Override
     public void run() {
         System.out.println("Abrindo arquivo");
@@ -181,7 +193,6 @@ public class Texto extends javax.swing.JFrame implements Runnable {
         while (controller.getTitulo() != null) {
             Modificacao operacoes = controller.requisicao();
             if (operacoes != null) {
-                System.out.println("requivisao " + i);
                 if (operacoes instanceof Adicao) {
                     Adicao add = (Adicao) operacoes;
                     if (add.getPosition() >= jTextArea1.getCaretPosition()) {
@@ -224,7 +235,6 @@ public class Texto extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
-        System.out.println("Fechou thread");
     }
 
 }

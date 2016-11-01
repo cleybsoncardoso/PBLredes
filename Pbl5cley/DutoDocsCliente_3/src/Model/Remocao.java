@@ -15,6 +15,11 @@ public class Remocao extends Modificacao implements Serializable {
 
     private int position;
 
+    /**
+     * 
+     * @param nomenome do arquivo
+     * @param position  posição que deseja remover um caracter
+     */
     public Remocao(String nome, int position) {
         super(nome);
         this.position = position;

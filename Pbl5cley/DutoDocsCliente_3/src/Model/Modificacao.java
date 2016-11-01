@@ -8,8 +8,8 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
- * @author cleyb
+ * classe pai das classes adição, remocao e remocaoselecao
+ * @author cleybson e lucas
  */
 public class Modificacao implements Serializable {
     

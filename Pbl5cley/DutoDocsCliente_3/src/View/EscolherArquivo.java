@@ -15,13 +15,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author cleyb
+ * JFrame com o nome dos arquivos, por esta classe será possivel, criar e abrir arquivos, alem de poder atualizar a lista de arquivos
+ * @author cleybson e lucas
  */
 public class EscolherArquivo extends javax.swing.JFrame {
 
     private Controller controller;
-    private ArrayList<String> arquivos;
+    private ArrayList<String> arquivos; //nome dos arquivos
 
     /**
      * Creates new form EscolherArquivo
@@ -120,12 +120,21 @@ public class EscolherArquivo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Botão de atualizar
+     * @param evt evento do click
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.atualizarLista();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    /**
+     * metodo de criar um arquivo
+     * @param evt evento do click
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nomeArquivo = null;
+        //caso nao digite algum nome, ou cancele
         while (nomeArquivo == null || nomeArquivo.equals("")) {
             nomeArquivo = JOptionPane.showInputDialog("Qual o nome do Arquivo que deseja criar?");
             if (nomeArquivo == null || nomeArquivo.equals("")) {
@@ -151,11 +160,19 @@ public class EscolherArquivo extends javax.swing.JFrame {
         this.atualizarLista();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * metodo do botão de deslogar
+     * @param evt evento do click
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         new Tela(controller).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * metodo de abrir o texto
+     * @param evt evento do click
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Texto t = new Texto(jList1.getSelectedValue(), controller);
         t.setVisible(true);
@@ -173,6 +190,9 @@ public class EscolherArquivo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Atualizar lista de arquivos
+     */
     private void atualizarLista() {
         arquivos = controller.listarArquivosTxt();
         String[] nomes = new String[arquivos.size()];

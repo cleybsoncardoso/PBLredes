@@ -8,15 +8,20 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
- * @author paiva
+ * classe criada para armazenar os dados do caracter que será incrementado
+ * @author paiva e cleybson
  */
 public class Adicao extends Modificacao implements Serializable {
 
     private char conteudo;
     private int position;
-    private long chegada;
 
+    /**
+     * 
+     * @param nome nome do arquivo
+     * @param conteudo caracter a ser incrementado
+     * @param position posição que será colocado
+     */
     public Adicao(String nome, char conteudo, int position) {
         super(nome);
         this.conteudo = conteudo;
@@ -31,7 +36,4 @@ public class Adicao extends Modificacao implements Serializable {
         return position;
     }
 
-    public long getChegada() {
-        return chegada;
-    }
 }

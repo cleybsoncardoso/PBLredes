@@ -24,8 +24,6 @@ public interface iMetodoRemoto extends Remote {
 
     public String abrirArquivo(String nomeArquivo, String nome) throws RemoteException;
 
-    public String refresh(String nomeArquivo) throws RemoteException;
-
     public void modifica(String user, String nome, char conteudo, int carent) throws RemoteException;
 
     public void fechar(String user, String titulo) throws RemoteException;
